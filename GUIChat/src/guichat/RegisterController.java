@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -19,10 +20,19 @@ import javafx.stage.Stage;
  * @author Wero
  */
 public class RegisterController implements Initializable, IContentSetter {
-
+    
+    ScreenController screen;
     // Controles implementados en Interfaz
     @FXML
     private Button closeWindowBtn;
+    private TextField txtNewuser, txtnewPassword;
+    private Button signin;
+
+    public RegisterController() {
+    }
+    
+    
+    
     
     /**
      * Método para poder cerrar la pestaña
@@ -34,6 +44,19 @@ public class RegisterController implements Initializable, IContentSetter {
         stage.close();
     }
     
+    @FXML
+    public void handleRegister(ActionEvent e){
+        
+        if(txtNewuser.getText().isEmpty() && txtnewPassword.getText().isEmpty()){
+            
+        }
+        else{
+            //modelo = txtNewuser.getText();
+            //modelo = txtnewPassword.getText();
+            screen.setScreen(GUIChat.screenHome);
+        }
+    }
+    
     /**
      * Initializes the controller class.
      */
@@ -42,9 +65,14 @@ public class RegisterController implements Initializable, IContentSetter {
         // TODO
     }    
 
+    
+    /**
+     * Método para obtener que pantalla es la que se encuentra en ejecución
+     * @param screenPage
+     */
     @Override
     public void setContentToScreen(ScreenController screenPage) {
-        
+         this.screen = screenPage;
     }
     
 }
