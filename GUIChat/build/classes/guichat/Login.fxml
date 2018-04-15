@@ -11,13 +11,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="container" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.LoginController">
+<AnchorPane id="AnchorPane" fx:id="container" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.LoginController">
    <children>
       <AnchorPane fx:id="headerBar" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="closeWindowBtn" layoutX="948.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleCloseWindow" style="-fx-background-color: transparent;" text="x" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
+            <Button fx:id="closeWindowBtn" layoutX="948.0" layoutY="4.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#handleCloseWindow" prefWidth="32.0" styleClass="close" text="x" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="Century Gothic Bold" size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="minimizeWindowBtn" layoutX="908.0" layoutY="4.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#handleMinimizeWindow" prefWidth="32.0" styleClass="close" text="-" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="-2.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="13.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />

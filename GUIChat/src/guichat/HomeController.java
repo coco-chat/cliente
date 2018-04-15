@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 /**
@@ -24,7 +25,8 @@ public class HomeController implements Initializable, IContentSetter {
     ScreenController screen;
     
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn;
+    @FXML private TextArea txtMessage;
     
     /**
      * Método para poder cerrar la pestaña
@@ -34,6 +36,31 @@ public class HomeController implements Initializable, IContentSetter {
     public void handleCloseWindow(ActionEvent e){
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
+    }
+    
+    /**
+     * Método para minimizar la pestaña
+     * @param e 
+     */
+    @FXML
+    public void handleMinimizeWindow(ActionEvent e){
+        Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    /**
+     * Método para cerrar sesión del Usuario
+     * @param e 
+     */
+    @FXML
+    public void signOut(ActionEvent e){
+        screen.setScreen(GUIChat.screenLogin);
+    }
+    
+    @FXML
+    public void sendMessage(ActionEvent e){
+        System.out.println(txtMessage.getText());
+        txtMessage.setText("");
     }
     
     /**

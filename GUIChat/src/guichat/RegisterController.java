@@ -24,7 +24,7 @@ public class RegisterController implements Initializable, IContentSetter {
     ScreenController screen;
     // Controles implementados en Interfaz
     @FXML
-    private Button closeWindowBtn;
+    private Button closeWindowBtn, minimizeWindowBtn;
     private TextField txtNewuser, txtnewPassword;
     private Button signin;
 
@@ -42,6 +42,16 @@ public class RegisterController implements Initializable, IContentSetter {
     public void handleCloseWindow(ActionEvent e){
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
+    }
+    
+    /**
+     * Método para minimizar la pestaña
+     * @param e 
+     */
+    @FXML
+    public void handleMinimizeWindow(ActionEvent e){
+        Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
+        stage.setIconified(true);
     }
     
     @FXML

@@ -9,13 +9,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.RegisterController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.RegisterController">
    <children>
       <AnchorPane fx:id="headerBar" layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="closeWindowBtn" layoutX="973.0" layoutY="-2.0" mnemonicParsing="false" onAction="#handleCloseWindow" prefHeight="32.0" prefWidth="26.0" style="-fx-background-color: transparent;" text="x" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button fx:id="closeWindowBtn" layoutX="948.0" layoutY="4.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#handleCloseWindow" prefWidth="32.0" styleClass="close" text="x" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="Century Gothic Bold" size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="minimizeWindowBtn" layoutX="908.0" layoutY="4.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#handleMinimizeWindow" prefWidth="32.0" styleClass="close" text="-" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="-2.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="13.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -27,16 +35,31 @@
          <children>
             <AnchorPane layoutX="272.0" layoutY="114.0" prefHeight="386.0" prefWidth="411.0" style="-fx-background-color: #F2F7F7; -fx-background-radius: 10px;">
                <children>
-                  <TextField id="Nuevo_Usuario" fx:id="txtNewuser" layoutX="70.0" layoutY="146.0" prefHeight="32.0" prefWidth="300.0" promptText="Crea tu nombre de usuario" />
+                  <TextField id="Nuevo_Usuario" fx:id="txtNewuser" layoutX="70.0" layoutY="146.0" prefHeight="32.0" prefWidth="300.0" promptText="Crea tu nombre de usuario">
+                     <font>
+                        <Font name="Century Gothic" size="12.0" />
+                     </font></TextField>
                   <Label alignment="CENTER" layoutX="125.0" layoutY="53.0" text="¡Regístrate!" textAlignment="CENTER" textFill="#2f3740">
                      <font>
-                        <Font size="32.0" />
+                        <Font name="Century Gothic Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label layoutX="69.0" layoutY="116.0" text="Nombre de usuario" />
-                  <Label layoutX="69.0" layoutY="193.0" text="Contraseña" />
-                  <Button fx:id="signinBtn" graphicTextGap="2.0" layoutX="80.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="32.0" prefWidth="280.0" style="-fx-background-color: #303841;" text="CREAR USUARIO" textFill="#fffefe" />
-                  <PasswordField layoutX="69.0" layoutY="222.0" prefHeight="32.0" prefWidth="300.0" promptText="Crea una contraseña" />
+                  <Label layoutX="69.0" layoutY="116.0" text="Nombre de usuario:">
+                     <font>
+                        <Font name="Century Gothic Bold" size="13.0" />
+                     </font></Label>
+                  <Label layoutX="69.0" layoutY="193.0" text="Contraseña:">
+                     <font>
+                        <Font name="Century Gothic Bold" size="13.0" />
+                     </font></Label>
+                  <Button fx:id="signinBtn" graphicTextGap="2.0" layoutX="80.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="32.0" prefWidth="280.0" style="-fx-background-color: #303841;" text="CREAR USUARIO" textFill="#fffefe">
+                     <font>
+                        <Font name="Century Gothic Bold" size="13.0" />
+                     </font></Button>
+                  <PasswordField layoutX="69.0" layoutY="222.0" prefHeight="32.0" prefWidth="300.0" promptText="Crea una contraseña">
+                     <font>
+                        <Font name="Century Gothic" size="12.0" />
+                     </font></PasswordField>
                </children>
                <opaqueInsets>
                   <Insets />

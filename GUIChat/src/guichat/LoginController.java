@@ -24,7 +24,7 @@ public class LoginController implements Initializable, IContentSetter {
     ScreenController screen;
     
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn;
     @FXML private TextField txtUsername, txtPassword;
     
     /**
@@ -47,6 +47,16 @@ public class LoginController implements Initializable, IContentSetter {
     }
     
     /**
+     * Método para minimizar la pestaña
+     * @param e 
+     */
+    @FXML
+    public void handleMinimizeWindow(ActionEvent e){
+        Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
+        stage.setIconified(true);
+    }
+    
+    /**
      * Método para pasar a la Pantalla de Register
      * @param e 
      */
@@ -59,6 +69,8 @@ public class LoginController implements Initializable, IContentSetter {
     public void handleLogin(ActionEvent e){
         if(txtUsername.getText().equals("werofuentes") && txtPassword.getText().equals("14300143")){
             screen.setScreen(GUIChat.screenHome);
+            txtUsername.setText("");
+            txtPassword.setText("");
         }
     }
     
