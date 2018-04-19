@@ -14,7 +14,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -28,7 +30,7 @@ public class HomeController implements Initializable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
     @FXML private TextArea txtMessage;
-    @FXML private AnchorPane friends;
+    @FXML private ListView listFriends, listGroups;
     
     // Variables de control internas
     private String username;
@@ -37,8 +39,20 @@ public class HomeController implements Initializable {
      * Conseguir elemento del formulario
      */
     public void insertContent(){
-        friends.setStyle("-fx-background-color: antiquewhite;");
+        listFriends.getItems().addAll("Kevin Alan", "Arturo Carrillo", "Juan Antonio", "Emiliano Moreno", "Gerardo", "Wero");
+        listGroups.getItems().addAll("Régimen Perro", "8°B");
     }
+    
+    @FXML
+    public void getGroup(MouseEvent event) {
+        System.out.println(listGroups.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    public void getUser(MouseEvent event) {
+        System.out.println(listFriends.getSelectionModel().getSelectedItem());
+    }
+    
     
     /**
      * Método para poder cerrar la pestaña
