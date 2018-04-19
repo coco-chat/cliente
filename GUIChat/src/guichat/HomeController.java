@@ -5,13 +5,17 @@
  */
 package guichat;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -19,14 +23,22 @@ import javafx.stage.Stage;
  *
  * @author Wero
  */
-public class HomeController implements Initializable, IContentSetter {
+public class HomeController implements Initializable {
 
-    // Controlador para mostrar contenido
-    ScreenController screen;
-    
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
     @FXML private TextArea txtMessage;
+    @FXML private AnchorPane friends;
+    
+    // Variables de control internas
+    private String username;
+    
+    /**
+     * Conseguir elemento del formulario
+     */
+    public void insertContent(){
+        friends.setStyle("-fx-background-color: antiquewhite;");
+    }
     
     /**
      * Método para poder cerrar la pestaña
@@ -49,12 +61,29 @@ public class HomeController implements Initializable, IContentSetter {
     }
     
     /**
+     * Método para pasar el nombre de usuario de una vista a otra
+     * @param username String Nombre de Usuario
+     */
+    public void setUsername(String username){
+        this.username = username;
+        System.out.println(this.username);
+        insertContent();
+    }
+    
+    /**
      * Método para cerrar sesión del Usuario
      * @param e 
      */
     @FXML
     public void signOut(ActionEvent e){
-        screen.setScreen(GUIChat.screenLogin);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            Stage stage = (Stage) outBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
     }
     
     @FXML
@@ -71,15 +100,6 @@ public class HomeController implements Initializable, IContentSetter {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
-    /**
-     * Método para obtener que pantalla es la que se encuentra en ejecución
-     * @param screenPage
-     */
-    @Override
-    public void setContentToScreen(ScreenController screenPage) {
-        this.screen = screenPage;
-    }
+    }   
     
 }

@@ -6,7 +6,10 @@
 package guichat;
 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -19,34 +22,21 @@ import javafx.stage.StageStyle;
 public class GUIChat extends Application {
     
     /**
-     * Aquí se agregan todas las pantallas de nuestra aplicación, se separan en
-     * dos, el nombre de la pantalla (Identificador) y el nombre del archivo que 
-     * corresponde a esa pantalla.
+     * Escena principal
      */
-    public static String screenLogin = "Login";
-    public static String screenLoginFile = "Login.fxml";
-    public static String screenRegister = "Register";
-    public static String screenRegisterFile = "Register.fxml";
-    public static String screenHome = "Home";
-    public static String screenHomeFile = "Home.fxml";
+    public Scene scene;
     
     @Override
     public void start(Stage stage) throws Exception {
         
-        ScreenController container = new ScreenController();
-        container.loadScreen(GUIChat.screenHome, GUIChat.screenHomeFile);
-        container.loadScreen(GUIChat.screenLogin, GUIChat.screenLoginFile);
-        container.loadScreen(GUIChat.screenRegister, GUIChat.screenRegisterFile);
-        
-        container.setScreen(GUIChat.screenLogin);
-        
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+
+        scene = new Scene(root);
+
+        stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.getIcons().add(new Image("https://cdn1.iconfinder.com/data/icons/ui-5/502/speech-512.png"));
         stage.setTitle("Coco Chat");
-        Group root = new Group();
-        root.getChildren().addAll(container);
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
         stage.show();
     }
 

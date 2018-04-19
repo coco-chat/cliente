@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="container" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.LoginController">
    <children>
-      <AnchorPane fx:id="headerBar" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="headerBar" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" styleClass="headerBar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="closeWindowBtn" layoutX="948.0" layoutY="4.0" maxWidth="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#handleCloseWindow" prefWidth="32.0" styleClass="close" text="x" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
                <font>
@@ -61,7 +61,7 @@
                         <Insets left="16.0" />
                      </padding>
                   </TextField>
-                  <Button fx:id="loginBtn" alignment="CENTER" layoutX="10.0" layoutY="355.0" lineSpacing="2.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="32.0" prefWidth="280.0" style="-fx-background-color: #303841; -fx-border-radius: 50;" text="CONTINUAR" textFill="#fffefe">
+                  <Button fx:id="loginBtn" alignment="CENTER" layoutX="10.0" layoutY="355.0" lineSpacing="2.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="32.0" prefWidth="280.0" styleClass="btn-blue" text="CONTINUAR" textFill="#fffefe">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -69,7 +69,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="btnRegister" layoutX="10.0" layoutY="398.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="32.0" prefWidth="280.0" style="-fx-background-color: #54D38A;" text="REGISTRARSE" textFill="#fffefe">
+                  <Button fx:id="registerBtn" layoutX="10.0" layoutY="398.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="32.0" prefWidth="280.0" styleClass="btn-green" text="REGISTRARSE" textFill="#fffefe">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -120,7 +120,7 @@
                         <Image url="@Assets/login.png" />
                      </image>
                   </ImageView>
-                  <Label alignment="CENTER" layoutX="307.0" layoutY="59.0" text="Bienvenido a Coco Chat" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                  <Label alignment="CENTER" layoutX="307.0" layoutY="59.0" styleClass="title" text="Bienvenido a Coco Chat" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
                      <font>
                         <Font name="Century Gothic Bold" size="32.0" />
                      </font>
