@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author juanc
  */
-public class Modelo_amigos implements Serializable {
+public class Amigo implements Serializable {
     
     private int id;
     private int amigo1;
@@ -19,7 +19,7 @@ public class Modelo_amigos implements Serializable {
     private String apodo1;
     private String apodo2;
     
-    public Modelo_amigos() {
+    public Amigo() {
         
     }
     

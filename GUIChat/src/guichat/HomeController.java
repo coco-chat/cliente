@@ -6,11 +6,11 @@
 package guichat;
 
 import com.google.gson.Gson;
-import guichat.Modelos.Modelo_Comunicacion;
-import guichat.Modelos.Modelo_Mensaje;
-import guichat.Modelos.Modelo_Mensaje_Grupo;
-import guichat.Modelos.Modelo_amigos;
-import guichat.Modelos.Modelo_grupos;
+import guichat.Modelos.Comunicacion;
+import guichat.Modelos.Mensaje;
+import guichat.Modelos.MensajeGrupo;
+import guichat.Modelos.Amigo;
+import guichat.Modelos.Grupo;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -70,11 +70,11 @@ public class HomeController implements Initializable,Runnable {
     public void esperar()
     {
         Gson jayson= new Gson();
-        Modelo_Comunicacion modelo = new Modelo_Comunicacion();
+        Comunicacion modelo = new Comunicacion();
         try {
             Socket soquet= new Socket(ip,81);
             DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
-            modelo= jayson.fromJson(dataInput.readUTF(), Modelo_Comunicacion.class);
+            modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
         } catch (IOException e) {
             e.getMessage();
         }
@@ -82,17 +82,17 @@ public class HomeController implements Initializable,Runnable {
             
         
     }
-    public void mensajeria(Modelo_Comunicacion modelo)
+    public void mensajeria(Comunicacion modelo)
     {
         
           Gson jayson= new Gson(); 
         switch(modelo.getTipo())
             {
                 case SEND_MENSAJE:
-                    Mensaje_recivido(jayson.fromJson(modelo.getContenido().toString(), Modelo_Mensaje.class));
+                    Mensaje_recivido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class));
                     break;
                 case SEND_GRUPO:
-                    Mensaje_Grupo_recivido(jayson.fromJson(modelo.getContenido().toString(), Modelo_Mensaje_Grupo.class));
+                    Mensaje_Grupo_recivido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
                     break;
                 case SEND_CONECTADOS:
                     
@@ -102,15 +102,15 @@ public class HomeController implements Initializable,Runnable {
                     break;
             }
     }
-    public void Mensaje_recivido(Modelo_Mensaje mensaje)
+    public void Mensaje_recivido(Mensaje mensaje)
     {
         
     }
-    public void Mensaje_Grupo_recivido(Modelo_Mensaje_Grupo mensaje_grupo)
+    public void Mensaje_Grupo_recivido(MensajeGrupo mensaje_grupo)
     {
         
     }
-    public void Lista_Conectados(Modelo_amigos amigos_conectados)
+    public void Lista_Conectados(Amigo amigos_conectados)
     {
         
     }

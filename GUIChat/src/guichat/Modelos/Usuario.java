@@ -11,13 +11,13 @@ import java.io.Serializable;
  *
  * @author vanya
  */
-public class Modelo_usuarios implements Serializable {
+public class Usuario implements Serializable {
     
     private int id;
     private String username;
     private String password;
     
-    public Modelo_usuarios() {
+    public Usuario() {
         id = 0;
         username = "";
         password = "";

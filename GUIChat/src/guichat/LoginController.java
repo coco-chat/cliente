@@ -6,7 +6,12 @@
 package guichat;
 
 
+import com.google.gson.Gson;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import guichat.Modelos.Comunicacion;
+import guichat.Modelos.Comunicacion.MTypes;
+import guichat.Modelos.Usuario;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -79,6 +84,45 @@ public class LoginController implements Initializable {
     
     @FXML
     public void handleLogin(ActionEvent e){
+        String ip=txtServer.getText();
+        Usuario user= new Usuario();
+        Gson jayson= new Gson();
+        Comunicacion modeloInput = new Comunicacion();
+        Comunicacion modeloOutput = new Comunicacion();
+        if (!txtPassword.getText().equals("") && !txtServer.getText().equals("") && !txtUsername.getText().equals("")) {
+             try {
+            Socket soquet= new Socket(ip,81);
+            DataOutputStream dataOutput=new DataOutputStream(soquet.getOutputStream());
+            user.setUsername(txtUsername.getText());
+            user.setPassword(txtPassword.getText());
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_LOGIN);
+            modeloOutput.setContenido(user);
+            dataOutput.writeUTF(jayson.toJson(modeloOutput));
+            DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
+            modeloInput= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
+                 if (modeloInput.getTipo()== MTypes.ACK_LOGIN) {
+                     if ((int)modeloInput.getContenido()==210) {
+                         try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+                Stage stage = (Stage) loginBtn.getScene().getWindow();
+                Scene scene = new Scene(loader.load());
+                stage.setScene(scene);
+            }catch (IOException io){
+                io.printStackTrace();
+            }
+                     }
+                     
+                 }
+        } catch (IOException I) {
+            I.getMessage();
+        }
+        }
+        else
+        {
+            System.out.println("pendejo");
+        }
+       
+        
         if(txtUsername.getText().equals("werofuentes") && txtPassword.getText().equals("14300143")){
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));

@@ -12,26 +12,26 @@ import java.util.List;
  *
  * @author Kevin Alan Martinez Virgen 14300260 8B1
  */
-public class Modelo_nuevoGrupo implements Serializable{
-    private Modelo_grupos grupo;
-    private List<Modelo_pet_grupos> integrantes;
+public class NuevoGrupo implements Serializable{
+    private Grupo grupo;
+    private List<PetGrupo> integrantes;
 
-    public Modelo_nuevoGrupo() {
+    public NuevoGrupo() {
     }
 
-    public Modelo_grupos getGrupo() {
+    public Grupo getGrupo() {
         return grupo;
     }
 
-    public void setGrupo(Modelo_grupos grupo) {
+    public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
 
-    public List<Modelo_pet_grupos> getIntegrantes() {
+    public List<PetGrupo> getIntegrantes() {
         return integrantes;
     }
 
-    public void setIntegrantes(List<Modelo_pet_grupos> integrantes) {
+    public void setIntegrantes(List<PetGrupo> integrantes) {
         this.integrantes = integrantes;
     }
     

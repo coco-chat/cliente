@@ -11,13 +11,13 @@ import java.io.Serializable;
  *
  * @author juanc
  */
-public class Modelo_grupos implements Serializable {
+public class Integrante implements Serializable {
     
     private int id;
-    private int admin;
-    private String nombre;
+    private int grupo;
+    private int usuario;
     
-    public Modelo_grupos() {
+    public Integrante() {
         
     }
     
@@ -29,20 +29,20 @@ public class Modelo_grupos implements Serializable {
         return this.id;
     }
     
-    public void setAdmin(int admin) {
-        this.admin = admin;
+    public void setGrupo(int grupo) {
+        this.grupo = grupo;
     }
     
-    public int getAdmin() {
-        return this.admin;
+    public int getGrupo() {
+        return this.grupo;
     }
     
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
     }
     
-    public String getNombre() {
-        return this.nombre;
+    public int getUsuario() {
+        return this.usuario;
     }
     
 }

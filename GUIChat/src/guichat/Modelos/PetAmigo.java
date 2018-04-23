@@ -11,13 +11,13 @@ import java.io.Serializable;
  *
  * @author vanya
  */
-public class Modelo_pet_amigos implements Serializable {
+public class PetAmigo implements Serializable {
     
     private String id;
     private int solicitante;
     private int solicitado;
     
-    public Modelo_pet_amigos() {
+    public PetAmigo() {
         
     }
 

@@ -11,28 +11,28 @@ import java.io.Serializable;
  *
  * @author Kevin Alan Martinez Virgen 14300260 8B1
  */
-public class Modelo_Mensaje implements Serializable{
-    private Modelo_usuarios origen;
-    private Modelo_usuarios destino;
+public class MensajeGrupo implements Serializable{
+    private Grupo grupo;
+    private Usuario usuario;
     private String contenido;
-
-    public Modelo_Mensaje() {
+    
+    public MensajeGrupo() {
     }
 
-    public Modelo_usuarios getOrigen() {
-        return origen;
+    public Grupo getGrupo() {
+        return grupo;
     }
 
-    public void setOrigen(Modelo_usuarios origen) {
-        this.origen = origen;
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
     }
 
-    public Modelo_usuarios getDestino() {
-        return destino;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setDestino(Modelo_usuarios destino) {
-        this.destino = destino;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getContenido() {
@@ -41,7 +41,5 @@ public class Modelo_Mensaje implements Serializable{
 
     public void setContenido(String contenido) {
         this.contenido = contenido;
-    }
-    
-    
+    }   
 }

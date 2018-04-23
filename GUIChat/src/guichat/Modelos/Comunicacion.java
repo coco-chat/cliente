@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Kevin Alan Martinez Virgen 14300260 8B1
  */
-public class Modelo_Comunicacion implements Serializable{
+public class Comunicacion implements Serializable{
     
     public static enum MTypes{
         RQ_LOGIN,RQ_REG, RQ_LOGOUT,
@@ -27,7 +27,7 @@ public class Modelo_Comunicacion implements Serializable{
     private MTypes tipo;
     private Object contenido;
     
-    public Modelo_Comunicacion() {
+    public Comunicacion() {
         tipo = MTypes.ACK;
         contenido = null;
     }
