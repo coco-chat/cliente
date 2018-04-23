@@ -133,7 +133,7 @@
                               <Insets />
                            </opaqueInsets>
                         </TextArea>
-                        <Button fx:id="sendMessageBtn" layoutX="636.0" layoutY="2.0" maxWidth="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="64.0" style="-fx-background-color: #FFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="636.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Button fx:id="sendMessageBtn" layoutX="636.0" layoutY="2.0" maxWidth="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="64.0" styleClass="btn-gray" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="636.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
                               <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -147,6 +147,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
+                  <ListView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

@@ -5,7 +5,11 @@
  */
 package guichat;
 
+
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+
 /**
  *
  * @author Wero
@@ -25,7 +30,7 @@ public class LoginController implements Initializable {
     
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, registerBtn, loginBtn;
-    @FXML private TextField txtUsername, txtPassword;
+    @FXML private TextField txtUsername, txtPassword, txtServer;
     
     /**
      * Constructor de LoginController
@@ -80,10 +85,6 @@ public class LoginController implements Initializable {
                 Stage stage = (Stage) loginBtn.getScene().getWindow();
                 Scene scene = new Scene(loader.load());
                 stage.setScene(scene);
-                HomeController home = loader.getController();
-                home.setUsername(txtUsername.getText());
-                txtUsername.setText("");
-                txtPassword.setText("");
             }catch (IOException io){
                 io.printStackTrace();
             }
@@ -100,5 +101,7 @@ public class LoginController implements Initializable {
         // TODO
         
     } 
+    
+    
     
 }
