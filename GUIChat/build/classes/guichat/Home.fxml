@@ -147,7 +147,11 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                  <ListView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ListView fx:id="listConversation" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <styleClass>
+                        <String fx:value="listElements" />
+                        <String fx:value="conversation" />
+                     </styleClass></ListView>
                </children>
             </AnchorPane>
          </children>

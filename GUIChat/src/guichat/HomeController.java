@@ -29,7 +29,7 @@ public class HomeController implements Initializable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
     @FXML private TextArea txtMessage;
-    @FXML private ListView listFriends, listGroups;
+    @FXML private ListView listFriends, listGroups, listConversation;
     
     // Variables de control internas
     private String username;
@@ -40,6 +40,7 @@ public class HomeController implements Initializable {
     public void insertContent(){
         listFriends.getItems().addAll("Kevin Alan", "Arturo Carrillo", "Juan Antonio", "Emiliano Moreno", "Gerardo", "Wero");
         listGroups.getItems().addAll("Régimen Perro", "8°B");
+        listConversation.getItems().addAll("Hola Putita", "Que onda perro", "Como va todo?");
     }
     
     @FXML

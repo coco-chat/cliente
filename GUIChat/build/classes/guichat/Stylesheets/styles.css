@@ -104,6 +104,18 @@ and open the template in the editor.
     -fx-border-color: #363E47;
 }
 
+.listElements.conversation {
+    -fx-background-color: #F2F7F7;
+    -fx-border-color: #F2F7F7;
+}
+
+.listElements.conversation .list-cell:even, .listElements.conversation .list-cell:odd{
+    -fx-cell-size: 64;
+    -fx-text-fill: #363E47;
+    -fx-font-family: "Century Gothic";
+    -fx-cursor: default;
+}
+
 .listElements .list-cell:even, .listElements .list-cell:odd {
     -fx-cell-size: 64;
     -fx-text-fill: #F2F7F7;
@@ -114,6 +126,10 @@ and open the template in the editor.
 .listElements .list-cell:filled:selected:focused, .listElements .list-cell:filled:selected{
     -fx-background-color: #F2F7F7;
     -fx-text-fill: #363E47;
+}
+
+.listElements.conversation .list-cell:odd, .listElements.conversation .list-cell:even {
+    -fx-background-color: #F2F7F7;
 }
 
 .listElements .list-cell:odd {
@@ -152,4 +168,32 @@ and open the template in the editor.
     -fx-background-insets: 0, 0 1 0 1;
     -fx-background-color: #363E47;
 }
+/* Estilos para Scroll-Bar de conversación */
 
+.listElements.conversation .increment-button, .listElements.conversation .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color:#F2F7F7;
+    -fx-cursor: hand;
+}
+
+.listElements.conversation .increment-arrow, .listElements.conversation .decrement-arrow {
+    -fx-background-color: #363E47;
+}
+
+.listElements.conversation .scroll-bar{
+    -fx-fit-to-width: true;
+}
+
+.listElements.conversation .thumb {
+    -fx-background-color: #363E47;
+    -fx-cursor: closed_hand;
+}
+
+.listElements.conversation .scroll-bar:vertical .track {
+    -fx-background-color: #F2F7F7;
+}
+
+.listElements.conversation .scroll-bar:vertical{
+    -fx-background-insets: 0, 0 1 0 1;
+    -fx-background-color: #F2F7F7;
+}
