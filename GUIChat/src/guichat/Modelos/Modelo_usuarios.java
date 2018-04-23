@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chat.Modelos;
+package guichat.Modelos;
 
 import java.io.Serializable;
 
@@ -18,7 +18,9 @@ public class Modelo_usuarios implements Serializable {
     private String password;
     
     public Modelo_usuarios() {
-        
+        id = 0;
+        username = "";
+        password = "";
     }
 
     public int getId() {

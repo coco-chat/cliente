@@ -5,7 +5,15 @@
  */
 package guichat;
 
+import com.google.gson.Gson;
+import guichat.Modelos.Modelo_Comunicacion;
+import guichat.Modelos.Modelo_Mensaje;
+import guichat.Modelos.Modelo_Mensaje_Grupo;
+import guichat.Modelos.Modelo_amigos;
+import guichat.Modelos.Modelo_grupos;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,8 +33,8 @@ import javafx.stage.Stage;
  *
  * @author Wero
  */
-public class HomeController implements Initializable {
-
+public class HomeController implements Initializable,Runnable {
+    String ip;
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
     @FXML private TextArea txtMessage;
@@ -34,6 +42,7 @@ public class HomeController implements Initializable {
     
     // Variables de control internas
     private String username;
+    private Thread hilo;
     
     /**
      * Conseguir elemento del formulario
@@ -52,7 +61,59 @@ public class HomeController implements Initializable {
     public void getUser(MouseEvent event) {
         System.out.println(listFriends.getSelectionModel().getSelectedItem());
     }
+    @Override
+    public void run()
+    {
+        esperar();
+    }
     
+    public void esperar()
+    {
+        Gson jayson= new Gson();
+        Modelo_Comunicacion modelo = new Modelo_Comunicacion();
+        try {
+            Socket soquet= new Socket(ip,81);
+            DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
+            modelo= jayson.fromJson(dataInput.readUTF(), Modelo_Comunicacion.class);
+        } catch (IOException e) {
+            e.getMessage();
+        }
+          
+            
+        
+    }
+    public void mensajeria(Modelo_Comunicacion modelo)
+    {
+        
+          Gson jayson= new Gson(); 
+        switch(modelo.getTipo())
+            {
+                case SEND_MENSAJE:
+                    Mensaje_recivido(jayson.fromJson(modelo.getContenido().toString(), Modelo_Mensaje.class));
+                    break;
+                case SEND_GRUPO:
+                    Mensaje_Grupo_recivido(jayson.fromJson(modelo.getContenido().toString(), Modelo_Mensaje_Grupo.class));
+                    break;
+                case SEND_CONECTADOS:
+                    
+                    break;
+                case SEND_DESCONECTADOS:
+                    
+                    break;
+            }
+    }
+    public void Mensaje_recivido(Modelo_Mensaje mensaje)
+    {
+        
+    }
+    public void Mensaje_Grupo_recivido(Modelo_Mensaje_Grupo mensaje_grupo)
+    {
+        
+    }
+    public void Lista_Conectados(Modelo_amigos amigos_conectados)
+    {
+        
+    }
     
     /**
      * Método para poder cerrar la pestaña
@@ -114,6 +175,8 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        hilo = new Thread();
+        hilo.start(); 
     }   
     
 }
