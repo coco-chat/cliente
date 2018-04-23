@@ -45,7 +45,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </padding>
                   </Label>
-                  <PasswordField fx:id="txtPassword" layoutX="10.0" layoutY="281.0" maxHeight="32.0" prefHeight="32.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <PasswordField fx:id="txtPassword" layoutX="11.0" layoutY="229.0" maxHeight="32.0" prefHeight="32.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0">
                      <font>
                         <Font name="Century Gothic" size="12.0" />
                      </font>
@@ -53,7 +53,7 @@
                         <Insets left="16.0" />
                      </padding>
                   </PasswordField>
-                  <TextField fx:id="txtUsername" layoutX="10.0" layoutY="207.0" prefHeight="32.0" prefWidth="300.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <TextField fx:id="txtUsername" layoutX="9.0" layoutY="168.0" prefHeight="32.0" prefWidth="300.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="11.0">
                      <font>
                         <Font name="Century Gothic" size="12.0" />
                      </font>
@@ -61,7 +61,15 @@
                         <Insets left="16.0" />
                      </padding>
                   </TextField>
-                  <Button fx:id="loginBtn" alignment="CENTER" layoutX="10.0" layoutY="355.0" lineSpacing="2.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="32.0" prefWidth="280.0" styleClass="btn-blue" text="CONTINUAR" textFill="#fffefe">
+                  <TextField fx:id="txtServer" layoutX="11.0" layoutY="293.0" prefHeight="32.0" prefWidth="300.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0">
+                     <font>
+                        <Font name="Century Gothic" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets left="16.0" />
+                     </padding>
+                  </TextField>
+                  <Button fx:id="loginBtn" alignment="CENTER" layoutX="9.0" layoutY="357.0" lineSpacing="2.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="32.0" prefWidth="280.0" styleClass="btn-blue" text="CONTINUAR" textFill="#fffefe">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -69,7 +77,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="registerBtn" layoutX="10.0" layoutY="398.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="32.0" prefWidth="280.0" styleClass="btn-green" text="REGISTRARSE" textFill="#fffefe">
+                  <Button fx:id="registerBtn" layoutX="9.0" layoutY="400.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="32.0" prefWidth="280.0" styleClass="btn-green" text="REGISTRARSE" textFill="#fffefe">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -77,7 +85,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <AnchorPane layoutX="10.0" layoutY="175.0" prefHeight="32.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <AnchorPane layoutX="9.0" layoutY="136.0" prefHeight="32.0" prefWidth="200.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="11.0">
                      <children>
                         <Label alignment="CENTER" layoutX="32.0" layoutY="4.0" text="Nombre de usuario:" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="4.0">
                            <font>
@@ -94,7 +102,7 @@
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="10.0" layoutY="252.0" prefHeight="32.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <AnchorPane layoutX="11.0" layoutY="200.0" prefHeight="32.0" prefWidth="200.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0">
                      <children>
                         <Label alignment="CENTER" layoutX="32.0" layoutY="4.0" text="Contraseña:" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="4.0">
                            <font>
@@ -107,6 +115,23 @@
                         <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="10.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="9.0">
                            <image>
                               <Image url="@Assets/password.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="11.0" layoutY="261.0" prefHeight="32.0" prefWidth="200.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0">
+                     <children>
+                        <Label alignment="CENTER" layoutX="32.0" layoutY="4.0" text="Servidor:" AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="32.0" AnchorPane.topAnchor="4.0">
+                           <font>
+                              <Font name="Century Gothic Bold" size="13.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </Label>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" layoutX="10.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="9.0">
+                           <image>
+                              <Image url="@Assets/server.png" />
                            </image>
                         </ImageView>
                      </children>

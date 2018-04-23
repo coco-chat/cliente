@@ -25,7 +25,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -38,7 +37,7 @@ public class HomeController implements Initializable,Runnable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
     @FXML private TextArea txtMessage;
-    @FXML private ListView listFriends, listGroups;
+    @FXML private ListView listFriends, listGroups, listConversation;
     
     // Variables de control internas
     private String username;
@@ -50,6 +49,7 @@ public class HomeController implements Initializable,Runnable {
     public void insertContent(){
         listFriends.getItems().addAll("Kevin Alan", "Arturo Carrillo", "Juan Antonio", "Emiliano Moreno", "Gerardo", "Wero");
         listGroups.getItems().addAll("Régimen Perro", "8°B");
+        listConversation.getItems().addAll("Hola Putita", "Que onda perro", "Como va todo?");
     }
     
     @FXML
@@ -175,8 +175,10 @@ public class HomeController implements Initializable,Runnable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+
         hilo = new Thread();
         hilo.start(); 
+
     }   
     
 }
