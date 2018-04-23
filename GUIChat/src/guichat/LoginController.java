@@ -5,11 +5,14 @@
  */
 package guichat;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -18,13 +21,10 @@ import javafx.stage.Stage;
  *
  * @author Wero
  */
-public class LoginController implements Initializable, IContentSetter {
-    
-    // Controlador para mostrar contenido
-    ScreenController screen;
+public class LoginController implements Initializable {
     
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, registerBtn, loginBtn;
     @FXML private TextField txtUsername, txtPassword;
     
     /**
@@ -52,13 +52,41 @@ public class LoginController implements Initializable, IContentSetter {
      */
     @FXML
     public void goToRegister(ActionEvent e){
-        screen.setScreen(GUIChat.screenRegister);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Register.fxml"));
+            Stage stage = (Stage) registerBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
+    /**
+     * Método para minimizar la pestaña
+     * @param e 
+     */
+    @FXML
+    public void handleMinimizeWindow(ActionEvent e){
+        Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
+        stage.setIconified(true);
     }
     
     @FXML
     public void handleLogin(ActionEvent e){
         if(txtUsername.getText().equals("werofuentes") && txtPassword.getText().equals("14300143")){
-            screen.setScreen(GUIChat.screenHome);
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+                Stage stage = (Stage) loginBtn.getScene().getWindow();
+                Scene scene = new Scene(loader.load());
+                stage.setScene(scene);
+                HomeController home = loader.getController();
+                home.setUsername(txtUsername.getText());
+                txtUsername.setText("");
+                txtPassword.setText("");
+            }catch (IOException io){
+                io.printStackTrace();
+            }
         }
     }
     
@@ -70,15 +98,7 @@ public class LoginController implements Initializable, IContentSetter {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
-    /**
-     * Método para obtener que pantalla es la que se encuentra en ejecución
-     * @param screenPage
-     */
-    @Override
-    public void setContentToScreen(ScreenController screenPage) {
-        this.screen = screenPage;
-    }
+        
+    } 
     
 }

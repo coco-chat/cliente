@@ -1,0 +1,131 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12-abr-2018, 19:10:24
+    Author     : Wero
+*/
+
+.root { -fx-focus-color: transparent; -fx-faint-focus-color: transparent; }
+
+.btn-blue{
+    -fx-background-color: #363E47;
+}
+
+.btn-blue:hover{
+    -fx-background-color: #303841;
+}
+
+.btn-green{
+    -fx-background-color: #54D38A;
+}
+
+.btn-green:hover{
+    -fx-background-color: #48C17C;
+}
+
+.close{
+    -fx-background-color: #303841;
+}
+
+.close:hover{
+    -fx-background-color: #54D38A;
+}
+
+.sidebar{
+    -fx-background-color: #303841;
+}
+
+.sidebar-btn{
+    -fx-background-color: #303841;
+    -fx-border-width: 0 0 0 3;
+    -fx-border-color: transparent;
+}
+
+.sidebar-btn:hover{
+    -fx-background-color: #363E47;
+}
+
+.sidebar-active{
+    -fx-border-color: #54D38A;
+    -fx-border-width: 0 0 0 3;
+    -fx-background-color: #363E47;
+}
+
+.info{
+    -fx-background-color: #363E47;
+}
+
+.main-container{
+    -fx-background-color: #F2F7F7
+}
+
+.message-container{
+    -fx-background-color: #FFF;
+}
+
+.txtArea{
+    -fx-background-color: #FFF;
+}
+
+.txtArea .content{
+    -fx-background-color: #fff;
+}
+
+
+.splitPane{
+    -fx-background-color: #363E47;
+}
+
+.splitPane .friends, .splitPane .groups{
+    -fx-min-height: 128px;
+}
+
+.splitPane:vertical > .split-pane-divider {
+   -fx-background-color: #303841;
+}
+
+.listElements{
+    -fx-background-color: #363E47;
+}
+
+.listElements .list-cell:even, .listElements .list-cell:odd {
+    -fx-cell-size: 64;
+    -fx-text-fill: #F2F7F7;
+    -fx-font-family: "Century Gothic";
+}
+
+.listElements .list-cell:odd {
+    -fx-background-color: #363E47;
+}
+
+.listElements .list-cell:even {
+    -fx-background-color: #303841;
+}
+
+.listElements .increment-button, .listElements .decrement-button {
+    -fx-background-color: #363E47;
+    -fx-background-insets: 1 2 1 2, 2 3 2 3, 3 4 3 4;
+}
+
+.listElements .increment-arrow, .listElements .decrement-arrow {
+    -fx-background-color: #F2F7F7;
+}
+
+.listElements .scroll-bar{
+    -fx-fit-to-width: true;
+}
+
+.listElements .thumb {
+    -fx-background-color: #54D38A;
+}
+
+.listElements .track {
+    -fx-background-color: #363E47;
+}
+
+.scroll-bar:vertical{
+    -fx-background-insets: 0, 0 1 0 1;
+}
