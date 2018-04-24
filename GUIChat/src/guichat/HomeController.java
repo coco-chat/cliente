@@ -92,7 +92,7 @@ public class HomeController implements Initializable,Runnable {
                     Mensaje_recivido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class));
                     break;
                 case SEND_GRUPO:
-                    Mensaje_Grupo_recivido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
+                    Mensaje_Grupo_recibido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
                     break;
                 case SEND_CONECTADOS:
                     
@@ -104,11 +104,11 @@ public class HomeController implements Initializable,Runnable {
     }
     public void Mensaje_recivido(Mensaje mensaje)
     {
-        
+        listConversation.getItems().addAll(mensaje.getOrigen(),mensaje.getContenido());
     }
-    public void Mensaje_Grupo_recivido(MensajeGrupo mensaje_grupo)
+    public void Mensaje_Grupo_recibido(MensajeGrupo mensaje_grupo)
     {
-        
+        listGroups.getItems().addAll(mensaje_grupo.getGrupo(),mensaje_grupo.getUsuario(),mensaje_grupo.getContenido());
     }
     public void Lista_Conectados(Amigo amigos_conectados)
     {
@@ -175,7 +175,7 @@ public class HomeController implements Initializable,Runnable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
+        insertContent();
         hilo = new Thread();
         hilo.start(); 
 

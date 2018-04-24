@@ -3,17 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/HomeController.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/Amigo.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/LoginController.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/Grupo.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/Usuario.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/PetAmigo.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/PetGrupo.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/Mensaje.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/Comunicacion.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/GUIChat.java</file>
-            <file>file:/D:/Cliente/GUIChat/src/guichat/Modelos/MensajeGrupo.java</file>
+            <file>file:/C:/Users/Arturo/Documents/GitHub/cliente/GUIChat/src/guichat/LoginController.java</file>
+            <file>file:/C:/Users/Arturo/Documents/GitHub/cliente/GUIChat/src/guichat/GUIChat.java</file>
+            <file>file:/C:/Users/Arturo/Documents/GitHub/cliente/GUIChat/src/guichat/HomeController.java</file>
+            <file>file:/C:/Users/Arturo/Documents/GitHub/cliente/GUIChat/src/guichat/RegisterController.java</file>
         </group>
     </open-files>
 </project-private>
