@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
     @FXML private TextArea txtMessage;
     @FXML private ListView listFriends, listGroups, listConversation;
     
@@ -81,7 +81,6 @@ public class HomeController implements Initializable {
     public void setUsername(String username){
         this.username = username;
         System.out.println(this.username);
-        insertContent();
     }
     
     /**
@@ -95,6 +94,24 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
+    /**
+     * Método pare redirigir a la pestaña de Creación de Grupos
+     * @param e 
+     */
+    @FXML
+    public void goToCreateGroup(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
+            Stage stage = (Stage) outBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            GroupsController group = loader.getController();
+            group.setUsername(this.username);
         }catch (IOException io){
             io.printStackTrace();
         }

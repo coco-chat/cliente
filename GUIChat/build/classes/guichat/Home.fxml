@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.HomeController">
    <children>
-      <AnchorPane layoutX="250.0" layoutY="64.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
+      <AnchorPane layoutX="250.0" layoutY="64.0" maxWidth="1000.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
          <children>
             <AnchorPane maxWidth="64.0" minWidth="64.0" prefHeight="200.0" prefWidth="64.0" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -52,7 +52,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="-14.0" layoutY="136.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
+                  <Button fx:id="groupBtn" layoutX="-14.0" layoutY="136.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#goToCreateGroup" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -99,9 +99,9 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="64.0" maxWidth="236.0" minWidth="236.0" prefHeight="200.0" prefWidth="236.0" styleClass="info" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane layoutX="64.0" maxWidth="300.0" minWidth="300.0" prefHeight="200.0" prefWidth="300.0" styleClass="info" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <SplitPane dividerPositions="0.5" layoutX="38.0" layoutY="78.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" styleClass="splitPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.5" layoutX="38.0" layoutY="78.0" orientation="VERTICAL" prefHeight="250.0" prefWidth="160.0" styleClass="splitPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane fx:id="friends" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="friends">
                            <children>
@@ -115,9 +115,9 @@
                   </SplitPane>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="296.0" prefHeight="200.0" prefWidth="200.0" styleClass="main-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane layoutX="296.0" prefHeight="200.0" prefWidth="200.0" styleClass="main-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <AnchorPane layoutY="368.0" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="200.0" styleClass="message-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <AnchorPane layoutY="368.0" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="200.0" styleClass="message-container" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
                      <children>
                         <TextArea fx:id="txtMessage" focusTraversable="false" layoutX="-40.0" layoutY="-100.0" maxHeight="64.0" minHeight="64.0" pickOnBounds="false" prefHeight="64.0" prefWidth="200.0" promptText="Escribe tu mensaje" styleClass="txtArea" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="0.0">
                            <font>
@@ -133,7 +133,7 @@
                               <Insets />
                            </opaqueInsets>
                         </TextArea>
-                        <Button fx:id="sendMessageBtn" layoutX="636.0" layoutY="2.0" maxWidth="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="64.0" styleClass="btn-gray" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="636.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Button fx:id="sendMessageBtn" layoutX="636.0" layoutY="2.0" maxWidth="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#sendMessage" prefWidth="64.0" styleClass="btn-gray" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="572.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
                               <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -147,7 +147,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                  <ListView fx:id="listConversation" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ListView fx:id="listConversation" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="0.0">
                      <styleClass>
                         <String fx:value="listElements" />
                         <String fx:value="conversation" />
