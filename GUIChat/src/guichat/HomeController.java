@@ -11,6 +11,7 @@ import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.Amigo;
 import guichat.Modelos.Grupo;
+import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -75,6 +76,7 @@ public class HomeController implements Initializable,Runnable {
             Socket soquet= new Socket(ip,81);
             DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
             modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
+            mensajeria(modelo);
         } catch (IOException e) {
             e.getMessage();
         }
@@ -144,6 +146,15 @@ public class HomeController implements Initializable,Runnable {
         System.out.println(this.username);
         insertContent();
     }
+    public void setip(String ip){
+        this.ip = ip;
+        System.out.println(this.ip);
+    }
+    
+    public void sethilo(Thread hilo){
+        this.hilo = hilo;
+        System.out.println(this.hilo);
+    }
     
     /**
      * Método para cerrar sesión del Usuario
@@ -162,9 +173,17 @@ public class HomeController implements Initializable,Runnable {
     }
     
     @FXML
-    public void sendMessage(ActionEvent e){
+    public void sendMessage(ActionEvent e) throws IOException{
+        Comunicacion modeloOutput = new Comunicacion();
         System.out.println(txtMessage.getText());
-        txtMessage.setText("");
+        String Contenido= txtMessage.getText();
+        Mensaje mensaje_enviar= new Mensaje();
+        Usuario usuario_destino = new Usuario(); 
+        usuario_destino.setId(3);
+        mensaje_enviar.setDestino(usuario_destino);
+        mensaje_enviar.setContenido(Contenido);
+        
+        
     }
     
     /**
