@@ -14,9 +14,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -29,10 +32,19 @@ public class HomeController implements Initializable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
     @FXML private TextArea txtMessage;
-    @FXML private ListView listFriends, listGroups, listConversation;
+    @FXML private ListView listFriends, listGroups;
+    @FXML private VBox messagesVBox;
     
     // Variables de control internas
     private String username;
+    private String[] users = {
+        "Arturo Carrillo",
+        "Kevin Alan",
+        "Emiliano Moreno",
+        "Juan Castillo",
+        "Vanya Martínez",
+        "Jimena Zaragoza",
+    };
     
     /**
      * Conseguir elemento del formulario
@@ -40,7 +52,12 @@ public class HomeController implements Initializable {
     public void insertContent(){
         listFriends.getItems().addAll("Kevin Alan", "Arturo Carrillo", "Juan Antonio", "Emiliano Moreno", "Gerardo", "Wero");
         listGroups.getItems().addAll("Régimen Perro", "8°B");
-        listConversation.getItems().addAll("Hola Putita", "Que onda perro", "Como va todo?");
+        Boolean flag = false;
+        for(String user : users){
+            createBubble(flag, user);
+            if(flag) flag = false;
+            else flag = true;
+        }
     }
     
     @FXML
@@ -53,6 +70,27 @@ public class HomeController implements Initializable {
         System.out.println(listFriends.getSelectionModel().getSelectedItem());
     }
     
+    /**
+     * Método para crear el cuadro de mensaje de salida
+     * @param position Boolean Determinamos la posición del Mensaje
+     * true => Izquierda
+     * false => Derecha
+     * @param message String Mensaje a insertar
+     */
+    public void createBubble(Boolean position, String message){
+        StackPane main = new StackPane();
+        main.getStyleClass().add("bubble-container");
+        if(position){
+            main.getStyleClass().add("left");
+        }else{
+            main.getStyleClass().add("right");
+        }
+        Label content = new Label();
+        content.setText(message);
+        content.getStyleClass().add("bubble");
+        main.getChildren().add(content);
+        messagesVBox.getChildren().add(main);
+    }
     
     /**
      * Método para poder cerrar la pestaña
@@ -119,7 +157,7 @@ public class HomeController implements Initializable {
     
     @FXML
     public void sendMessage(ActionEvent e){
-        System.out.println(txtMessage.getText());
+        createBubble(Boolean.TRUE, txtMessage.getText());
         txtMessage.setText("");
     }
     
