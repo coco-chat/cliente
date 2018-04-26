@@ -84,48 +84,24 @@ public class LoginController implements Initializable {
     
     @FXML
     public void handleLogin(ActionEvent e){
-        String ip=txtServer.getText();
-        Usuario user= new Usuario();
-        Gson jayson= new Gson();
-        Comunicacion modeloInput = new Comunicacion();
-        Comunicacion modeloOutput = new Comunicacion();
         if (!txtPassword.getText().equals("") && !txtServer.getText().equals("") && !txtUsername.getText().equals("")) {
-             try {
-            Utileria.CrearSocket(ip, 5567);
-            DataOutputStream dataOutput=new DataOutputStream(Utileria.soquet.getOutputStream());
-            user.setUsername(txtUsername.getText());
-            user.setPassword(txtPassword.getText());
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_LOGIN);
-            modeloOutput.setContenido(user);
-            dataOutput.writeUTF(jayson.toJson(modeloOutput));
-            DataInputStream dataInput= new DataInputStream(Utileria.soquet.getInputStream());
-            modeloInput= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
-                 if (modeloInput.getTipo()== MTypes.ACK_LOGIN) {
-                     System.out.println(modeloInput.getContenido());
-                     if ((double)modeloInput.getContenido()==210.0) {
-                         try {
-                             System.out.println("entre");
-                             
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-                Stage stage = (Stage) loginBtn.getScene().getWindow();
-                Scene scene = new Scene(loader.load());
-                stage.setScene(scene);
-                HomeController casita = loader.getController();
-                casita.setip(ip);
-                casita.setUsername(txtUsername.getText());
-            }catch (IOException io){
-                io.printStackTrace();
+            if(Procesos.Login(txtUsername.getText(), txtPassword.getText(), txtServer.getText()) == 210.0){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+                    Stage stage = (Stage) loginBtn.getScene().getWindow();
+                    Scene scene = new Scene(loader.load());
+                    stage.setScene(scene);
+                    HomeController casita = loader.getController();
+                    casita.setip(txtServer.getText());
+                    casita.setUsername(txtUsername.getText());
+                }catch (IOException io){
+                    io.printStackTrace();
+                }
             }
-                     }
-                     
-                 }
-        } catch (IOException I) {
-            I.getMessage();
-        }
         }
         else
         {
-            System.out.println("pendejo");
+            System.out.println("Error en la consulta");
         }
     }
     
