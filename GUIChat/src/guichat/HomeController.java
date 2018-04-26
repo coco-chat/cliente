@@ -6,6 +6,7 @@
 package guichat;
 
 import com.google.gson.Gson;
+import guichat.Components.CButton;
 import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
@@ -18,14 +19,16 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -33,88 +36,107 @@ import javafx.stage.Stage;
  *
  * @author Wero
  */
-public class HomeController implements Initializable,Runnable {
+public class HomeController implements Initializable {
     String ip;
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
     @FXML private TextArea txtMessage;
-    @FXML private ListView listFriends, listGroups, listConversation;
+    @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
+    @FXML private Label txtUser;
     
     // Variables de control internas
     private String username;
-    private Thread hilo;
+    private String[] users = {
+        "Arturo Carrillo",
+        "Kevin Alan",
+        "Vanya Martínez",
+        "Jimena Zaragoza",
+        "Juan Antonio",
+        "Emiliano Moreno",
+        "Eduardo Fuentes"
+    };
     
     /**
-     * Conseguir elemento del formulario
+     * Método para hacer pruebas en la pantalla
      */
     public void insertContent(){
-        listFriends.getItems().addAll("Kevin Alan", "Arturo Carrillo", "Juan Antonio", "Emiliano Moreno", "Gerardo", "Wero");
-        listGroups.getItems().addAll("Régimen Perro", "8°B");
-        listConversation.getItems().addAll("Hola Putita", "Que onda perro", "Como va todo?");
-    }
-    
-    @FXML
-    public void getGroup(MouseEvent event) {
-        System.out.println(listGroups.getSelectionModel().getSelectedItem());
-    }
-
-    @FXML
-    public void getUser(MouseEvent event) {
-        System.out.println(listFriends.getSelectionModel().getSelectedItem());
-    }
-    @Override
-    public void run()
-    {
-        esperar();
-    }
-    
-    public void esperar()
-    {
-        Gson jayson= new Gson();
-        Comunicacion modelo = new Comunicacion();
-        try {
-            Socket soquet= new Socket(ip,81);
-            DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
-            modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
-            mensajeria(modelo);
-        } catch (IOException e) {
-            e.getMessage();
+        Boolean flag = false;
+        for(String user : users){
+            createBubble(flag, user);
+            if(flag) flag = false;
+            else flag = true;
         }
-          
-            
-        
+        int contador = 0;
+        for(String user : users){
+            createFriend(user, contador);
+            contador++;
+        }
     }
-    public void mensajeria(Comunicacion modelo)
-    {
-        
-          Gson jayson= new Gson(); 
-        switch(modelo.getTipo())
-            {
-                case SEND_MENSAJE:
-                    Mensaje_recivido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class));
-                    break;
-                case SEND_GRUPO:
-                    Mensaje_Grupo_recibido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
-                    break;
-                case SEND_CONECTADOS:
-                    
-                    break;
-                case SEND_DESCONECTADOS:
-                    
-                    break;
+    
+    /**
+     * Método para crear el boton del grupo
+     * @param name String Nombre del grupo
+     * @param id int Identificador en la base de datos del grupo
+     */
+    public void createGroup(String name, int id){
+        CButton group = new CButton(name);
+        group.setIdElement(id);
+        group.setNameElement(name);
+        group.getStyleClass().add("chat-btn");
+        group.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == group){
+                    System.out.println("Id del Grupo: " + group.getIdElement());
+                    txtUser.setText(group.getNameElement());
+                }
             }
+        });
+        groupsVBox.getChildren().add(group);
     }
-    public void Mensaje_recivido(Mensaje mensaje)
-    {
-        listConversation.getItems().addAll(mensaje.getOrigen(),mensaje.getContenido());
+    
+    /**
+     * Método para crear el boton del amigo
+     * @param name String Nombre o apodo del amigo
+     * @param id int Identificador en la base de datos del amigo
+     */
+    public void createFriend(String name, int id){
+        CButton user = new CButton(name);
+        user.setIdElement(id);
+        user.setNameElement(name);
+        user.getStyleClass().add("chat-btn");
+        user.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == user){
+                    System.out.println("Id del usuario: " + user.getIdElement());
+                    txtUser.setText(user.getNameElement());
+                }
+            }
+        });
+        friendsVBox.getChildren().add(user);
     }
-    public void Mensaje_Grupo_recibido(MensajeGrupo mensaje_grupo)
-    {
-        listGroups.getItems().addAll(mensaje_grupo.getGrupo(),mensaje_grupo.getUsuario(),mensaje_grupo.getContenido());
-    }
-    public void Lista_Conectados(Amigo amigos_conectados)
-    {
-        
+    
+    /**
+     * Método para crear el cuadro de mensaje de salida
+     * @param position Boolean Determinamos la posición del Mensaje
+     * true => Izquierda
+     * false => Derecha
+     * @param message String Mensaje a insertar
+     */
+    public void createBubble(Boolean position, String message){
+        StackPane main = new StackPane();
+        main.getStyleClass().add("bubble-container");
+        if(position){
+            main.getStyleClass().add("left");
+        }else{
+            main.getStyleClass().add("right");
+        }
+        Label content = new Label();
+        content.setText(message);
+        content.getStyleClass().add("bubble");
+        main.getChildren().add(content);
+        messagesVBox.getChildren().add(main);
     }
     
     /**
@@ -144,17 +166,12 @@ public class HomeController implements Initializable,Runnable {
     public void setUsername(String username){
         this.username = username;
         System.out.println(this.username);
-        insertContent();
     }
     public void setip(String ip){
         this.ip = ip;
         System.out.println(this.ip);
     }
     
-    public void sethilo(Thread hilo){
-        this.hilo = hilo;
-        System.out.println(this.hilo);
-    }
     
     /**
      * Método para cerrar sesión del Usuario
@@ -172,18 +189,27 @@ public class HomeController implements Initializable,Runnable {
         }
     }
     
+    /**
+     * Método pare redirigir a la pestaña de Creación de Grupos
+     * @param e 
+     */
     @FXML
-    public void sendMessage(ActionEvent e) throws IOException{
-        Comunicacion modeloOutput = new Comunicacion();
-        System.out.println(txtMessage.getText());
-        String Contenido= txtMessage.getText();
-        Mensaje mensaje_enviar= new Mensaje();
-        Usuario usuario_destino = new Usuario(); 
-        usuario_destino.setId(3);
-        mensaje_enviar.setDestino(usuario_destino);
-        mensaje_enviar.setContenido(Contenido);
-        
-        
+    public void goToCreateGroup(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
+            Stage stage = (Stage) groupBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            GroupsController group = loader.getController();
+            group.setUsername(this.username);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
+    public void sendMessage(ActionEvent e){
+        createBubble(Boolean.TRUE, txtMessage.getText());
+        txtMessage.setText("");
     }
     
     /**
@@ -195,8 +221,6 @@ public class HomeController implements Initializable,Runnable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         insertContent();
-        hilo = new Thread();
-        hilo.start(); 
 
     }   
     

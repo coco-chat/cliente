@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Wero
 */
 
-.root { -fx-focus-color: transparent; -fx-faint-focus-color: transparent; }
+.root { -fx-focus-color: transparent; }
 
 .btn-blue{
     -fx-background-color: #363E47;
@@ -20,6 +20,7 @@ and open the template in the editor.
 
 .btn-green{
     -fx-background-color: #54D38A;
+    -fx-cursor:hand;
 }
 
 .btn-green:hover{
@@ -36,6 +37,8 @@ and open the template in the editor.
 
 .close{
     -fx-background-color: #303841;
+    -fx-border-radius: 0 0 0 0; 
+    -fx-background-radius: 0 0 0 0;
 }
 
 .close:hover{
@@ -70,12 +73,9 @@ and open the template in the editor.
     -fx-background-color: #F2F7F7
 }
 
-.message-container{
-    -fx-background-color: #FFF;
-}
-
 .txtArea{
     -fx-background-color: #FFF;
+    -fx-faint-focus-color: transparent;
 }
 
 .txtArea .content{
@@ -95,105 +95,166 @@ and open the template in the editor.
    -fx-background-color: #303841;
 }
 
-/*
-    Estilos para la lista de los elementos
-*/
+.bg-blue > .viewport {
+   -fx-background: transparent;
+}
 
-.listElements{
-    -fx-background-color: #363E47;
+/* Listas de amigos */
+.bg-blue {
+    -fx-background: #363E47;
     -fx-border-color: #363E47;
 }
 
-.listElements.conversation {
-    -fx-background-color: #F2F7F7;
+.bg-gray > .viewport {
+    -fx-background: transparent;
+}
+
+.bg-gray {
+    -fx-background: #F2F7F7;
     -fx-border-color: #F2F7F7;
 }
 
-.listElements.conversation .list-cell:even, .listElements.conversation .list-cell:odd{
-    -fx-cell-size: 64;
-    -fx-text-fill: #363E47;
-    -fx-font-family: "Century Gothic";
-    -fx-cursor: default;
-}
-
-.listElements .list-cell:even, .listElements .list-cell:odd {
-    -fx-cell-size: 64;
-    -fx-text-fill: #F2F7F7;
-    -fx-font-family: "Century Gothic";
-    -fx-cursor: hand;
-}
-
-.listElements .list-cell:filled:selected:focused, .listElements .list-cell:filled:selected{
-    -fx-background-color: #F2F7F7;
-    -fx-text-fill: #363E47;
-}
-
-.listElements.conversation .list-cell:odd, .listElements.conversation .list-cell:even {
-    -fx-background-color: #F2F7F7;
-}
-
-.listElements .list-cell:odd {
-    -fx-background-color: #363E47;
-}
-
-.listElements .list-cell:even {
-    -fx-background-color: #303841;
-}
-
 /* Estilos para Scroll-Bar del contenedor */
-.listElements .increment-button, .listElements .decrement-button {
+.green-scroll {
+    -fx-faint-focus-color: transparent;
+}
+.green-scroll .increment-button, .green-scroll .decrement-button {
     -fx-background-color: transparent;
     -fx-border-color:#363E47;
     -fx-cursor: hand;
 }
 
-.listElements .increment-arrow, .listElements .decrement-arrow {
+.green-scroll .increment-arrow, .green-scroll .decrement-arrow {
     -fx-background-color: #F2F7F7;
 }
 
-.listElements .scroll-bar{
+.green-scroll .scroll-bar{
     -fx-fit-to-width: true;
 }
 
-.listElements .thumb {
+.bg-blue .scroll-bar:vertical .thumb {
     -fx-background-color: #54D38A;
-    -fx-cursor: closed_hand;
 }
 
-.listElements .scroll-bar:vertical .track {
+.green-scroll .scroll-bar:vertical .track {
     -fx-background-color: #363E47;
 }
 
-.scroll-bar:vertical{
+.green-scroll .scroll-bar:vertical{
     -fx-background-insets: 0, 0 1 0 1;
     -fx-background-color: #363E47;
 }
-/* Estilos para Scroll-Bar de conversación */
 
-.listElements.conversation .increment-button, .listElements.conversation .decrement-button {
+/* Estilos para Scroll-Bar de conversación */
+.blue-scroll {
+    -fx-faint-focus-color: transparent;
+}
+.blue-scroll .increment-button, .blue-scroll .decrement-button {
     -fx-background-color: transparent;
     -fx-border-color:#F2F7F7;
     -fx-cursor: hand;
 }
 
-.listElements.conversation .increment-arrow, .listElements.conversation .decrement-arrow {
+.blue-scroll .increment-arrow, .blue-scroll .decrement-arrow {
     -fx-background-color: #363E47;
 }
 
-.listElements.conversation .scroll-bar{
+.blue-scroll .scroll-bar{
     -fx-fit-to-width: true;
 }
 
-.listElements.conversation .thumb {
+.bg-gray .scroll-bar:vertical .thumb {
     -fx-background-color: #363E47;
     -fx-cursor: closed_hand;
 }
 
-.listElements.conversation .scroll-bar:vertical .track {
+.blue-scroll .scroll-bar:vertical .track {
     -fx-background-color: #F2F7F7;
 }
 
-.listElements.conversation .scroll-bar:vertical{
+.blue-scroll .scroll-bar:vertical{
     -fx-background-insets: 0, 0 1 0 1;
     -fx-background-color: #F2F7F7;
+}
+
+.group{
+    -fx-background-color: #363E47;
+}
+
+.border-bottom {
+    -fx-border-width: 0 0 2 0; 
+    -fx-border-color: transparent transparent #F2F7F7 transparent;
+}
+
+.txtField:disabled, .txtField:disabled > * {
+    -fx-opacity: 1.0 ;
+}
+
+/* Cuadros de mensajes del Chat */
+.message-container {
+    -fx-background-color: #F2F7F7;
+    -fx-padding: 20 10 10 10;
+    -fx-pref-width: 626;
+}
+
+.message-container .bubble-container {
+    -fx-pref-height: 64px;
+    -fx-padding: 0 0 5 10;
+}
+
+.message-container .bubble-container.left {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.message-container .bubble-container.right {
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.message-container .bubble-container.left .bubble {
+    -fx-text-fill: #99A8B4;
+    -fx-background-color: white;
+    -fx-border-radius: 10 10 10 0; 
+    -fx-background-radius: 10 10 10 0; 
+}
+
+.message-container .bubble-container.right .bubble {
+    -fx-text-fill: white;
+    -fx-background-color: #54D38A;
+    -fx-border-radius: 10 10 0 10; 
+    -fx-background-radius: 10 10 0 10; 
+}
+
+.message-container .bubble-container .bubble {
+    -fx-font-family: "Century Gothic";
+    -fx-padding: 5 10 5 10;
+    -fx-pref-width: 280px;
+    -fx-font-size: 11px;
+    -fx-pref-height: 50px;
+    -fx-font-weight: bold;
+}
+
+/* Lista de Amigos y Grupos */
+.chat-btn {
+    -fx-pref-width: 292;
+    -fx-pref-height: 64;
+    -fx-font-family: "Century Gothic";
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: #363E47;
+    -fx-faint-focus-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-padding: 20 6 20 6;
+    -fx-text-fill: #F2F7F7;
+    -fx-border-radius: 0 0 0 0; 
+    -fx-background-radius: 0 0 0 0;
+}
+
+.chat-btn:hover {
+    -fx-background-color: #54D38A;
+    -fx-cursor: hand;
+}
+
+.chat-btn .content {
+    -fx-background-color: #363E47;
 }
