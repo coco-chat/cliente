@@ -5,19 +5,19 @@
  */
 package guichat;
 
+import guichat.Components.CButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,42 +32,80 @@ public class HomeController implements Initializable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
     @FXML private TextArea txtMessage;
-    @FXML private ListView listFriends, listGroups;
-    @FXML private VBox messagesVBox;
+    @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
+    @FXML private Label txtUser;
     
     // Variables de control internas
     private String username;
     private String[] users = {
         "Arturo Carrillo",
         "Kevin Alan",
-        "Emiliano Moreno",
-        "Juan Castillo",
         "Vanya Martínez",
         "Jimena Zaragoza",
+        "Juan Antonio",
+        "Emiliano Moreno",
+        "Eduardo Fuentes"
     };
     
     /**
-     * Conseguir elemento del formulario
+     * Método para hacer pruebas en la pantalla
      */
     public void insertContent(){
-        listFriends.getItems().addAll("Kevin Alan", "Arturo Carrillo", "Juan Antonio", "Emiliano Moreno", "Gerardo", "Wero");
-        listGroups.getItems().addAll("Régimen Perro", "8°B");
         Boolean flag = false;
         for(String user : users){
             createBubble(flag, user);
             if(flag) flag = false;
             else flag = true;
         }
+        int contador = 0;
+        for(String user : users){
+            createFriend(user, contador);
+            contador++;
+        }
     }
     
-    @FXML
-    public void getGroup(MouseEvent event) {
-        System.out.println(listGroups.getSelectionModel().getSelectedItem());
+    /**
+     * Método para crear el boton del grupo
+     * @param name String Nombre del grupo
+     * @param id int Identificador en la base de datos del grupo
+     */
+    public void createGroup(String name, int id){
+        CButton group = new CButton(name);
+        group.setIdElement(id);
+        group.setNameElement(name);
+        group.getStyleClass().add("chat-btn");
+        group.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == group){
+                    System.out.println("Id del Grupo: " + group.getIdElement());
+                    txtUser.setText(group.getNameElement());
+                }
+            }
+        });
+        groupsVBox.getChildren().add(group);
     }
-
-    @FXML
-    public void getUser(MouseEvent event) {
-        System.out.println(listFriends.getSelectionModel().getSelectedItem());
+    
+    /**
+     * Método para crear el boton del amigo
+     * @param name String Nombre o apodo del amigo
+     * @param id int Identificador en la base de datos del amigo
+     */
+    public void createFriend(String name, int id){
+        CButton user = new CButton(name);
+        user.setIdElement(id);
+        user.setNameElement(name);
+        user.getStyleClass().add("chat-btn");
+        user.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == user){
+                    System.out.println("Id del usuario: " + user.getIdElement());
+                    txtUser.setText(user.getNameElement());
+                }
+            }
+        });
+        friendsVBox.getChildren().add(user);
     }
     
     /**
@@ -145,7 +183,7 @@ public class HomeController implements Initializable {
     public void goToCreateGroup(ActionEvent e){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
-            Stage stage = (Stage) outBtn.getScene().getWindow();
+            Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
             GroupsController group = loader.getController();
