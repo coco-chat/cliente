@@ -3,7 +3,7 @@
 ### Procesos en cliente:
 
 - [x] Login
-- [ ] Registro
+- [x] Registro
 - [ ] Mostrar mensajes por amigo
 - [ ] Mostrar mensajes de un grupo
 - [ ] Crear grupo y agregar amigos
