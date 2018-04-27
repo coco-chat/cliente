@@ -23,6 +23,7 @@ import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import javafx.scene.layout.VBox;
 import guichat.HomeController;
+import javafx.scene.control.TextArea;
 /**
  *
  * @author usuario
@@ -124,13 +125,37 @@ public class Procesos {
         }
        return 0;
     }    
-    
+    public static void EnviarMensajes(String txtMessage)
+    {
+        
+        DataOutputStream EnviarCadena = null;
+       try {
+
+           Comunicacion modeloOutput = new Comunicacion();
+           System.out.println(txtMessage);
+           String Contenido= txtMessage;
+           Mensaje mensaje_enviar= new Mensaje();
+           Usuario usuario_destino = new Usuario();
+           usuario_destino.setId(3);
+           mensaje_enviar.setDestino(usuario_destino);
+           mensaje_enviar.setContenido(Contenido);
+           modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE);
+           modeloOutput.setContenido(mensaje_enviar);
+           EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+           EnviarCadena.writeUTF(json.toJson(modeloOutput));
+           EnviarCadena.close();
+           DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+           RecibirConfirmacion.readUTF();
+       } catch (IOException ex) {
+           Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+       } 
+       
+    }
     public static void RecibirPeticiones(VBox messagesVBox)
     {
          Gson jayson= new Gson();
         Comunicacion modelo = new Comunicacion();
         try {
-            Socket soquet= new Socket(ip,81);
             DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
             modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
             mensajeria(messagesVBox,modelo);

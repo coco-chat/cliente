@@ -234,6 +234,7 @@ public class HomeController implements Initializable,Runnable {
     
     public void sendMessage(ActionEvent e){
         createBubble(Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
+        Procesos.EnviarMensajes(txtMessage.getText());
         txtMessage.setText("");
     }
     
