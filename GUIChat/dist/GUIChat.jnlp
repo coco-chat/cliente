@@ -8,7 +8,10 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="GUIChat.jar" size="37678" download="eager" />
+    <jar href="GUIChat.jar" size="49622" download="eager" />
+    <jar href="lib\gson-2.8.2-javadoc.jar" size="263440" download="eager" />
+    <jar href="lib\gson-2.8.2-sources.jar" size="147855" download="eager" />
+    <jar href="lib\gson-2.8.2.jar" size="232932" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="GUIChat" >
     <param name="requiredFXVersion" value="8.0+"/>

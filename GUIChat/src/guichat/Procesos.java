@@ -32,6 +32,7 @@ public class Procesos {
    public static String ip;
    public static int puerto;
    public static Socket soquet;
+   public static VBox mensajes;
    public static Gson json = new Gson();
    
    public Procesos()
@@ -125,7 +126,7 @@ public class Procesos {
        return 0;
     }    
     
-    public static void RecibirPeticiones(VBox messagesVBox)
+    public static void RecibirPeticiones()
     {
          Gson jayson= new Gson();
         Comunicacion modelo = new Comunicacion();
@@ -133,19 +134,19 @@ public class Procesos {
             Socket soquet= new Socket(ip,81);
             DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
             modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
-            mensajeria(messagesVBox,modelo);
+            mensajeria(modelo);
         } catch (IOException e) {
             e.getMessage();
 }
     }
-    public static void mensajeria(VBox Contenedor,Comunicacion modelo)
+    public static void mensajeria(Comunicacion modelo)
     {
         
           Gson jayson= new Gson(); 
         switch(modelo.getTipo())
             {
                 case SEND_MENSAJE:
-                    MensajeRecibido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class), Contenedor);
+                    MensajeRecibido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class));
                     break;
                 case SEND_GRUPO:
                     MensajeGrupoRecibido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
@@ -158,9 +159,9 @@ public class Procesos {
                     break;
             }
 }
-    public static void MensajeRecibido(Mensaje mensaje, VBox Contenedor)
+    public static void MensajeRecibido(Mensaje mensaje)
     {
-        MostrarMensajeAmigo(Contenedor,mensaje);
+        MostrarMensajeAmigo(mensaje);
     }
     public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
     {
@@ -171,8 +172,8 @@ public class Procesos {
         
     }
     
-    private static void MostrarMensajeAmigo(VBox Contenedor, Mensaje mensaje) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private static void MostrarMensajeAmigo(Mensaje mensaje) {
+        
     }
  
     
