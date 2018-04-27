@@ -65,7 +65,7 @@ public class Procesos {
         Comunicacion modeloInput = new Comunicacion();
         Comunicacion modeloOutput = new Comunicacion();
         try {
-            Procesos.CrearSocket(ip, 5567);
+            Procesos.CrearSocket(ip, 4567);
             DataOutputStream dataOutput=new DataOutputStream(Procesos.soquet.getOutputStream());
             user.setUsername(usuario);
             user.setPassword(contraseña);
@@ -86,5 +86,37 @@ public class Procesos {
         }
        return 0;
        
+    }    
+   
+    public static double Register(String nick, String contraseña, String servidor){
+        Usuario usuario = new Usuario();
+        Comunicacion modeloRespuesta = new Comunicacion();
+        Comunicacion modeloPeticion = new Comunicacion();
+        
+        try {
+            
+            Procesos.CrearSocket(servidor, 4567);
+            DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
+            usuario.setUsername(nick);
+            usuario.setPassword(contraseña);
+            modeloPeticion.setTipo(Comunicacion.MTypes.RQ_REG);
+            modeloPeticion.setContenido(usuario);
+            peticion.writeUTF(json.toJson(modeloPeticion));
+            
+            DataInputStream  respuesta = new DataInputStream(Procesos.soquet.getInputStream());
+            modeloRespuesta= json.fromJson(respuesta.readUTF(), Comunicacion.class);
+            
+            if (modeloRespuesta.getTipo()== Comunicacion.MTypes.ACK_LOGIN) {
+                System.out.println(modeloRespuesta.getContenido());
+                if ((double)modeloRespuesta.getContenido()==220.0) {
+                    return (double)modeloRespuesta.getContenido();
+                }
+            }
+            
+        } catch (IOException I) {
+            I.getMessage();
+            return 0;
+        }
+       return 0;
     }    
 }
