@@ -169,7 +169,11 @@ public class Procesos {
     public static void Lista_Conectados(Amigo AmigosConectados)
     {
         
-}
+    }
+    
+    private static void MostrarMensajeAmigo(VBox Contenedor, Mensaje mensaje) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
  
     
 }

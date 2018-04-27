@@ -46,6 +46,7 @@ public class HomeController implements Initializable,Runnable {
     @FXML private Label txtUser;
     
     // Variables de control internas
+    private Boolean type = false;
     private String username;
     private String[] users = {
         "Arturo Carrillo",
@@ -63,13 +64,17 @@ public class HomeController implements Initializable,Runnable {
     public void insertContent(){
         Boolean flag = false;
         for(String user : users){
-            createBubble(flag, user);
+            createBubble(flag, type, user, null);
             if(flag) flag = false;
             else flag = true;
         }
         int contador = 0;
         for(String user : users){
             createFriend(user, contador);
+            contador++;
+        }
+        for(String user : users){
+            createGroup(user, contador);
             contador++;
         }
     }
@@ -88,8 +93,10 @@ public class HomeController implements Initializable,Runnable {
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == group){
+                    messagesVBox.getChildren().clear();
                     System.out.println("Id del Grupo: " + group.getIdElement());
                     txtUser.setText(group.getNameElement());
+                    type = true;
                 }
             }
         });
@@ -110,8 +117,10 @@ public class HomeController implements Initializable,Runnable {
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == user){
+                    messagesVBox.getChildren().clear();
                     System.out.println("Id del usuario: " + user.getIdElement());
                     txtUser.setText(user.getNameElement());
+                    type = false;
                 }
             }
         });
@@ -123,20 +132,35 @@ public class HomeController implements Initializable,Runnable {
      * @param position Boolean Determinamos la posición del Mensaje
      * true => Izquierda
      * false => Derecha
+     * @param type Boolean Determinamos si es para un grupo o amigo
+     * true => Grupo
+     * false => Amigo
      * @param message String Mensaje a insertar
+     * @param user String Nombre de Usuario que envío el mensaje
      */
-    public void createBubble(Boolean position, String message){
+    public void createBubble(Boolean position, Boolean type, String message, String user){
         StackPane main = new StackPane();
         main.getStyleClass().add("bubble-container");
+        VBox div = new VBox();
         if(position){
             main.getStyleClass().add("left");
+            div.getStyleClass().add("align-left");
         }else{
             main.getStyleClass().add("right");
+            div.getStyleClass().add("align-right");
         }
         Label content = new Label();
         content.setText(message);
         content.getStyleClass().add("bubble");
-        main.getChildren().add(content);
+        div.getChildren().add(content);
+        if(type){
+            main.getStyleClass().add("group-message");
+            Label by = new Label();
+            by.setText(user);
+            by.getStyleClass().add("by");
+            div.getChildren().add(by);
+        }
+        main.getChildren().add(div);
         messagesVBox.getChildren().add(main);
     }
     
@@ -209,7 +233,7 @@ public class HomeController implements Initializable,Runnable {
     }
     
     public void sendMessage(ActionEvent e){
-        createBubble(Boolean.TRUE, txtMessage.getText());
+        createBubble(Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
         txtMessage.setText("");
     }
     
