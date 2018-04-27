@@ -6,6 +6,7 @@
 package guichat;
 
 import com.google.gson.Gson;
+import guichat.Modelos.Amigo;
 import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
@@ -17,7 +18,11 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import  guichat.Modelos.Comunicacion;
+import guichat.Modelos.Mensaje;
+import guichat.Modelos.MensajeGrupo;
+import javafx.scene.layout.VBox;
+import guichat.HomeController;
 /**
  *
  * @author usuario
@@ -119,4 +124,52 @@ public class Procesos {
         }
        return 0;
     }    
+    
+    public static void RecibirPeticiones(VBox messagesVBox)
+    {
+         Gson jayson= new Gson();
+        Comunicacion modelo = new Comunicacion();
+        try {
+            Socket soquet= new Socket(ip,81);
+            DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
+            modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
+            mensajeria(messagesVBox,modelo);
+        } catch (IOException e) {
+            e.getMessage();
+}
+    }
+    public static void mensajeria(VBox Contenedor,Comunicacion modelo)
+    {
+        
+          Gson jayson= new Gson(); 
+        switch(modelo.getTipo())
+            {
+                case SEND_MENSAJE:
+                    MensajeRecibido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class), Contenedor);
+                    break;
+                case SEND_GRUPO:
+                    MensajeGrupoRecibido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
+                    break;
+                case SEND_CONECTADOS:
+                    
+                    break;
+                case SEND_DESCONECTADOS:
+                    
+                    break;
+            }
+}
+    public static void MensajeRecibido(Mensaje mensaje, VBox Contenedor)
+    {
+        MostrarMensajeAmigo(Contenedor,mensaje);
+    }
+    public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
+    {
+        
+    }
+    public static void Lista_Conectados(Amigo AmigosConectados)
+    {
+        
+}
+ 
+    
 }

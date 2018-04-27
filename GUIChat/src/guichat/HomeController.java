@@ -30,13 +30,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import guichat.Procesos;
 
 /**
  * FXML Controller class
  *
  * @author Wero
  */
-public class HomeController implements Initializable {
+public class HomeController implements Initializable,Runnable {
     String ip;
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
@@ -222,6 +223,11 @@ public class HomeController implements Initializable {
         // TODO
         insertContent();
 
-    }   
+    }
+    @Override
+    public void run()
+    {
+       Procesos.RecibirPeticiones(messagesVBox);
+    }
     
 }
