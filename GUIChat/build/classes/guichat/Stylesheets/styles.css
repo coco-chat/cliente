@@ -16,6 +16,7 @@ and open the template in the editor.
 
 .btn-blue:hover{
     -fx-background-color: #303841;
+    -fx-cursor:hand;
 }
 
 .btn-green{
@@ -27,12 +28,26 @@ and open the template in the editor.
     -fx-background-color: #48C17C;
 }
 
+.btn-red {
+    -fx-background-color: #EE5243;
+    -fx-cursor: hand;
+}
+
+.btn-red:hover {
+    -fx-background-color: #f24736;
+}
+
 .btn-gray {
     -fx-background-color: #fff;
 }
 
 .btn-gray:hover{
     -fx-background-color: #F2F7F7;
+}
+
+.square {
+    -fx-border-radius: 0 0 0 0; 
+    -fx-background-radius: 0 0 0 0;
 }
 
 .close{
@@ -282,4 +297,16 @@ and open the template in the editor.
 
 .chat-btn .content {
     -fx-background-color: #363E47;
+}
+
+.textField {
+    -fx-background-color: #F2F7F7;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-faint-focus-color: transparent;
+}
+
+.textField:focused {
+    -fx-border-color: transparent transparent #54D38A transparent;
+    -fx-faint-focus-color: transparent;
 }

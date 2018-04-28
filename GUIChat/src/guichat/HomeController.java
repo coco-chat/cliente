@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,14 +31,17 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
-    @FXML private Label txtUser;
+    @FXML private TextField txtCurrentContact;
     
     // Variables de control internas
     private Boolean type = false;
     private String username;
+    private Boolean flagEdit = false;
+    private Boolean typeEdit = true;
+    private String contact;
     private String[] users = {
         "Arturo Carrillo",
         "Kevin Alan",
@@ -85,8 +89,12 @@ public class HomeController implements Initializable {
                 if(event.getSource() == group){
                     messagesVBox.getChildren().clear();
                     System.out.println("Id del Grupo: " + group.getIdElement());
-                    txtUser.setText(group.getNameElement());
+                    txtCurrentContact.setText(group.getNameElement());
+                    contact = group.getNameElement();
                     type = true;
+                    typeEdit = true;
+                    editBtn.setDisable(false);
+                    deleteBtn.setDisable(false);
                 }
             }
         });
@@ -109,8 +117,12 @@ public class HomeController implements Initializable {
                 if(event.getSource() == user){
                     messagesVBox.getChildren().clear();
                     System.out.println("Id del usuario: " + user.getIdElement());
-                    txtUser.setText(user.getNameElement());
+                    txtCurrentContact.setText(user.getNameElement());
                     type = false;
+                    contact = user.getNameElement();
+                    editBtn.setDisable(false);
+                    deleteBtn.setDisable(false);
+                    typeEdit = false;
                 }
             }
         });
@@ -152,6 +164,29 @@ public class HomeController implements Initializable {
         }
         main.getChildren().add(div);
         messagesVBox.getChildren().add(main);
+    }
+    
+    @FXML
+    public void editContact(ActionEvent e){
+        if(!flagEdit){
+            editBtn.setText("Aceptar");
+            txtCurrentContact.setDisable(false);
+            flagEdit = true;
+            txtCurrentContact.requestFocus();
+        }else{
+            if(!txtCurrentContact.getText().equals(contact)){
+                System.out.println("Nuevo nombre del elemento: " + txtCurrentContact.getText());
+                contact = txtCurrentContact.getText();
+            }
+            editBtn.setText("Editar");
+            txtCurrentContact.setDisable(true);
+            flagEdit = false;
+        }
+    }
+    
+    @FXML
+    public void deleteContact(ActionEvent e){
+        System.out.println("Falta implementar funcionalidad del botón de eliminar");
     }
     
     /**
