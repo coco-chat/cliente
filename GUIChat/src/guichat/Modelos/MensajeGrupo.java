@@ -17,6 +17,9 @@ public class MensajeGrupo implements Serializable{
     private String contenido;
     
     public MensajeGrupo() {
+        this.grupo = new Grupo();
+        this.usuario = new Usuario();
+        this.contenido = " ";
     }
 
     public Grupo getGrupo() {

@@ -7,7 +7,6 @@ package guichat;
 
 import com.google.gson.Gson;
 import guichat.Modelos.Amigo;
-import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,15 +14,10 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import  guichat.Modelos.Comunicacion;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import javafx.scene.layout.VBox;
-import guichat.HomeController;
-import javafx.scene.control.TextArea;
 /**
  *
  * @author usuario
@@ -131,21 +125,28 @@ public class Procesos {
     {
         
         DataOutputStream EnviarCadena = null;
+        Usuario origen = new Usuario();
+        origen.setId(1);
+        origen.setUsername("wero");
+        origen.setPassword("123");
+        System.out.println("Enviando mensaje");
        try {
 
            Comunicacion modeloOutput = new Comunicacion();
            System.out.println(txtMessage);
-           String Contenido= txtMessage;
            Mensaje mensaje_enviar= new Mensaje();
            Usuario usuario_destino = new Usuario();
-           usuario_destino.setId(3);
+           usuario_destino.setId(2);
+           usuario_destino.setUsername("kevin");
+           usuario_destino.setPassword("123");
            mensaje_enviar.setDestino(usuario_destino);
-           mensaje_enviar.setContenido(Contenido);
+           mensaje_enviar.setOrigen(origen);
+           mensaje_enviar.setContenido(txtMessage);
            modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE);
            modeloOutput.setContenido(mensaje_enviar);
            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
            EnviarCadena.writeUTF(json.toJson(modeloOutput));
-           EnviarCadena.close();
+           
            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
            RecibirConfirmacion.readUTF();
        } catch (IOException ex) {

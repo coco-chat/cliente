@@ -6,6 +6,7 @@
 package guichat.Modelos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +18,8 @@ public class NuevoGrupo implements Serializable{
     private List<PetGrupo> integrantes;
 
     public NuevoGrupo() {
+        this.grupo =  new Grupo();
+        this.integrantes = new ArrayList<PetGrupo>();
     }
 
     public Grupo getGrupo() {

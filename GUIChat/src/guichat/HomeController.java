@@ -236,6 +236,7 @@ public class HomeController implements Initializable,Runnable {
     
     public void sendMessage(ActionEvent e){
         Interfaz.createBubble(messagesVBox, Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
+        Procesos.EnviarMensajes(txtMessage.getText());
         txtMessage.setText("");
     }
     
@@ -253,8 +254,9 @@ public class HomeController implements Initializable,Runnable {
     @Override
     public void run()
     {
-       Procesos.RecibirPeticiones();
-       
+        while(true){
+            Procesos.RecibirPeticiones();
+        }
     }
     
 }

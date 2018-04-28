@@ -17,6 +17,9 @@ public class Mensaje implements Serializable{
     private String contenido;
 
     public Mensaje() {
+        this.origen = new Usuario();
+        this.destino = new Usuario();
+        this.contenido = " ";
     }
 
     public Usuario getOrigen() {

@@ -36,21 +36,21 @@ public class RegisterController implements Initializable {
     public void handleRegister(ActionEvent e){
         
         if(txtNewuser.getText().isEmpty() && txtnewPassword.getText().isEmpty()){
-            
+            if(Procesos.Register(txtNewuser.getText(), txtnewPassword.getText(), "192.168.60.5") == 220.0){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+                    Stage stage = (Stage) signinBtn.getScene().getWindow();
+                    Scene scene = new Scene(loader.load());
+                    stage.setScene(scene);
+                    HomeController home = loader.getController();
+                    home.setUsername(txtNewuser.getText());
+                }catch (IOException io){
+                    io.printStackTrace();
+                }
+            }
         }
         else{
-            //modelo = txtNewuser.getText();
-            //modelo = txtnewPassword.getText();
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
-                Stage stage = (Stage) signinBtn.getScene().getWindow();
-                Scene scene = new Scene(loader.load());
-                stage.setScene(scene);
-                HomeController home = loader.getController();
-                home.setUsername(txtNewuser.getText());
-            }catch (IOException io){
-                io.printStackTrace();
-            }
+            System.out.println("Error en el registro");
         }
     }
     
