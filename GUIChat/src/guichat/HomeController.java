@@ -31,13 +31,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import guichat.Procesos;
 
 /**
  * FXML Controller class
  *
  * @author Wero
  */
-public class HomeController implements Initializable {
+public class HomeController implements Initializable,Runnable {
     String ip;
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn;
@@ -67,7 +68,7 @@ public class HomeController implements Initializable {
     public void insertContent(){
         Boolean flag = false;
         for(String user : users){
-            createBubble(flag, type, user, null);
+            Interfaz.createBubble(messagesVBox, flag, type, user, null);
             if(flag) flag = false;
             else flag = true;
         }
@@ -139,42 +140,9 @@ public class HomeController implements Initializable {
     }
     
     /**
-     * Método para crear el cuadro de mensaje de salida
-     * @param position Boolean Determinamos la posición del Mensaje
-     * true => Izquierda
-     * false => Derecha
-     * @param type Boolean Determinamos si es para un grupo o amigo
-     * true => Grupo
-     * false => Amigo
-     * @param message String Mensaje a insertar
-     * @param user String Nombre de Usuario que envío el mensaje
+     * Editar información de contacto
+     * @param e 
      */
-    public void createBubble(Boolean position, Boolean type, String message, String user){
-        StackPane main = new StackPane();
-        main.getStyleClass().add("bubble-container");
-        VBox div = new VBox();
-        if(position){
-            main.getStyleClass().add("left");
-            div.getStyleClass().add("align-left");
-        }else{
-            main.getStyleClass().add("right");
-            div.getStyleClass().add("align-right");
-        }
-        Label content = new Label();
-        content.setText(message);
-        content.getStyleClass().add("bubble");
-        div.getChildren().add(content);
-        if(type){
-            main.getStyleClass().add("group-message");
-            Label by = new Label();
-            by.setText(user);
-            by.getStyleClass().add("by");
-            div.getChildren().add(by);
-        }
-        main.getChildren().add(div);
-        messagesVBox.getChildren().add(main);
-    }
-    
     @FXML
     public void editContact(ActionEvent e){
         if(!flagEdit){
@@ -267,7 +235,7 @@ public class HomeController implements Initializable {
     }
     
     public void sendMessage(ActionEvent e){
-        createBubble(Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
+        Interfaz.createBubble(messagesVBox, Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
         txtMessage.setText("");
     }
     
@@ -280,7 +248,13 @@ public class HomeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         insertContent();
-
-    }   
+        Procesos.mensajes = messagesVBox;
+    }
+    @Override
+    public void run()
+    {
+       Procesos.RecibirPeticiones();
+       
+    }
     
 }

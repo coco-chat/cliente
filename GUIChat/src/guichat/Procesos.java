@@ -6,6 +6,7 @@
 package guichat;
 
 import com.google.gson.Gson;
+import guichat.Modelos.Amigo;
 import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
@@ -17,7 +18,12 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import  guichat.Modelos.Comunicacion;
+import guichat.Modelos.Mensaje;
+import guichat.Modelos.MensajeGrupo;
+import javafx.scene.layout.VBox;
+import guichat.HomeController;
+import javafx.scene.control.TextArea;
 /**
  *
  * @author usuario
@@ -27,6 +33,7 @@ public class Procesos {
    public static String ip;
    public static int puerto;
    public static Socket soquet;
+   public static VBox mensajes;
    public static Gson json = new Gson();
    
    public Procesos()
@@ -118,5 +125,83 @@ public class Procesos {
             return 0;
         }
        return 0;
-    }    
+    }
+    
+    public static void EnviarMensajes(String txtMessage)
+    {
+        
+        DataOutputStream EnviarCadena = null;
+       try {
+
+           Comunicacion modeloOutput = new Comunicacion();
+           System.out.println(txtMessage);
+           String Contenido= txtMessage;
+           Mensaje mensaje_enviar= new Mensaje();
+           Usuario usuario_destino = new Usuario();
+           usuario_destino.setId(3);
+           mensaje_enviar.setDestino(usuario_destino);
+           mensaje_enviar.setContenido(Contenido);
+           modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE);
+           modeloOutput.setContenido(mensaje_enviar);
+           EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+           EnviarCadena.writeUTF(json.toJson(modeloOutput));
+           EnviarCadena.close();
+           DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+           RecibirConfirmacion.readUTF();
+       } catch (IOException ex) {
+           Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+       } 
+       
+    }
+    
+    public static void RecibirPeticiones()
+    {
+         Gson jayson= new Gson();
+        Comunicacion modelo = new Comunicacion();
+        try {
+            DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
+            modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
+            mensajeria(modelo);
+        } catch (IOException e) {
+            e.getMessage();
+}
+    }
+    public static void mensajeria(Comunicacion modelo)
+    {
+        
+          Gson jayson= new Gson(); 
+        switch(modelo.getTipo())
+            {
+                case SEND_MENSAJE:
+                    MensajeRecibido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class));
+                    break;
+                case SEND_GRUPO:
+                    MensajeGrupoRecibido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
+                    break;
+                case SEND_CONECTADOS:
+                    
+                    break;
+                case SEND_DESCONECTADOS:
+                    
+                    break;
+            }
+}
+    public static void MensajeRecibido(Mensaje mensaje)
+    {
+        MostrarMensajeAmigo(mensaje);
+    }
+    public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
+    {
+        
+    }
+    public static void Lista_Conectados(Amigo AmigosConectados)
+    {
+        
+    }
+    
+    private static void MostrarMensajeAmigo(Mensaje mensaje) {
+        
+    }
+ 
+    
 }
