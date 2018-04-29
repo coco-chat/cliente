@@ -8,6 +8,7 @@ package guichat;
 import com.google.gson.Gson;
 import guichat.Components.CButton;
 import guichat.Modelos.Comunicacion;
+import guichat.Modelos.Mensaje;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -27,13 +28,15 @@ import javafx.stage.Stage;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.concurrent.Task;
+import javafx.scene.layout.StackPane;
 
 /**
  * FXML Controller class
  *
  * @author Wero
  */
-public class HomeController implements Initializable,Runnable {
+public class HomeController implements Initializable {
     String ip;
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn;
@@ -262,42 +265,35 @@ public class HomeController implements Initializable,Runnable {
         Procesos.MostrarGrupos();
     }
     
-    @Override
-    public void run()
-    {
-        System.out.println("Corriendo");
-        
-        try {
-            
-            ServerSocket response = new ServerSocket(7654);
-            
-            System.out.println("Entre al try");
-            
-            while(true) {
+    public synchronized void agregarMensaje(Mensaje mensaje){
+        Task <StackPane> serverMessages = new Task<StackPane>() {
+            @Override
+            protected StackPane call() throws Exception {
+                System.out.println("Corriendo");
+                try {
+                    ServerSocket response = new ServerSocket(7654);
+                    System.out.println("Entre al try");
+                    while(true) {
+                        System.out.println("Entre al while");
+                        Gson json = new Gson();
+                        Socket peticion = response.accept();
+                        DataInputStream datos = new DataInputStream(peticion.getInputStream());
+                        String da = datos.readUTF();
+                        Comunicacion modelo = json.fromJson(da, Comunicacion.class);
+                        Procesos.mensajeria(modelo);
+                        peticion.close();
+                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
-                System.out.println("Entre al while");
-                
-                Gson json = new Gson();
-                
-                Socket peticion = response.accept();
-                
-                DataInputStream datos = new DataInputStream(peticion.getInputStream());
-                
-                String da = datos.readUTF();
-                
-                Comunicacion modelo = json.fromJson(da, Comunicacion.class);
-                
-                Procesos.mensajeria(modelo);
-                
-                peticion.close();
-                
-                response.close();
-                
+                return null;
             }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+        };
+                
+        serverMessages.setOnSucceeded(event -> {
+            messagesVBox.getChildren().add(serverMessages.getValue());
+        });
+    };
     
 }
