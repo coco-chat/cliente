@@ -147,6 +147,11 @@ public class HomeController implements Initializable,Runnable {
             txtCurrentContact.requestFocus();
         }else{
             if(!txtCurrentContact.getText().equals(contact)){
+                if(Procesos.ActualizarApodoAmigo(txtCurrentContact.getText()) == 243.0){
+                    System.out.println("Campo actualizado correctamente");
+                }else{
+                    System.out.println("Hubo un problema con la actualizacion");
+                }
                 System.out.println("Nuevo nombre del elemento: " + txtCurrentContact.getText());
                 contact = txtCurrentContact.getText();
             }
@@ -245,7 +250,14 @@ public class HomeController implements Initializable,Runnable {
         // TODO
         Procesos.mensajes = messagesVBox;
         Procesos.friends = friendsVBox;
-        Procesos.MostrarAmigos();
+        //Procesos.MostrarAmigos();
+        //Procesos.MostrarUsuariosConectados();
+        //Procesos.MostrarUsuariosDesconectados();
+        if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
+            System.out.println("El cambio se llevo a cabo correctamente");
+        }else{
+            System.out.println("Hubo problemas con la actualización");
+        }
     }
     
     @Override

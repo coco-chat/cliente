@@ -126,6 +126,89 @@ public class Procesos {
        return 0;
     }
     
+    public static void MostrarUsuariosDesconectados(){
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_DESCONECTADOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Usuario>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Usuario> amigos = json.fromJson(JsonList, type);
+            for(Usuario usuario : amigos){
+                Interfaz.createFriend(friends, mensajes, usuario.getUsername(), usuario.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static double ActualizarApodoAmigo(String apodo){
+        Amigo amigo = new Amigo();
+        Comunicacion modeloRespuesta = new Comunicacion();
+        Comunicacion modeloPeticion = new Comunicacion();
+        
+        try {
+            DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
+            modeloPeticion.setTipo(Comunicacion.MTypes.RQ_APODO);
+            amigo.setApodo2(apodo);
+            amigo.setAmigo2(3);
+            amigo.setId(1);
+            modeloPeticion.setContenido(amigo);
+            peticion.writeUTF(json.toJson(modeloPeticion));
+            
+            DataInputStream  respuesta = new DataInputStream(Procesos.soquet.getInputStream());
+            modeloRespuesta= json.fromJson(respuesta.readUTF(), Comunicacion.class);
+            
+            if (modeloRespuesta.getTipo()== Comunicacion.MTypes.ACK) {
+                System.out.println(modeloRespuesta.getContenido());
+                if ((double)modeloRespuesta.getContenido()==243.0) {
+                    return (double)modeloRespuesta.getContenido();
+                }
+            }
+            
+        } catch (IOException I) {
+            I.getMessage();
+            return 0;
+        }
+       return 0;
+    }
+    
+    public static void MostrarUsuariosConectados(){
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_CONECTADOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Usuario>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Usuario> amigos = json.fromJson(JsonList, type);
+            for(Usuario usuario : amigos){
+                Interfaz.createFriend(friends, mensajes, usuario.getUsername(), usuario.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     public static void MostrarAmigos(){
         DataOutputStream peticion = null;
         try {
