@@ -6,6 +6,7 @@
 package guichat;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import guichat.Modelos.Amigo;
 import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
@@ -14,9 +15,11 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import  guichat.Modelos.Comunicacion;
+import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
+import java.lang.reflect.Type;
+import java.util.List;
 import javafx.scene.layout.VBox;
 /**
  *
@@ -90,12 +93,13 @@ public class Procesos {
     }    
    
     public static double Register(String nick, String contraseña, String servidor){
+        System.out.println("Hola");
         Usuario usuario = new Usuario();
         Comunicacion modeloRespuesta = new Comunicacion();
         Comunicacion modeloPeticion = new Comunicacion();
         
         try {
-            
+            System.out.println("Entre");
             Procesos.CrearSocket(servidor, 4567);
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
             usuario.setUsername(nick);
@@ -107,7 +111,7 @@ public class Procesos {
             DataInputStream  respuesta = new DataInputStream(Procesos.soquet.getInputStream());
             modeloRespuesta= json.fromJson(respuesta.readUTF(), Comunicacion.class);
             
-            if (modeloRespuesta.getTipo()== Comunicacion.MTypes.ACK_LOGIN) {
+            if (modeloRespuesta.getTipo()== Comunicacion.MTypes.ACK) {
                 System.out.println(modeloRespuesta.getContenido());
                 if ((double)modeloRespuesta.getContenido()==220.0) {
                     return (double)modeloRespuesta.getContenido();
@@ -121,37 +125,56 @@ public class Procesos {
        return 0;
     }
     
+    public static void MostrarAmigos(){
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Amigo[]>>() {}.getType();
+            List<Amigo[]> amigos = json.fromJson(modeloInput.getContenido().toString(), type);
+            System.out.println(amigos);
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     public static void EnviarMensajes(String txtMessage)
     {
         
         DataOutputStream EnviarCadena = null;
         Usuario origen = new Usuario();
         origen.setId(1);
-        origen.setUsername("wero");
-        origen.setPassword("123");
         System.out.println("Enviando mensaje");
-       try {
+        try {
 
-           Comunicacion modeloOutput = new Comunicacion();
-           System.out.println(txtMessage);
-           Mensaje mensaje_enviar= new Mensaje();
-           Usuario usuario_destino = new Usuario();
-           usuario_destino.setId(2);
-           usuario_destino.setUsername("kevin");
-           usuario_destino.setPassword("123");
-           mensaje_enviar.setDestino(usuario_destino);
-           mensaje_enviar.setOrigen(origen);
-           mensaje_enviar.setContenido(txtMessage);
-           modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE);
-           modeloOutput.setContenido(mensaje_enviar);
-           EnviarCadena = new DataOutputStream(soquet.getOutputStream());
-           EnviarCadena.writeUTF(json.toJson(modeloOutput));
-           
-           DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
-           RecibirConfirmacion.readUTF();
-       } catch (IOException ex) {
-           Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
-       } 
+            Comunicacion modeloOutput = new Comunicacion();
+            System.out.println(txtMessage);
+            Mensaje mensaje_enviar= new Mensaje();
+            Usuario usuario_destino = new Usuario();
+            usuario_destino.setId(2);
+            mensaje_enviar.setDestino(usuario_destino);
+            mensaje_enviar.setOrigen(origen);
+            mensaje_enviar.setContenido(txtMessage);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE);
+            modeloOutput.setContenido(mensaje_enviar);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(modeloOutput));
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
        
     }
     
@@ -170,14 +193,15 @@ public class Procesos {
     public static void mensajeria(Comunicacion modelo)
     {
         
-          Gson jayson= new Gson(); 
+          Gson json= new Gson(); 
+          String data = json.toJson(modelo.getContenido());
         switch(modelo.getTipo())
             {
                 case SEND_MENSAJE:
-                    MensajeRecibido(jayson.fromJson(modelo.getContenido().toString(), Mensaje.class));
+                    MensajeRecibido(json.fromJson(data, Mensaje.class));
                     break;
                 case SEND_GRUPO:
-                    MensajeGrupoRecibido(jayson.fromJson(modelo.getContenido().toString(), MensajeGrupo.class));
+                    MensajeGrupoRecibido(json.fromJson(data, MensajeGrupo.class));
                     break;
                 case SEND_CONECTADOS:
                     
@@ -201,7 +225,7 @@ public class Procesos {
     }
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
-        
+        Interfaz.createBubble(mensajes, Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null);
     }
  
     

@@ -8,11 +8,6 @@ package guichat;
 import com.google.gson.Gson;
 import guichat.Components.CButton;
 import guichat.Modelos.Comunicacion;
-import guichat.Modelos.Mensaje;
-import guichat.Modelos.MensajeGrupo;
-import guichat.Modelos.Amigo;
-import guichat.Modelos.Grupo;
-import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -25,13 +20,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import guichat.Procesos;
+import java.net.ServerSocket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FXML Controller class
@@ -248,14 +243,47 @@ public class HomeController implements Initializable,Runnable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        insertContent();
         Procesos.mensajes = messagesVBox;
+        Procesos.MostrarAmigos();
+        Thread hilo = new Thread(this);
+        hilo.start();
     }
+    
     @Override
     public void run()
     {
-        while(true){
-            Procesos.RecibirPeticiones();
+        System.out.println("Corriendo");
+        
+        try {
+            
+            ServerSocket response = new ServerSocket(7654);
+            
+            System.out.println("Entre al try");
+            
+            while(true) {
+                
+                System.out.println("Entre al while");
+                
+                Gson json = new Gson();
+                
+                Socket peticion = response.accept();
+                
+                DataInputStream datos = new DataInputStream(peticion.getInputStream());
+                
+                String da = datos.readUTF();
+                
+                Comunicacion modelo = json.fromJson(da, Comunicacion.class);
+                
+                Procesos.mensajeria(modelo);
+                
+                peticion.close();
+                
+                response.close();
+                
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
