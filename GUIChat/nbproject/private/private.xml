@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/GroupsController.java</file>
             <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/LoginController.java</file>
@@ -10,5 +11,8 @@
             <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/NotificationsController.java</file>
             <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/Notifications.fxml</file>
         </group>
+=======
+        <group/>
+>>>>>>> af9eb3598680a33eebbd64cb67565f8c0b1f02a5
     </open-files>
 </project-private>

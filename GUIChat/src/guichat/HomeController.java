@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -30,13 +31,21 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     // Controles implementados en Interfaz
+<<<<<<< HEAD
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, notificationBtn;
+=======
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn;
+>>>>>>> af9eb3598680a33eebbd64cb67565f8c0b1f02a5
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
-    @FXML private Label txtUser;
+    @FXML private TextField txtCurrentContact;
     
     // Variables de control internas
+    private Boolean type = false;
     private String username;
+    private Boolean flagEdit = false;
+    private Boolean typeEdit = true;
+    private String contact;
     private String[] users = {
         "Arturo Carrillo",
         "Kevin Alan",
@@ -53,13 +62,17 @@ public class HomeController implements Initializable {
     public void insertContent(){
         Boolean flag = false;
         for(String user : users){
-            createBubble(flag, user);
+            createBubble(flag, type, user, null);
             if(flag) flag = false;
             else flag = true;
         }
         int contador = 0;
         for(String user : users){
             createFriend(user, contador);
+            contador++;
+        }
+        for(String user : users){
+            createGroup(user, contador);
             contador++;
         }
     }
@@ -78,8 +91,14 @@ public class HomeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == group){
+                    messagesVBox.getChildren().clear();
                     System.out.println("Id del Grupo: " + group.getIdElement());
-                    txtUser.setText(group.getNameElement());
+                    txtCurrentContact.setText(group.getNameElement());
+                    contact = group.getNameElement();
+                    type = true;
+                    typeEdit = true;
+                    editBtn.setDisable(false);
+                    deleteBtn.setDisable(false);
                 }
             }
         });
@@ -100,8 +119,14 @@ public class HomeController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == user){
+                    messagesVBox.getChildren().clear();
                     System.out.println("Id del usuario: " + user.getIdElement());
-                    txtUser.setText(user.getNameElement());
+                    txtCurrentContact.setText(user.getNameElement());
+                    type = false;
+                    contact = user.getNameElement();
+                    editBtn.setDisable(false);
+                    deleteBtn.setDisable(false);
+                    typeEdit = false;
                 }
             }
         });
@@ -113,21 +138,59 @@ public class HomeController implements Initializable {
      * @param position Boolean Determinamos la posición del Mensaje
      * true => Izquierda
      * false => Derecha
+     * @param type Boolean Determinamos si es para un grupo o amigo
+     * true => Grupo
+     * false => Amigo
      * @param message String Mensaje a insertar
+     * @param user String Nombre de Usuario que envío el mensaje
      */
-    public void createBubble(Boolean position, String message){
+    public void createBubble(Boolean position, Boolean type, String message, String user){
         StackPane main = new StackPane();
         main.getStyleClass().add("bubble-container");
+        VBox div = new VBox();
         if(position){
             main.getStyleClass().add("left");
+            div.getStyleClass().add("align-left");
         }else{
             main.getStyleClass().add("right");
+            div.getStyleClass().add("align-right");
         }
         Label content = new Label();
         content.setText(message);
         content.getStyleClass().add("bubble");
-        main.getChildren().add(content);
+        div.getChildren().add(content);
+        if(type){
+            main.getStyleClass().add("group-message");
+            Label by = new Label();
+            by.setText(user);
+            by.getStyleClass().add("by");
+            div.getChildren().add(by);
+        }
+        main.getChildren().add(div);
         messagesVBox.getChildren().add(main);
+    }
+    
+    @FXML
+    public void editContact(ActionEvent e){
+        if(!flagEdit){
+            editBtn.setText("Aceptar");
+            txtCurrentContact.setDisable(false);
+            flagEdit = true;
+            txtCurrentContact.requestFocus();
+        }else{
+            if(!txtCurrentContact.getText().equals(contact)){
+                System.out.println("Nuevo nombre del elemento: " + txtCurrentContact.getText());
+                contact = txtCurrentContact.getText();
+            }
+            editBtn.setText("Editar");
+            txtCurrentContact.setDisable(true);
+            flagEdit = false;
+        }
+    }
+    
+    @FXML
+    public void deleteContact(ActionEvent e){
+        System.out.println("Falta implementar funcionalidad del botón de eliminar");
     }
     
     /**
@@ -210,7 +273,7 @@ public class HomeController implements Initializable {
     
     @FXML
     public void sendMessage(ActionEvent e){
-        createBubble(Boolean.TRUE, txtMessage.getText());
+        createBubble(Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
         txtMessage.setText("");
     }
     

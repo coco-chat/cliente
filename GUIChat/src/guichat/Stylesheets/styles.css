@@ -16,6 +16,7 @@ and open the template in the editor.
 
 .btn-blue:hover{
     -fx-background-color: #303841;
+    -fx-cursor:hand;
 }
 
 .btn-green{
@@ -27,12 +28,26 @@ and open the template in the editor.
     -fx-background-color: #48C17C;
 }
 
+.btn-red {
+    -fx-background-color: #EE5243;
+    -fx-cursor: hand;
+}
+
+.btn-red:hover {
+    -fx-background-color: #f24736;
+}
+
 .btn-gray {
     -fx-background-color: #fff;
 }
 
 .btn-gray:hover{
     -fx-background-color: #F2F7F7;
+}
+
+.square {
+    -fx-border-radius: 0 0 0 0; 
+    -fx-background-radius: 0 0 0 0;
 }
 
 .close{
@@ -197,6 +212,21 @@ and open the template in the editor.
     -fx-pref-width: 626;
 }
 
+.message-container .bubble-container.group-message {
+    -fx-pref-height: 80;
+}
+
+.message-container .bubble-container .align-left {
+    -fx-alignment: CENTER_LEFT;
+}
+.message-container .bubble-container .align-right{
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.message-container .bubble-container .align-right .by {
+    -fx-alignment: CENTER_RIGHT;
+}
+
 .message-container .bubble-container {
     -fx-pref-height: 64px;
     -fx-padding: 0 0 5 10;
@@ -225,12 +255,22 @@ and open the template in the editor.
 }
 
 .message-container .bubble-container .bubble {
-    -fx-font-family: "Century Gothic";
+    -fx-font-family: "Lao UI";
     -fx-padding: 5 10 5 10;
-    -fx-pref-width: 280px;
-    -fx-font-size: 11px;
-    -fx-pref-height: 50px;
+    -fx-font-size: 12px;
+    -fx-wrap-text: true;
+    -fx-line-spacing: 5;
+    -fx-max-width: 280;
+    -fx-max-height: 60;
+}
+
+.message-container .bubble-container .by {
+    -fx-font-family: "Lao UI";
+    -fx-padding: 5 10 5 10;
+    -fx-max-width: 280;
+    -fx-font-size: 10px;
     -fx-font-weight: bold;
+    -fx-text-fill: #99A8B4;
 }
 
 /* Lista de Amigos y Grupos */
@@ -257,4 +297,46 @@ and open the template in the editor.
 
 .chat-btn .content {
     -fx-background-color: #363E47;
+}
+
+.textField {
+    -fx-background-color: #F2F7F7;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-faint-focus-color: transparent;
+}
+
+.textField:focused {
+    -fx-border-color: transparent transparent #54D38A transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Contactos (Amigos y Grupos) */
+.contact {
+    -fx-pref-width: 292;
+    -fx-pref-height: 60;
+    -fx-background-color: #363E47;
+    -fx-cursor: hand;
+}
+
+.contact .circle {
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+    -fx-background-radius: 5em;
+}
+
+.contact .circle.online {
+    -fx-background-color: #54D38A;
+}
+.contact .circle.offline {
+    -fx-background-color: #F2F7F7;
+}
+
+.contact .icon {
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+    -fx-background-image: url("../Assets/username.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
 }
