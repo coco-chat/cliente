@@ -5,6 +5,9 @@
  */
 package guichat;
 
+import guichat.Components.CButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -56,4 +59,25 @@ public class Interfaz {
         container.getChildren().add(main);
     }
     
+    /**
+     * Método para crear el boton del amigo
+     * @param name String Nombre o apodo del amigo
+     * @param id int Identificador en la base de datos del amigo
+     */
+    public static void createFriend(VBox friends, VBox mensajes , String name, int id){
+        CButton user = new CButton(name);
+        user.setIdElement(id);
+        user.setNameElement(name);
+        user.getStyleClass().add("chat-btn");
+        user.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == user){
+                    mensajes.getChildren().clear();
+                    System.out.println("Id del usuario: " + user.getIdElement());
+                }
+            }
+        });
+        friends.getChildren().add(user);
+    }
 }

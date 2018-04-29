@@ -244,9 +244,8 @@ public class HomeController implements Initializable,Runnable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         Procesos.mensajes = messagesVBox;
+        Procesos.friends = friendsVBox;
         Procesos.MostrarAmigos();
-        Thread hilo = new Thread(this);
-        hilo.start();
     }
     
     @Override

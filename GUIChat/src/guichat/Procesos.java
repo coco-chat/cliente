@@ -31,6 +31,7 @@ public class Procesos {
    public static int puerto;
    public static Socket soquet;
    public static VBox mensajes;
+   public static VBox friends;
    public static Gson json = new Gson();
    
    public Procesos()
@@ -139,9 +140,16 @@ public class Procesos {
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
             data = RecibirConfirmacion.readUTF();
             modeloInput = json.fromJson(data, Comunicacion.class);
-            Type type = new TypeToken<List<Amigo[]>>() {}.getType();
-            List<Amigo[]> amigos = json.fromJson(modeloInput.getContenido().toString(), type);
-            System.out.println(amigos);
+            Type type = new TypeToken<List<Amigo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Amigo> amigos = json.fromJson(JsonList, type);
+            for(Amigo amigo : amigos){
+                if(amigo.getAmigo1() != -1){
+                    Interfaz.createFriend(friends, mensajes, amigo.getApodo1(), amigo.getAmigo1());
+                }else if(amigo.getAmigo2() != -1){
+                    Interfaz.createFriend(friends, mensajes, amigo.getApodo2(), amigo.getAmigo2());
+                }
+            }
             
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
