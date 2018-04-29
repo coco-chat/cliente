@@ -310,3 +310,33 @@ and open the template in the editor.
     -fx-border-color: transparent transparent #54D38A transparent;
     -fx-faint-focus-color: transparent;
 }
+
+/* Contactos (Amigos y Grupos) */
+.contact {
+    -fx-pref-width: 292;
+    -fx-pref-height: 60;
+    -fx-background-color: #363E47;
+    -fx-cursor: hand;
+}
+
+.contact .circle {
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+    -fx-background-radius: 5em;
+}
+
+.contact .circle.online {
+    -fx-background-color: #54D38A;
+}
+.contact .circle.offline {
+    -fx-background-color: #F2F7F7;
+}
+
+.contact .icon {
+    -fx-pref-width: 16;
+    -fx-pref-height: 16;
+    -fx-background-image: url("../Assets/username.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 16 16;
+    -fx-background-position: center center;
+}
