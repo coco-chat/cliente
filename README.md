@@ -3,7 +3,7 @@
 ### Procesos en cliente:
 
 - [x] Login
-- [ ] Registro
+- [x] Registro
 - [ ] Mostrar mensajes por amigo
 - [ ] Mostrar mensajes de un grupo
 - [ ] Crear grupo y agregar amigos
@@ -13,8 +13,12 @@
 - [ ] Aceptar peticiones de grupos
 - [ ] Enviar mensaje a amigo
 - [ ] Enviar mensaje a grupo
-- [ ] Modificar apodo de amigo
+- [x] Modificar apodo de amigo
 - [ ] Modificar nombre a grupo
 - [ ] Eliminar amigo
 - [ ] Eliminar miembro de un grupo
 - [ ] Eliminar grupo
+- [x] Desplegar lista de desconectados
+- [x] Desplegar lista de conectados
+- [x] Desplegar lista de amigos
+- [x] Desplegar lista de grupos
