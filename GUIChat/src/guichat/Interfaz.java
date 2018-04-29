@@ -80,4 +80,26 @@ public class Interfaz {
         });
         friends.getChildren().add(user);
     }
+    
+    /**
+     * Método para crear el boton del grupo
+     * @param name String Nombre del grupo
+     * @param id int Identificador en la base de datos del grupo
+     */
+    public static void createGroup(VBox groups, VBox mensajes, String name, int id){
+        CButton group = new CButton(name);
+        group.setIdElement(id);
+        group.setNameElement(name);
+        group.getStyleClass().add("chat-btn");
+        group.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == group){
+                    mensajes.getChildren().clear();
+                    System.out.println("Id del grupo: " + group.getIdElement());
+                }
+            }
+        });
+        groups.getChildren().add(group);
+    }
 }

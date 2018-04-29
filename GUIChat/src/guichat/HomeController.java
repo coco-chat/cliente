@@ -250,14 +250,16 @@ public class HomeController implements Initializable,Runnable {
         // TODO
         Procesos.mensajes = messagesVBox;
         Procesos.friends = friendsVBox;
+        Procesos.groups = groupsVBox;
         //Procesos.MostrarAmigos();
         //Procesos.MostrarUsuariosConectados();
         //Procesos.MostrarUsuariosDesconectados();
-        if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
-            System.out.println("El cambio se llevo a cabo correctamente");
-        }else{
-            System.out.println("Hubo problemas con la actualización");
-        }
+        //if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
+        //    System.out.println("El cambio se llevo a cabo correctamente");
+        //}else{
+        //    System.out.println("Hubo problemas con la actualización");
+        //}
+        Procesos.MostrarGrupos();
     }
     
     @Override

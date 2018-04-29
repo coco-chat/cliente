@@ -16,6 +16,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import guichat.Modelos.Comunicacion;
+import guichat.Modelos.Grupo;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import java.lang.reflect.Type;
@@ -32,6 +33,7 @@ public class Procesos {
    public static Socket soquet;
    public static VBox mensajes;
    public static VBox friends;
+   public static VBox groups;
    public static Gson json = new Gson();
    
    public Procesos()
@@ -203,6 +205,31 @@ public class Procesos {
             for(Usuario usuario : amigos){
                 Interfaz.createFriend(friends, mensajes, usuario.getUsername(), usuario.getId());
             }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public static void MostrarGrupos() {
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_GRUPOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Grupo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Grupo> grupos = json.fromJson(JsonList, type);
+            for(Grupo grupo : grupos)
+                Interfaz.createGroup(groups, mensajes, grupo.getNombre(), grupo.getId());
             
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
