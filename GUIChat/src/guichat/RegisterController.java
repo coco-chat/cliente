@@ -26,7 +26,7 @@ public class RegisterController implements Initializable {
 
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, signinBtn, loginBtn;
-    @FXML private TextField txtNewuser, txtnewPassword;
+    @FXML private TextField txtNewuser, txtnewPassword, txtServer;
     
     /**
      * Método para llevar a cabo el registro del usuario
@@ -35,7 +35,7 @@ public class RegisterController implements Initializable {
     @FXML
     public void handleRegister(ActionEvent e){
         
-        if(txtNewuser.getText().isEmpty() && txtnewPassword.getText().isEmpty()){
+        if(txtNewuser.getText().isEmpty() || txtnewPassword.getText().isEmpty() || txtServer.getText().isEmpty()){
             
         }
         else{

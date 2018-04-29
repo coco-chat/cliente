@@ -84,7 +84,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutY="192.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="192.0">
+                  <Button fx:id="notificationBtn" layoutY="192.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#goToNotifications" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="192.0">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>

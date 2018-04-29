@@ -19,6 +19,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import static javafx.scene.input.KeyCode.T;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -28,13 +30,23 @@ import javafx.stage.Stage;
  */
 public class GroupsController implements Initializable {
 
+    @FXML
+    private Button closeWindowBtn;
+    @FXML
+    private Button minimizeWindowBtn;
+
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, createGroupBtn, outBtn, messagesBtn;
+    @FXML private Button createGroupBtn, outBtn, messagesBtn;
     @FXML private ListView listUsers;
-    @FXML private TextField txtGroup, txtOwner;
+    @FXML
+    private TextField txtGroup;
+    @FXML
+    private TextField txtOwner;
     
     // Variables locales
     private String username;
+    @FXML
+    private AnchorPane headerBar;
     
     /**
      * Método para poder cerrar la pestaña

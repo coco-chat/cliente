@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, notificationBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private Label txtUser;
@@ -191,6 +191,21 @@ public class HomeController implements Initializable {
         }catch (IOException io){
             io.printStackTrace();
         }
+    }
+    
+    @FXML
+    public void goToNotifications(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
+            Stage stage = (Stage) notificationBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            NotificationsController notifications = loader.getController();
+            notifications.setUsername(this.username);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+        
     }
     
     @FXML
