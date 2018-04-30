@@ -27,6 +27,10 @@ public class CButton extends Button {
     public CButton(String text) {
         super(text);
     }
+    
+    public CButton(){
+        
+    }
 
     public int getIdElement() {
         return idElement;

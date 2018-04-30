@@ -23,6 +23,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.ServerSocket;
@@ -39,7 +41,7 @@ import javafx.scene.layout.StackPane;
 public class HomeController implements Initializable {
     String ip;
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn, notificationBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private TextField txtCurrentContact;
@@ -61,6 +63,12 @@ public class HomeController implements Initializable {
     };
     
     /**
+     * =========================================================================
+     * Métodos Locales
+     * =========================================================================
+     */
+    
+    /**
      * Método para hacer pruebas en la pantalla
      */
     public void insertContent(){
@@ -72,13 +80,21 @@ public class HomeController implements Initializable {
         }
         int contador = 0;
         for(String user : users){
-            createFriend(user, contador);
+            createFriend(flag, flag, user, contador);
+            if(flag) flag = false;
+            else flag = true;
             contador++;
         }
-        for(String user : users){
-            createGroup(user, contador);
-            contador++;
-        }
+    }
+    
+        
+    /**
+     * Método para pasar el nombre de usuario de una vista a otra
+     * @param username String Nombre de Usuario
+     */
+    public void setUsername(String username){
+        this.username = username;
+        System.out.println(this.username);
     }
     
     /**
@@ -111,36 +127,90 @@ public class HomeController implements Initializable {
     
     /**
      * Método para crear el boton del amigo
+     * @param state Boolean Determina si el usuario esta activo o no
+     * true => online
+     * false => offline
+     * @param friend Boolean Determina si un usuario es amigo o no
+     * true => Amigo
+     * false => No es amigo
      * @param name String Nombre o apodo del amigo
      * @param id int Identificador en la base de datos del amigo
      */
-    public void createFriend(String name, int id){
+    public void createFriend(Boolean state, Boolean friend, String name, int id){      
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
         CButton user = new CButton(name);
         user.setIdElement(id);
         user.setNameElement(name);
-        user.getStyleClass().add("chat-btn");
+        user.getStyleClass().add("btn");
         user.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == user){
                     messagesVBox.getChildren().clear();
-                    System.out.println("Id del usuario: " + user.getIdElement());
+                    System.out.println("Id del Usuario: " + user.getIdElement());
                     txtCurrentContact.setText(user.getNameElement());
-                    type = false;
                     contact = user.getNameElement();
+                    type = false;
+                    typeEdit = false;
                     editBtn.setDisable(false);
                     deleteBtn.setDisable(false);
-                    typeEdit = false;
                 }
             }
         });
-        friendsVBox.getChildren().add(user);
+        Label con = new Label();
+        con.getStyleClass().add("circle");
+        if(state){
+            con.getStyleClass().add("online");
+        }else{
+            con.getStyleClass().add("offline");
+        }
+        container.getChildren().add(user);
+        container.getChildren().add(con);
+        if(friend){
+            Label f = new Label();
+            f.getStyleClass().add("icon");
+            container.getChildren().add(f);
+        }
+        friendsVBox.getChildren().add(container);
     }
     
     /**
      * Editar información de contacto
      * @param e 
      */
+    public void createBubble(Boolean position, Boolean type, String message, String user){
+        StackPane main = new StackPane();
+        main.getStyleClass().add("bubble-container");
+        VBox div = new VBox();
+        if(position){
+            main.getStyleClass().add("left");
+            div.getStyleClass().add("align-left");
+        }else{
+            main.getStyleClass().add("right");
+            div.getStyleClass().add("align-right");
+        }
+        Label content = new Label();
+        content.setText(message);
+        content.getStyleClass().add("bubble");
+        div.getChildren().add(content);
+        if(type){
+            main.getStyleClass().add("group-message");
+            Label by = new Label();
+            by.setText(user);
+            by.getStyleClass().add("by");
+            div.getChildren().add(by);
+        }
+        main.getChildren().add(div);
+        messagesVBox.getChildren().add(main);
+    }
+    
+    /**
+     * =========================================================================
+     * Métodos FXML
+     * =========================================================================
+     */
+    
     @FXML
     public void editContact(ActionEvent e){
         if(!flagEdit){
@@ -237,6 +307,22 @@ public class HomeController implements Initializable {
         }
     }
     
+    @FXML
+    public void goToNotifications(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
+            Stage stage = (Stage) notificationBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            NotificationsController notifications = loader.getController();
+            notifications.setUsername(this.username);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+        
+    }
+    
+    @FXML
     public void sendMessage(ActionEvent e){
         Interfaz.createBubble(messagesVBox, Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
         Procesos.EnviarMensajes(txtMessage.getText());

@@ -33,37 +33,41 @@
       </AnchorPane>
       <AnchorPane layoutX="-1.0" layoutY="32.0" prefHeight="568.0" prefWidth="1001.0" style="-fx-background-color: #363E47;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
          <children>
-            <AnchorPane layoutX="272.0" layoutY="114.0" prefHeight="386.0" prefWidth="411.0" style="-fx-background-color: #F2F7F7; -fx-background-radius: 10px;">
+            <AnchorPane layoutX="272.0" layoutY="72.0" prefHeight="428.0" prefWidth="411.0" style="-fx-background-color: #F2F7F7; -fx-background-radius: 10px;">
                <children>
-                  <TextField id="Nuevo_Usuario" fx:id="txtNewuser" layoutX="80.0" layoutY="147.0" prefHeight="32.0" prefWidth="280.0" promptText="Crea tu nombre de usuario">
+                  <TextField id="Nuevo_Usuario" fx:id="txtNewuser" layoutX="80.0" layoutY="113.0" prefHeight="32.0" prefWidth="280.0" promptText="Crea tu nombre de usuario">
                      <font>
                         <Font name="Century Gothic" size="12.0" />
                      </font></TextField>
-                  <Label alignment="CENTER" layoutX="120.0" layoutY="53.0" text="¡Regístrate!" textAlignment="CENTER" textFill="#2f3740">
+                  <Label alignment="CENTER" layoutX="115.0" layoutY="33.0" text="¡Regístrate!" textAlignment="CENTER" textFill="#2f3740">
                      <font>
                         <Font name="Century Gothic Bold" size="32.0" />
                      </font>
                   </Label>
-                  <Label layoutX="80.0" layoutY="117.0" text="Nombre de usuario:">
+                  <Label layoutX="80.0" layoutY="89.0" text="Nombre de usuario:">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font></Label>
-                  <Label layoutX="80.0" layoutY="194.0" text="Contraseña:">
+                  <Label layoutX="80.0" layoutY="153.0" text="Contraseña:">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font></Label>
-                  <Button fx:id="signinBtn" graphicTextGap="2.0" layoutX="80.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="32.0" prefWidth="280.0" styleClass="btn-blue" text="REGISTRARSE" textFill="#fffefe">
+                  <Button fx:id="signinBtn" graphicTextGap="2.0" layoutX="80.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="32.0" prefWidth="280.0" styleClass="btn-blue" text="REGISTRARSE" textFill="#fffefe">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
+<<<<<<< HEAD
                   <PasswordField fx:id="txtnewPassword" layoutX="80.0" layoutY="222.0" prefHeight="32.0" prefWidth="280.0" promptText="Crea una contraseña">
+=======
+                  <PasswordField fx:id="txtnewPassword" layoutX="80.0" layoutY="177.0" prefHeight="32.0" prefWidth="280.0" promptText="Crea una contraseña">
+>>>>>>> design
                      <font>
                         <Font name="Century Gothic" size="12.0" />
                      </font></PasswordField>
-                  <Button fx:id="loginBtn" graphicTextGap="2.0" layoutX="80.0" layoutY="327.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="32.0" prefWidth="280.0" styleClass="btn-green" text="INGRESAR" textFill="#fffefe">
+                  <Button fx:id="loginBtn" graphicTextGap="2.0" layoutX="80.0" layoutY="353.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="32.0" prefWidth="280.0" styleClass="btn-green" text="INGRESAR" textFill="#fffefe">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -71,6 +75,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Label layoutX="80.0" layoutY="224.0" text="Servidor">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtServer" layoutX="80.0" layoutY="254.0" prefHeight="32.0" prefWidth="280.0" promptText="Escribe el nombre del servidor" />
                </children>
                <opaqueInsets>
                   <Insets />
