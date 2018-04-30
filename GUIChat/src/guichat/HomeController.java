@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -31,11 +32,7 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     // Controles implementados en Interfaz
-<<<<<<< HEAD
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, notificationBtn;
-=======
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn;
->>>>>>> af9eb3598680a33eebbd64cb67565f8c0b1f02a5
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn, notificationBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private TextField txtCurrentContact;
@@ -57,6 +54,12 @@ public class HomeController implements Initializable {
     };
     
     /**
+     * =========================================================================
+     * Métodos Locales
+     * =========================================================================
+     */
+    
+    /**
      * Método para hacer pruebas en la pantalla
      */
     public void insertContent(){
@@ -68,13 +71,21 @@ public class HomeController implements Initializable {
         }
         int contador = 0;
         for(String user : users){
-            createFriend(user, contador);
+            createFriend(flag, flag, user, contador);
+            if(flag) flag = false;
+            else flag = true;
             contador++;
         }
-        for(String user : users){
-            createGroup(user, contador);
-            contador++;
-        }
+    }
+    
+        
+    /**
+     * Método para pasar el nombre de usuario de una vista a otra
+     * @param username String Nombre de Usuario
+     */
+    public void setUsername(String username){
+        this.username = username;
+        System.out.println(this.username);
     }
     
     /**
@@ -107,30 +118,52 @@ public class HomeController implements Initializable {
     
     /**
      * Método para crear el boton del amigo
+     * @param state Boolean Determina si el usuario esta activo o no
+     * true => online
+     * false => offline
+     * @param friend Boolean Determina si un usuario es amigo o no
+     * true => Amigo
+     * false => No es amigo
      * @param name String Nombre o apodo del amigo
      * @param id int Identificador en la base de datos del amigo
      */
-    public void createFriend(String name, int id){
+    public void createFriend(Boolean state, Boolean friend, String name, int id){      
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
         CButton user = new CButton(name);
         user.setIdElement(id);
         user.setNameElement(name);
-        user.getStyleClass().add("chat-btn");
+        user.getStyleClass().add("btn");
         user.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == user){
                     messagesVBox.getChildren().clear();
-                    System.out.println("Id del usuario: " + user.getIdElement());
+                    System.out.println("Id del Usuario: " + user.getIdElement());
                     txtCurrentContact.setText(user.getNameElement());
-                    type = false;
                     contact = user.getNameElement();
+                    type = false;
+                    typeEdit = false;
                     editBtn.setDisable(false);
                     deleteBtn.setDisable(false);
-                    typeEdit = false;
                 }
             }
         });
-        friendsVBox.getChildren().add(user);
+        Label con = new Label();
+        con.getStyleClass().add("circle");
+        if(state){
+            con.getStyleClass().add("online");
+        }else{
+            con.getStyleClass().add("offline");
+        }
+        container.getChildren().add(user);
+        container.getChildren().add(con);
+        if(friend){
+            Label f = new Label();
+            f.getStyleClass().add("icon");
+            container.getChildren().add(f);
+        }
+        friendsVBox.getChildren().add(container);
     }
     
     /**
@@ -169,6 +202,12 @@ public class HomeController implements Initializable {
         main.getChildren().add(div);
         messagesVBox.getChildren().add(main);
     }
+    
+    /**
+     * =========================================================================
+     * Métodos FXML
+     * =========================================================================
+     */
     
     @FXML
     public void editContact(ActionEvent e){
@@ -211,15 +250,6 @@ public class HomeController implements Initializable {
     public void handleMinimizeWindow(ActionEvent e){
         Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
         stage.setIconified(true);
-    }
-    
-    /**
-     * Método para pasar el nombre de usuario de una vista a otra
-     * @param username String Nombre de Usuario
-     */
-    public void setUsername(String username){
-        this.username = username;
-        System.out.println(this.username);
     }
     
     /**
