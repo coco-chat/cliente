@@ -6,10 +6,14 @@
 package guichat;
 
 import guichat.Components.CCheckBox;
+import guichat.Modelos.NuevoGrupo;
+import guichat.Modelos.PetGrupo;
+import guichat.Modelos.Usuario;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
-import static javafx.scene.input.KeyCode.T;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -125,15 +125,37 @@ public class GroupsController implements Initializable {
     }
     
     public void getUsers(){
+        List<PetGrupo> usuarios = new ArrayList<PetGrupo>();
+        int cont = 0;
         if(usersVBox instanceof VBox){
             for(Node node : ((VBox)usersVBox).getChildren()){
                 if(node instanceof CCheckBox){
                     if(((CCheckBox) node).isSelected()){
-                        System.out.println("Esta seleeccionado: " + ((CCheckBox) node).getText());
+                        cont++;
+                        PetGrupo usuario = new PetGrupo();
+                        usuario.setUsuario(((CCheckBox) node).getIdUser());
+                        usuarios.add(usuario);
                         System.out.println("Id del usuario: " + ((CCheckBox) node).getIdUser());
                     }
                 }
             }
+        }
+        if(cont > 0){
+            NuevoGrupo grupo = new NuevoGrupo();
+            grupo.setIntegrantes(usuarios);
+            grupo.getGrupo().setNombre(txtGroup.getText());
+            if(Procesos.CrearGrupo(grupo) == 270.0){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+                    Stage stage = (Stage) outBtn.getScene().getWindow();
+                    Scene scene = new Scene(loader.load());
+                    stage.setScene(scene);
+                }catch (IOException io){
+                    io.printStackTrace();
+                }
+            }
+        }else{
+            System.out.println("No tienes usuarios seleccionados.");
         }
     }
     
@@ -143,11 +165,7 @@ public class GroupsController implements Initializable {
     public void insertContent(){
         int count = 1;
         for(String user : users) {
-            CCheckBox usuario = new CCheckBox(user);
-            usuario.getStyleClass().add("check");
-            usuario.setIdUser(count);
-            count++;
-            usersVBox.getChildren().add(usuario);
+            Interfaz.createUser(usersVBox, user, count);
         }
     }
     
@@ -157,7 +175,8 @@ public class GroupsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        insertContent();
+        Procesos.lista = usersVBox;
+        Procesos.ListaUsuarios();
     }    
     
 }

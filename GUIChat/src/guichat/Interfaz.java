@@ -6,9 +6,11 @@
 package guichat;
 
 import guichat.Components.CButton;
+import guichat.Components.CCheckBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -64,21 +66,37 @@ public class Interfaz {
      * @param name String Nombre o apodo del amigo
      * @param id int Identificador en la base de datos del amigo
      */
-    public static void createFriend(VBox friends, VBox mensajes , String name, int id){
+    public static void createFriend(VBox friends, VBox mensajes, Boolean state, Boolean friend, String name, int id){
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
         CButton user = new CButton(name);
         user.setIdElement(id);
         user.setNameElement(name);
-        user.getStyleClass().add("chat-btn");
+        user.getStyleClass().add("btn");
         user.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == user){
                     mensajes.getChildren().clear();
-                    System.out.println("Id del usuario: " + user.getIdElement());
+                    System.out.println("Id del Usuario: " + user.getIdElement());
                 }
             }
         });
-        friends.getChildren().add(user);
+        Label con = new Label();
+        con.getStyleClass().add("circle");
+        if(state){
+            con.getStyleClass().add("online");
+        }else{
+            con.getStyleClass().add("offline");
+        }
+        container.getChildren().add(user);
+        container.getChildren().add(con);
+        if(friend){
+            Label f = new Label();
+            f.getStyleClass().add("icon");
+            container.getChildren().add(f);
+        }
+        friends.getChildren().add(container);
     }
     
     /**
@@ -101,5 +119,12 @@ public class Interfaz {
             }
         });
         groups.getChildren().add(group);
+    }
+    
+    public static void createUser(VBox users, String name, int id){
+        CCheckBox usuario = new CCheckBox(name);
+        usuario.getStyleClass().add("check");
+        usuario.setIdUser(id);
+        users.getChildren().add(usuario);
     }
 }

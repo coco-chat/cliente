@@ -8,7 +8,6 @@ package guichat;
 import com.google.gson.Gson;
 import guichat.Components.CButton;
 import guichat.Modelos.Comunicacion;
-import guichat.Modelos.Mensaje;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -24,13 +23,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.concurrent.Task;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -38,7 +36,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author Wero
  */
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, Runnable {
     String ip;
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn, notificationBtn;
@@ -86,17 +84,7 @@ public class HomeController implements Initializable {
             contador++;
         }
     }
-    
-        
-    /**
-     * Método para pasar el nombre de usuario de una vista a otra
-     * @param username String Nombre de Usuario
-     */
-    public void setUsername(String username){
-        this.username = username;
-        System.out.println(this.username);
-    }
-    
+
     /**
      * Método para crear el boton del grupo
      * @param name String Nombre del grupo
@@ -340,7 +328,9 @@ public class HomeController implements Initializable {
         Procesos.mensajes = messagesVBox;
         Procesos.friends = friendsVBox;
         Procesos.groups = groupsVBox;
-        //Procesos.MostrarAmigos();
+        Thread hilo = new Thread(this);
+        hilo.start();
+        Procesos.MostrarAmigos();
         //Procesos.MostrarUsuariosConectados();
         //Procesos.MostrarUsuariosDesconectados();
         //if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
@@ -351,35 +341,23 @@ public class HomeController implements Initializable {
         Procesos.MostrarGrupos();
     }
     
-    public synchronized void agregarMensaje(Mensaje mensaje){
-        Task <StackPane> serverMessages = new Task<StackPane>() {
-            @Override
-            protected StackPane call() throws Exception {
-                System.out.println("Corriendo");
-                try {
-                    ServerSocket response = new ServerSocket(7654);
-                    System.out.println("Entre al try");
-                    while(true) {
-                        System.out.println("Entre al while");
-                        Gson json = new Gson();
-                        Socket peticion = response.accept();
-                        DataInputStream datos = new DataInputStream(peticion.getInputStream());
-                        String da = datos.readUTF();
-                        Comunicacion modelo = json.fromJson(da, Comunicacion.class);
-                        Procesos.mensajeria(modelo);
-                        peticion.close();
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                return null;
+    @Override
+    public void run(){
+        System.out.println("Corriendo");
+        try {
+            ServerSocket response = new ServerSocket(7654);
+            while(true) {
+                System.out.println("Entre al while");
+                Gson json = new Gson();
+                Socket peticion = response.accept();
+                DataInputStream datos = new DataInputStream(peticion.getInputStream());
+                String da = datos.readUTF();
+                Comunicacion modelo = json.fromJson(da, Comunicacion.class);
+                Procesos.mensajeria(modelo);
+                peticion.close();
             }
-        };
-                
-        serverMessages.setOnSucceeded(event -> {
-            messagesVBox.getChildren().add(serverMessages.getValue());
-        });
-    };
-    
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

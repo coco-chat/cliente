@@ -19,8 +19,10 @@ import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Grupo;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
+import guichat.Modelos.NuevoGrupo;
 import java.lang.reflect.Type;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 /**
  *
@@ -34,6 +36,8 @@ public class Procesos {
    public static VBox mensajes;
    public static VBox friends;
    public static VBox groups;
+   public static VBox lista;
+   
    public static Gson json = new Gson();
    
    public Procesos()
@@ -128,6 +132,34 @@ public class Procesos {
        return 0;
     }
     
+    public static double CrearGrupo(NuevoGrupo grupo){
+        Comunicacion modeloRespuesta = new Comunicacion();
+        Comunicacion modeloPeticion = new Comunicacion();
+        try {
+            System.out.println("Entre");
+            DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
+           
+            modeloPeticion.setTipo(Comunicacion.MTypes.RQ_CGRUPO);
+            modeloPeticion.setContenido(grupo);
+            peticion.writeUTF(json.toJson(modeloPeticion));
+            
+            DataInputStream  respuesta = new DataInputStream(Procesos.soquet.getInputStream());
+            modeloRespuesta= json.fromJson(respuesta.readUTF(), Comunicacion.class);
+            
+            if (modeloRespuesta.getTipo()== Comunicacion.MTypes.ACK) {
+                System.out.println(modeloRespuesta.getContenido());
+                if ((double)modeloRespuesta.getContenido()==270.0) {
+                    return (double)modeloRespuesta.getContenido();
+                }
+            }
+            
+        } catch (IOException I) {
+            I.getMessage();
+            return 0;
+        }
+       return 0;
+    }
+    
     public static void MostrarUsuariosDesconectados(){
         DataOutputStream peticion = null;
         try {
@@ -146,7 +178,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
-                Interfaz.createFriend(friends, mensajes, usuario.getUsername(), usuario.getId());
+                Interfaz.createFriend(friends, mensajes,true, true,  usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -203,7 +235,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
-                Interfaz.createFriend(friends, mensajes, usuario.getUsername(), usuario.getId());
+                Interfaz.createFriend(friends, mensajes, true, true, usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -255,15 +287,41 @@ public class Procesos {
             List<Amigo> amigos = json.fromJson(JsonList, type);
             for(Amigo amigo : amigos){
                 if(amigo.getAmigo1() != -1){
-                    Interfaz.createFriend(friends, mensajes, amigo.getApodo1(), amigo.getAmigo1());
+                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo1(), amigo.getAmigo1());
                 }else if(amigo.getAmigo2() != -1){
-                    Interfaz.createFriend(friends, mensajes, amigo.getApodo2(), amigo.getAmigo2());
+                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo2(), amigo.getAmigo2());
                 }
             }
             
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
         } 
+    }
+    
+    public static void ListaUsuarios() {
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_LUSUARIOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Usuario>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Usuario> usuarios = json.fromJson(JsonList, type);
+            for(Usuario usuario : usuarios){
+                Interfaz.createUser(lista, usuario.getUsername(), usuario.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void EnviarMensajes(String txtMessage)
@@ -279,7 +337,7 @@ public class Procesos {
             System.out.println(txtMessage);
             Mensaje mensaje_enviar= new Mensaje();
             Usuario usuario_destino = new Usuario();
-            usuario_destino.setId(2);
+            usuario_destino.setId(1);
             mensaje_enviar.setDestino(usuario_destino);
             mensaje_enviar.setOrigen(origen);
             mensaje_enviar.setContenido(txtMessage);
@@ -343,7 +401,9 @@ public class Procesos {
     }
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
-        Interfaz.createBubble(mensajes, Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null);
+        Platform.runLater(
+            () -> Interfaz.createBubble(mensajes, Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
+        );
     }
  
     
