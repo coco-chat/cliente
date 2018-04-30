@@ -11,7 +11,7 @@
 - [ ] Enviar petición de amistad a amigo
 - [ ] Aceptar peticiones de amigos
 - [ ] Aceptar peticiones de grupos
-- [ ] Enviar mensaje a amigo
+- [x] Enviar mensaje a amigo
 - [ ] Enviar mensaje a grupo
 - [x] Modificar apodo de amigo
 - [ ] Modificar nombre a grupo
