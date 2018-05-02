@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Grupo;
+import guichat.Modelos.Integrante;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
@@ -416,6 +417,72 @@ public class Procesos {
                     break;
             }
 }
+    public static void EnviarMensajeGrupo(String txtMessage, int IdGrupo)
+    {
+        DataOutputStream EnviarCadena = null;
+        Usuario origen = new Usuario();
+        origen.setId(1);
+        System.out.println("Enviando mensaje");
+        try {
+            Comunicacion modeloOutput = new Comunicacion();
+            System.out.println(txtMessage);
+            MensajeGrupo mensaje_enviar= new MensajeGrupo();
+            mensaje_enviar.getGrupo().setId(IdGrupo);
+            mensaje_enviar.setContenido(txtMessage);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE_GRUPO);
+            modeloOutput.setContenido(mensaje_enviar);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(modeloOutput));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public static void CambiarNombreGrupo(String txtNombre, int IdGrupo)
+    {
+        DataOutputStream EnviarCadena = null;
+        Usuario origen = new Usuario();
+        origen.setId(1);
+        System.out.println("Enviando m");
+        try {
+            Comunicacion modeloOutput = new Comunicacion();
+            System.out.println(txtNombre);
+            Grupo CambiarGrupo= new Grupo();
+            CambiarGrupo.setId(IdGrupo);
+            CambiarGrupo.setNombre(txtNombre);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_CGRUPO);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(modeloOutput));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public static void EliminarIntegrante(int IdMiembro, int IdGrupo)
+    {
+        DataOutputStream EnviarCadena = null;
+        Usuario origen = new Usuario();
+        origen.setId(1);
+        System.out.println("Eliminando");
+        try {
+            Comunicacion modeloOutput = new Comunicacion();
+            System.out.println(IdMiembro);
+            Integrante EliminarIntegrante= new Integrante();
+            EliminarIntegrante.setId(IdMiembro);
+            EliminarIntegrante.setGrupo(IdGrupo);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_DMIEMBRO);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(modeloOutput));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
     public static void MensajeRecibido(Mensaje mensaje)
     {
         MostrarMensajeAmigo(mensaje);
