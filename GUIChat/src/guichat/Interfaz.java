@@ -20,6 +20,9 @@ import javafx.scene.layout.VBox;
  */
 public class Interfaz {
     
+    public static int idElement;
+    public static int type;
+    
     public Interfaz(){
         
     }
@@ -79,6 +82,8 @@ public class Interfaz {
                 if(event.getSource() == user){
                     mensajes.getChildren().clear();
                     System.out.println("Id del Usuario: " + user.getIdElement());
+                    idElement = user.getIdElement();
+                    type = 1;
                 }
             }
         });
@@ -115,6 +120,8 @@ public class Interfaz {
                 if(event.getSource() == group){
                     mensajes.getChildren().clear();
                     System.out.println("Id del grupo: " + group.getIdElement());
+                    idElement = group.getIdElement();
+                    type = 2;
                 }
             }
         });

@@ -354,7 +354,7 @@ public class Procesos {
         }
     }
     
-    public static void EnviarMensajes(String txtMessage)
+    public static void EnviarMensajes(String txtMessage, int id)
     {
         
         DataOutputStream EnviarCadena = null;
@@ -367,7 +367,7 @@ public class Procesos {
             System.out.println(txtMessage);
             Mensaje mensaje_enviar= new Mensaje();
             Usuario usuario_destino = new Usuario();
-            usuario_destino.setId(1);
+            usuario_destino.setId(id);
             mensaje_enviar.setDestino(usuario_destino);
             mensaje_enviar.setOrigen(origen);
             mensaje_enviar.setContenido(txtMessage);

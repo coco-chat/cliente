@@ -313,7 +313,9 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void sendMessage(ActionEvent e){
         Interfaz.createBubble(messagesVBox, Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
-        Procesos.EnviarMensajes(txtMessage.getText());
+        Procesos.EnviarMensajes(txtMessage.getText(), Interfaz.idElement);
+        System.out.println(Interfaz.idElement);
+        System.out.println(Interfaz.type);
         txtMessage.setText("");
     }
     
@@ -332,8 +334,8 @@ public class HomeController implements Initializable, Runnable {
         hilo.start();
         Procesos.MostrarAmigos();
         Procesos.MostrarAmigosDesconectados();
-        //Procesos.MostrarUsuariosConectados();
-        //Procesos.MostrarUsuariosDesconectados();
+        Procesos.MostrarUsuariosConectados();
+        Procesos.MostrarUsuariosDesconectados();
         //if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
         //    System.out.println("El cambio se llevo a cabo correctamente");
         //}else{
