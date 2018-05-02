@@ -424,10 +424,51 @@ public class Procesos {
     {
         
     }
-    public static void Lista_Conectados(Amigo AmigosConectados)
+    
+    public static void EnviarPeticionAmigo ()
     {
-        
+        DataOutputStream EnviarCadena = null;
+        Usuario amigoSolicitado = new Usuario();
+        amigoSolicitado.setId(1);
+        System.out.println("Enviando peticion Amigo");
+        try {
+
+            Comunicacion peticionAmigo = new Comunicacion();
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NAMIGO);
+            peticionAmigo.setContenido(amigoSolicitado);
+            
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(peticionAmigo));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
+    
+     public static void PeticionEliminarAmigo ()
+    {
+        DataOutputStream EnviarCadena = null;
+        Usuario bannedFriend = new Usuario();
+        bannedFriend.setId(1);
+        System.out.println("Enviando peticion Amigo");
+        try {
+
+            Comunicacion peticionAmigo = new Comunicacion();
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_DAMIGO);
+            peticionAmigo.setContenido(bannedFriend);
+            
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(peticionAmigo));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
         Platform.runLater(
