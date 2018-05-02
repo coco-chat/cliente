@@ -1,4 +1,4 @@
-# [Chat de coco](https://github.com/coco-chat) - Cliente
+﻿# [Chat de coco](https://github.com/coco-chat) - Cliente
 
 ### Procesos en cliente:
 
@@ -8,14 +8,14 @@
 - [ ] Mostrar mensajes de un grupo
 - [ ] Crear grupo y agregar amigos
 - [ ] Agregar miembros a grupo (después de crearlo)
-- [ ] Enviar petición de amistad a amigo
+- [x] Enviar petición de amistad a amigo
 - [ ] Aceptar peticiones de amigos
 - [ ] Aceptar peticiones de grupos
 - [x] Enviar mensaje a amigo
 - [ ] Enviar mensaje a grupo
 - [x] Modificar apodo de amigo
 - [ ] Modificar nombre a grupo
-- [ ] Eliminar amigo
+- [x] Eliminar amigo
 - [ ] Eliminar miembro de un grupo
 - [ ] Eliminar grupo
 - [x] Desplegar lista de desconectados
