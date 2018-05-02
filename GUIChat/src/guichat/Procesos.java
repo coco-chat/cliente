@@ -107,7 +107,7 @@ public class Procesos {
         
         try {
             System.out.println("Entre");
-            Procesos.CrearSocket(servidor, 4567);
+            Procesos.CrearSocket("192.168.84.215", 4567);
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
             usuario.setUsername(nick);
             usuario.setPassword(contraseña);
@@ -274,7 +274,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOSCON);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -298,6 +298,35 @@ public class Procesos {
         } 
     }
     
+    public static void MostrarAmigosDesconectados(){
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOSDES);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Amigo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Amigo> amigos = json.fromJson(JsonList, type);
+            for(Amigo amigo : amigos){
+                if(amigo.getAmigo1() != -1){
+                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo1(), amigo.getAmigo1());
+                }else if(amigo.getAmigo2() != -1){
+                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo2(), amigo.getAmigo2());
+                }
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
     public static void ListaUsuarios() {
         DataOutputStream peticion = null;
         try {

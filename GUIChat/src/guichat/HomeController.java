@@ -331,6 +331,7 @@ public class HomeController implements Initializable, Runnable {
         Thread hilo = new Thread(this);
         hilo.start();
         Procesos.MostrarAmigos();
+        Procesos.MostrarAmigosDesconectados();
         //Procesos.MostrarUsuariosConectados();
         //Procesos.MostrarUsuariosDesconectados();
         //if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
