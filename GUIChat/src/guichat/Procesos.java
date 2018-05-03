@@ -546,55 +546,86 @@ public class Procesos {
         );
     }
     
-    private static boolean GuardarMensajePersonal (Mensaje mensaje, int Id_Conversnate) {
+    private static boolean GuardarMensajePersonal (Mensaje mensaje) {
         Gson gson = new Gson();
             
-        //Id_Conversante es el ID de la otra persona con la que se mensajea
+        //Id_Conversante es el ID de la otra persona con la que se mensaje
         
         ArchivosController mensajesPersonalesFile = new ArchivosController (
-            System.getProperty("user.dir") + "\\" + Id_Conversnate + ".json"
+            System.getProperty("user.dir") + "\\mensajesPersonales.json"
         );
         
         List <Mensaje> smsPersonalesRecibidos = new ArrayList<>();
+        List <Mensaje> smsRecibidosEspecificos = new ArrayList<>();
+        List <Mensaje> otrosSmsRecibidos = new ArrayList<>();
         List <String> smsStrFile = mensajesPersonalesFile.readFile();
         
+        //Se obtienen pasan las Str de mensajes y se transforman a Mensaje.class
         for (String personalSmsStr : smsStrFile) {
             Mensaje smsRecibido = new Mensaje();
             smsRecibido = gson.fromJson(personalSmsStr, Mensaje.class);
             smsPersonalesRecibidos.add(smsRecibido);
         }
         
-        if (smsPersonalesRecibidos.size() < 3) {
+        for (Mensaje sms : smsPersonalesRecibidos) {          
+            int d = sms.getDestino().getId();
+            int o = sms.getOrigen().getId();
+            
+            int smsD = sms.getDestino().getId();
+            int smsO = sms.getDestino().getId();
+            
+            if ((smsD == d && smsO == o) || (smsO == o && smsD == d)){
+                //Son los que conversan y añadirlos a la lista de 3 
+                //mensajes por almacenar
+                smsRecibidosEspecificos.add(sms);
+            } else {
+                otrosSmsRecibidos.add(sms);
+            }
+        }
+        
+        //Checar cuantos mensajes se ha enviado los usuarios
+        if (smsRecibidosEspecificos.size() < 3) {
+            //Solo añadir al archivo si los mensajes enviados/recibidos son 
+            //menos de 3
             boolean wsms = mensajesPersonalesFile.writeFile(gson.toJson(mensaje));
             if (wsms) {
                 return true;    //Mensaje almacenado
             } else {
                 return false;
             }
-        } else if (smsPersonalesRecibidos.size() > 2) {
-          Iterator listIterator = smsPersonalesRecibidos.listIterator();
-          List <Mensaje> newPersonalSms = new ArrayList<>();
-          
-          while(listIterator.hasNext()) {
-              Mensaje aux = new Mensaje();
-              aux = (Mensaje) listIterator.next();
-              newPersonalSms.add(aux);
-          }
-          
-          newPersonalSms.add(mensaje);
-          smsStrFile = new ArrayList<>();
-          
-          for (Mensaje newSms : newPersonalSms) {
-              smsStrFile.add(gson.toJson(newSms));
-          }
-          
-          boolean owsms = mensajesPersonalesFile.overwriteFile(smsStrFile);
-          
-          if (owsms) {
-              return true;
-          } else {
-            return false;
-          }
+        } else if (smsRecibidosEspecificos.size() > 2) {                        
+            //Nueva lista para sobre escribir el archivo
+            List <Mensaje> newPersonalSms = new ArrayList<>();
+            
+            //Sms enviados/recividos con otros usuarios
+            for (Mensaje otrosSms : otrosSmsRecibidos) {
+                newPersonalSms.add(otrosSms);
+            }
+                     
+            //Iterador para seleccionar el siguiente objeto de una lista
+            //para almacenarlo en la lista nueva a sobre escribir en el file
+            //Se añade al ultimo el nuevo mensaje enviado/recibido
+            Iterator listIterator = smsRecibidosEspecificos.listIterator();
+            while(listIterator.hasNext()) {
+                Mensaje aux = new Mensaje();
+                aux = (Mensaje) listIterator.next();
+                newPersonalSms.add(aux);
+            }
+            newPersonalSms.add(mensaje);
+            
+            //Reset de List<String> para sobre escribir archivo
+            smsStrFile = new ArrayList<>();
+            for (Mensaje newSms : newPersonalSms) {
+                smsStrFile.add(gson.toJson(newSms));
+            }
+
+            boolean owsms = mensajesPersonalesFile.overwriteFile(smsStrFile);
+
+            if (owsms) {
+                return true;
+            } else {
+              return false;
+            }
         }
         return false;//Error por que no hay numero mensajes adecuado
     }    
