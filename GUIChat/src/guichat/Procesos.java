@@ -109,7 +109,7 @@ public class Procesos {
         
         try {
             System.out.println("Entre");
-            Procesos.CrearSocket("192.168.84.215", 4567);
+            Procesos.CrearSocket("192.168.84.15", 4567);
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
             usuario.setUsername(nick);
             usuario.setPassword(contraseña);

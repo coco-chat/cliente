@@ -81,8 +81,6 @@ public class GroupsController implements Initializable {
             Stage stage = (Stage) messagesBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
-            HomeController home = loader.getController();
-            home.setUsername(this.username);
         }catch (IOException io){
             io.printStackTrace();
         }
