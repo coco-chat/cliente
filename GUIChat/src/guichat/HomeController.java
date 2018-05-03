@@ -314,6 +314,7 @@ public class HomeController implements Initializable, Runnable {
     public void sendMessage(ActionEvent e){
         Interfaz.createBubble(messagesVBox, Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
         Procesos.EnviarMensajes(txtMessage.getText(), Interfaz.idElement);
+        
         System.out.println(Interfaz.idElement);
         System.out.println(Interfaz.type);
         txtMessage.setText("");

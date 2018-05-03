@@ -22,6 +22,8 @@ import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
@@ -217,7 +219,7 @@ public class Procesos {
         }
        return 0;
     }
-    
+        
     public static void MostrarUsuariosConectados(){
         DataOutputStream peticion = null;
         try {
@@ -486,6 +488,7 @@ public class Procesos {
     public static void MensajeRecibido(Mensaje mensaje)
     {
         MostrarMensajeAmigo(mensaje);
+        
     }
     public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
     {
@@ -542,6 +545,57 @@ public class Procesos {
             () -> Interfaz.createBubble(mensajes, Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
         );
     }
- 
     
+    private static boolean GuardarMensajePersonal (Mensaje mensaje, int Id_Conversnate) {
+        Gson gson = new Gson();
+            
+        //Id_Conversante es el ID de la otra persona con la que se mensajea
+        
+        ArchivosController mensajesPersonalesFile = new ArchivosController (
+            System.getProperty("user.dir") + "\\" + Id_Conversnate + ".json"
+        );
+        
+        List <Mensaje> smsPersonalesRecibidos = new ArrayList<>();
+        List <String> smsStrFile = mensajesPersonalesFile.readFile();
+        
+        for (String personalSmsStr : smsStrFile) {
+            Mensaje smsRecibido = new Mensaje();
+            smsRecibido = gson.fromJson(personalSmsStr, Mensaje.class);
+            smsPersonalesRecibidos.add(smsRecibido);
+        }
+        
+        if (smsPersonalesRecibidos.size() < 3) {
+            boolean wsms = mensajesPersonalesFile.writeFile(gson.toJson(mensaje));
+            if (wsms) {
+                return true;    //Mensaje almacenado
+            } else {
+                return false;
+            }
+        } else if (smsPersonalesRecibidos.size() > 2) {
+          Iterator listIterator = smsPersonalesRecibidos.listIterator();
+          List <Mensaje> newPersonalSms = new ArrayList<>();
+          
+          while(listIterator.hasNext()) {
+              Mensaje aux = new Mensaje();
+              aux = (Mensaje) listIterator.next();
+              newPersonalSms.add(aux);
+          }
+          
+          newPersonalSms.add(mensaje);
+          smsStrFile = new ArrayList<>();
+          
+          for (Mensaje newSms : newPersonalSms) {
+              smsStrFile.add(gson.toJson(newSms));
+          }
+          
+          boolean owsms = mensajesPersonalesFile.overwriteFile(smsStrFile);
+          
+          if (owsms) {
+              return true;
+          } else {
+            return false;
+          }
+        }
+        return false;//Error por que no hay numero mensajes adecuado
+    }    
 }
