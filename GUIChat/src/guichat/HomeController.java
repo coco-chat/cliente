@@ -72,7 +72,7 @@ public class HomeController implements Initializable, Runnable {
     public void insertContent(){
         Boolean flag = false;
         for(String user : users){
-            Interfaz.createBubble(messagesVBox, flag, type, user, null);
+            Interfaz.createBubble(flag, type, user, null);
             if(flag) flag = false;
             else flag = true;
         }
@@ -220,14 +220,14 @@ public class HomeController implements Initializable, Runnable {
             flagEdit = true;
             txtCurrentContact.requestFocus();
         }else{
-            if(!txtCurrentContact.getText().equals(contact)){
-                if(Procesos.ActualizarApodoAmigo(txtCurrentContact.getText()) == 243.0){
+            if(!txtCurrentContact.getText().equals(Interfaz.nombre)){
+                if(Procesos.ActualizarApodoAmigo(txtCurrentContact.getText(), Interfaz.idElement) == 243.0){
                     System.out.println("Campo actualizado correctamente");
                 }else{
                     System.out.println("Hubo un problema con la actualizacion");
                 }
                 System.out.println("Nuevo nombre del elemento: " + txtCurrentContact.getText());
-                contact = txtCurrentContact.getText();
+                Interfaz.nombre = txtCurrentContact.getText();
             }
             editBtn.setText("Editar");
             txtCurrentContact.setDisable(true);
@@ -325,7 +325,7 @@ public class HomeController implements Initializable, Runnable {
     
     @FXML
     public void sendMessage(ActionEvent e){
-        Interfaz.createBubble(messagesVBox, Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
+        Interfaz.createBubble(Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
         Procesos.EnviarMensajes(txtMessage.getText(), Interfaz.idElement);
         
         System.out.println(Interfaz.idElement);
@@ -341,9 +341,11 @@ public class HomeController implements Initializable, Runnable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Procesos.mensajes = messagesVBox;
-        Procesos.friends = friendsVBox;
-        Procesos.groups = groupsVBox;
+        Interfaz.mensajes = messagesVBox;
+        Interfaz.friends = friendsVBox;
+        Interfaz.groups = groupsVBox;
+        Interfaz.current = txtCurrentContact;
+        Interfaz.editar = editBtn;
         Thread hilo = new Thread(this);
         hilo.start();
         Procesos.MostrarAmigos();

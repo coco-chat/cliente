@@ -25,6 +25,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 /**
  *
@@ -35,10 +36,6 @@ public class Procesos {
    public static String ip;
    public static int puerto;
    public static Socket soquet;
-   public static VBox mensajes;
-   public static VBox friends;
-   public static VBox groups;
-   public static VBox lista;
    
    public static Gson json = new Gson();
    
@@ -180,7 +177,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
-                Interfaz.createFriend(friends, mensajes,false, false,  usuario.getUsername(), usuario.getId());
+                Interfaz.createFriend(false, false, usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -188,7 +185,7 @@ public class Procesos {
         }
     }
     
-    public static double ActualizarApodoAmigo(String apodo){
+    public static double ActualizarApodoAmigo(String apodo, int id){
         Amigo amigo = new Amigo();
         Comunicacion modeloRespuesta = new Comunicacion();
         Comunicacion modeloPeticion = new Comunicacion();
@@ -196,9 +193,8 @@ public class Procesos {
         try {
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
             modeloPeticion.setTipo(Comunicacion.MTypes.RQ_APODO);
-            amigo.setApodo2(apodo);
-            amigo.setAmigo2(3);
-            amigo.setId(1);
+            amigo.setApodo1(apodo);
+            amigo.setAmigo1(id);
             modeloPeticion.setContenido(amigo);
             peticion.writeUTF(json.toJson(modeloPeticion));
             
@@ -237,7 +233,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
-                Interfaz.createFriend(friends, mensajes, true, false, usuario.getUsername(), usuario.getId());
+                Interfaz.createFriend(true, false, usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -263,7 +259,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Grupo> grupos = json.fromJson(JsonList, type);
             for(Grupo grupo : grupos)
-                Interfaz.createGroup(groups, mensajes, grupo.getNombre(), grupo.getId());
+                Interfaz.createGroup(grupo.getNombre(), grupo.getId());
             
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
@@ -289,9 +285,9 @@ public class Procesos {
             List<Amigo> amigos = json.fromJson(JsonList, type);
             for(Amigo amigo : amigos){
                 if(amigo.getAmigo1() != -1){
-                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo1(), amigo.getAmigo1());
+                    Interfaz.createFriend(true, true, amigo.getApodo1(), amigo.getAmigo1());
                 }else if(amigo.getAmigo2() != -1){
-                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo2(), amigo.getAmigo2());
+                    Interfaz.createFriend(true, true, amigo.getApodo2(), amigo.getAmigo2());
                 }
             }
             
@@ -319,9 +315,9 @@ public class Procesos {
             List<Amigo> amigos = json.fromJson(JsonList, type);
             for(Amigo amigo : amigos){
                 if(amigo.getAmigo1() != -1){
-                    Interfaz.createFriend(friends, mensajes, false, true, amigo.getApodo1(), amigo.getAmigo1());
+                    Interfaz.createFriend(false, true, amigo.getApodo1(), amigo.getAmigo1());
                 }else if(amigo.getAmigo2() != -1){
-                    Interfaz.createFriend(friends, mensajes, false, true, amigo.getApodo2(), amigo.getAmigo2());
+                    Interfaz.createFriend(false, true, amigo.getApodo2(), amigo.getAmigo2());
                 }
             }
             
@@ -348,7 +344,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> usuarios = json.fromJson(JsonList, type);
             for(Usuario usuario : usuarios){
-                Interfaz.createUser(lista, usuario.getUsername(), usuario.getId());
+                Interfaz.createUser(usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -549,7 +545,7 @@ public class Procesos {
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
         Platform.runLater(
-            () -> Interfaz.createBubble(mensajes, Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
+            () -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
         );
     }
     

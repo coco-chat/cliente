@@ -9,7 +9,9 @@ import guichat.Components.CButton;
 import guichat.Components.CCheckBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,8 +22,16 @@ import javafx.scene.layout.VBox;
  */
 public class Interfaz {
     
+    public static VBox mensajes;
+    public static VBox friends;
+    public static VBox groups;
+    public static VBox lista;
+    public static Button editar;
+    public static TextField current;
     public static int idElement;
     public static int type;
+    public static String nombre;
+    public static int amistad;
     
     public Interfaz(){
         
@@ -38,7 +48,7 @@ public class Interfaz {
      * @param message String Mensaje a insertar
      * @param user String Nombre de Usuario que envío el mensaje
      */
-    public static void createBubble(VBox container, Boolean position, Boolean type, String message, String user){
+    public static void createBubble(Boolean position, Boolean type, String message, String user){
         StackPane main = new StackPane();
         main.getStyleClass().add("bubble-container");
         VBox div = new VBox();
@@ -61,7 +71,7 @@ public class Interfaz {
             div.getChildren().add(by);
         }
         main.getChildren().add(div);
-        container.getChildren().add(main);
+        mensajes.getChildren().add(main);
     }
     
     /**
@@ -69,7 +79,7 @@ public class Interfaz {
      * @param name String Nombre o apodo del amigo
      * @param id int Identificador en la base de datos del amigo
      */
-    public static void createFriend(VBox friends, VBox mensajes, Boolean state, Boolean friend, String name, int id){
+    public static void createFriend(Boolean state, Boolean friend, String name, int id){
         HBox container = new HBox();
         container.getStyleClass().add("contact");
         CButton user = new CButton(name);
@@ -83,7 +93,10 @@ public class Interfaz {
                     mensajes.getChildren().clear();
                     System.out.println("Id del Usuario: " + user.getIdElement());
                     idElement = user.getIdElement();
+                    current.setText(user.getNameElement());
+                    nombre = user.getNameElement();
                     type = 1;
+                    editar.setDisable(false);
                 }
             }
         });
@@ -109,7 +122,7 @@ public class Interfaz {
      * @param name String Nombre del grupo
      * @param id int Identificador en la base de datos del grupo
      */
-    public static void createGroup(VBox groups, VBox mensajes, String name, int id){
+    public static void createGroup(String name, int id){
         CButton group = new CButton(name);
         group.setIdElement(id);
         group.setNameElement(name);
@@ -121,17 +134,20 @@ public class Interfaz {
                     mensajes.getChildren().clear();
                     System.out.println("Id del grupo: " + group.getIdElement());
                     idElement = group.getIdElement();
+                    current.setText(group.getNameElement());
+                    nombre = group.getNameElement();
                     type = 2;
+                    editar.setDisable(false);
                 }
             }
         });
         groups.getChildren().add(group);
     }
     
-    public static void createUser(VBox users, String name, int id){
+    public static void createUser(String name, int id){
         CCheckBox usuario = new CCheckBox(name);
         usuario.getStyleClass().add("check");
         usuario.setIdUser(id);
-        users.getChildren().add(usuario);
+        lista.getChildren().add(usuario);
     }
 }

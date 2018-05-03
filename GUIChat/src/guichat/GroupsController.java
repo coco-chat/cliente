@@ -163,7 +163,7 @@ public class GroupsController implements Initializable {
     public void insertContent(){
         int count = 1;
         for(String user : users) {
-            Interfaz.createUser(usersVBox, user, count);
+            Interfaz.createUser(user, count);
         }
     }
     
@@ -173,7 +173,7 @@ public class GroupsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Procesos.lista = usersVBox;
+        Interfaz.lista = usersVBox;
         Procesos.ListaUsuarios();
     }    
     

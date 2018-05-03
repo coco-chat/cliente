@@ -5,29 +5,9 @@
         <group>
             <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/GUIChat.java</file>
             <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/Interfaz.java</file>
+            <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/GroupsController.java</file>
             <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/Procesos.java</file>
-            <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/Register.fxml</file>
-            <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/Modelos/Comunicacion.java</file>
-            <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/RegisterController.java</file>
             <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/HomeController.java</file>
-            <file>file:/C:/Users/Wero/Documents/GitHub/cliente/GUIChat/src/guichat/LoginController.java</file>
         </group>
-=======
-<<<<<<< HEAD
-        <group>
-            <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/GroupsController.java</file>
-            <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/LoginController.java</file>
-            <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/RegisterController.java</file>
-            <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/HomeController.java</file>
-            <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/NotificationsController.java</file>
-            <file>file:/C:/Users/start/OneDrive/Documentos/GitHub/cliente/GUIChat/src/guichat/Notifications.fxml</file>
-        </group>
-<<<<<<< HEAD
-=======
-        <group/>
->>>>>>> af9eb3598680a33eebbd64cb67565f8c0b1f02a5
->>>>>>> design
-=======
->>>>>>> design
     </open-files>
 </project-private>
