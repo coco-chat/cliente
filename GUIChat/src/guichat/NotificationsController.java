@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,7 +37,10 @@ import javafx.stage.Stage;
 public class NotificationsController implements Initializable{
     @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, aceptarBtn, rechazarBtn;
     @FXML private VBox notificationsVBox;
+<<<<<<< HEAD
     @FXML private Label txtCurrentNotification;
+=======
+>>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
     private String username;
     private String[] users = {
         "Arturo Carrillo te quiere agregar como amigo",
@@ -47,6 +51,7 @@ public class NotificationsController implements Initializable{
         "Emiliano Moreno",
         "Eduardo Fuentes"
     };
+    private int currentRequest;
 
     public NotificationsController() {
     }
@@ -79,16 +84,19 @@ public class NotificationsController implements Initializable{
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == notification){
-                    notificationsVBox.getChildren().clear();
                     System.out.println("Id del usuario: " + notification.getIdElement());
-                    txtCurrentNotification.setText(notification.getNameElement());
+                    currentRequest = notification.getIdElement();
                     username = notification.getNameElement();
                     aceptarBtn.setVisible(true);
                     rechazarBtn.setVisible(true);
+<<<<<<< HEAD
                     aceptarBtn.setDisable(false);
                     rechazarBtn.setDisable(false);
                     
                     }
+=======
+                }
+>>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
             }
         });
         Label con = new Label();
@@ -118,14 +126,31 @@ public class NotificationsController implements Initializable{
         stage.setIconified(true);
     }
     
+    public void deleteElement(){
+        if(notificationsVBox instanceof VBox){
+            for(Node hbox : ((VBox)notificationsVBox).getChildren()){
+                if(hbox instanceof HBox){
+                    for(Node cbutton : ((HBox)hbox).getChildren()){
+                        if(cbutton instanceof CButton){
+                            if(((CButton) cbutton).getIdElement() == currentRequest){
+                                notificationsVBox.getChildren().remove(hbox);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     @FXML
     public void handleAdd(ActionEvent e){
-        
+        deleteElement();
     }
     
     @FXML
     public void handleNoAdd(ActionEvent e){
-        
+        currentRequest = -1;
     }
     
 
