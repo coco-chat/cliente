@@ -330,6 +330,7 @@ public class Procesos {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
+    
     public static void ListaUsuarios() {
         DataOutputStream peticion = null;
         try {
@@ -377,9 +378,11 @@ public class Procesos {
             modeloOutput.setContenido(mensaje_enviar);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
-
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
             RecibirConfirmacion.readUTF();
+            
+            GuardarMensajePersonal(mensaje_enviar);
+            
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -388,7 +391,7 @@ public class Procesos {
     
     public static void RecibirPeticiones()
     {
-         Gson jayson= new Gson();
+        Gson jayson= new Gson();
         Comunicacion modelo = new Comunicacion();
         try {
             DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
@@ -401,8 +404,8 @@ public class Procesos {
     public static void mensajeria(Comunicacion modelo)
     {
         
-          Gson json= new Gson(); 
-          String data = json.toJson(modelo.getContenido());
+        Gson json= new Gson(); 
+        String data = json.toJson(modelo.getContenido());
         switch(modelo.getTipo())
             {
                 case SEND_MENSAJE:
@@ -418,7 +421,8 @@ public class Procesos {
                     
                     break;
             }
-}
+    }
+    
     public static void EnviarMensajeGrupo(String txtMessage, int IdGrupo)
     {
         DataOutputStream EnviarCadena = null;
@@ -437,6 +441,9 @@ public class Procesos {
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
             RecibirConfirmacion.readUTF();
+            
+            GuardarMensajeGrupo(mensaje_enviar);
+            
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -487,12 +494,13 @@ public class Procesos {
     }
     public static void MensajeRecibido(Mensaje mensaje)
     {
+        GuardarMensajePersonal(mensaje);
         MostrarMensajeAmigo(mensaje);
-        
     }
+    
     public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
     {
-        
+        GuardarMensajeGrupo(mensaje_grupo);
     }
     
     public static void EnviarPeticionAmigo ()
@@ -555,7 +563,7 @@ public class Procesos {
         
         List <Mensaje> smsPersonalesRecibidos = new ArrayList<>();
         List <Mensaje> smsRecibidosEspecificos = new ArrayList<>();
-        List <Mensaje> otrosSmsRecibidos = new ArrayList<>();
+        //List <Mensaje> otrosSmsRecibidos = new ArrayList<>();
         List <String> smsStrFile = mensajesPersonalesFile.readFile();
         
         //Se obtienen pasan las Str de mensajes y se transforman a Mensaje.class
@@ -565,6 +573,24 @@ public class Procesos {
             smsPersonalesRecibidos.add(smsRecibido);
         }
         
+        smsPersonalesRecibidos.add(mensaje);
+        
+        smsStrFile = new ArrayList<>();
+        
+        for (Mensaje sms : smsPersonalesRecibidos) {
+            smsStrFile.add(gson.toJson(sms));
+        } 
+        
+        boolean owfile = mensajesPersonalesFile.overwriteFile(smsStrFile);
+        
+        if (owfile) {
+            return true;
+        } else {
+            return false;
+        }
+        
+        
+        /*
         for (Mensaje sms : smsPersonalesRecibidos) {          
             int d = sms.getDestino().getId();
             int o = sms.getOrigen().getId();
@@ -580,6 +606,7 @@ public class Procesos {
                 otrosSmsRecibidos.add(sms);
             }
         }
+        
         
         //Checar cuantos mensajes se ha enviado los usuarios
         if (smsRecibidosEspecificos.size() < 3) {
@@ -626,18 +653,25 @@ public class Procesos {
             }
         }
         return false;//Error por que no hay numero mensajes adecuado
+        */
     }    
     
     private static boolean GuardarMensajeGrupo (MensajeGrupo smsGrupo) {        
-        
+        Gson gson = new Gson();        
+                
         ArchivosController mensajesPersonalesFile = new ArchivosController (
             System.getProperty("user.dir") + "\\smsGrupos.json"
         );
         
-        //Agregar el menasje al flie de grupos
+        boolean wsms = mensajesPersonalesFile.writeFile(gson.toJson(smsGrupo));
+        
+        if (wsms) {
+            return true;
+        } else {
+            return false;
+        }        
         
         //Para leer verificar cual de cuál grupo es del que se quiere obtener 
         //los mensajes.
-        
     }
 }
