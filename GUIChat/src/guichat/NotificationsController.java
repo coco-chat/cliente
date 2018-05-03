@@ -17,13 +17,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import static javafx.scene.input.KeyCode.T;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -32,8 +35,12 @@ import javafx.stage.Stage;
  * @author start
  */
 public class NotificationsController implements Initializable{
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, aceptarBtn, rechazarBtn;
     @FXML private VBox notificationsVBox;
+//<<<<<<< HEAD
+    @FXML private TextField txtCurrentNotification;
+//=======
+//>>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
     private String username;
     private String[] users = {
         "Arturo Carrillo te quiere agregar como amigo",
@@ -44,6 +51,7 @@ public class NotificationsController implements Initializable{
         "Emiliano Moreno",
         "Eduardo Fuentes"
     };
+    private int currentRequest;
 
     public NotificationsController() {
     }
@@ -53,6 +61,7 @@ public class NotificationsController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         insertContent();
+        
     }
     
     @FXML
@@ -64,27 +73,48 @@ public class NotificationsController implements Initializable{
     /**
      * Método para hacer pruebas en la pantalla
      */
-    public void createNotification(String name, int id){
+    public void createNotification(Boolean state, Boolean friend, String name, int id){
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
         CButton notification = new CButton(name);
         notification.setIdElement(id);
         notification.setNameElement(name);
-        notification.getStyleClass().add("chat-btn");
+        notification.getStyleClass().add("btn");
         notification.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == notification){
                     System.out.println("Id del usuario: " + notification.getIdElement());
-                    //txtUser.setText(notification.getNameElement());
+                    currentRequest = notification.getIdElement();
+                    username = notification.getNameElement();
+                    aceptarBtn.setVisible(true);
+                    rechazarBtn.setVisible(true);
+//<<<<<<< HEAD
+                    aceptarBtn.setDisable(false);
+                    rechazarBtn.setDisable(false);
+                    
+                    }
+//=======
                 }
-            }
+//>>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
         });
-        notificationsVBox.getChildren().add(notification);
+        Label con = new Label();
+        con.getStyleClass().add("circle");
+        container.getChildren().add(notification);
+        container.getChildren().add(con);
+        
+        notificationsVBox.getChildren().add(container);
+    
+        
     }
     
     public void insertContent(){
+        Boolean flag = false;
         int contador = 0;
         for(String user : users){
-            createNotification(user, contador);
+            createNotification(flag, flag, user, contador);
+            if(flag) flag = false;
+            else flag = true;
             contador++;
         }
     }
@@ -93,6 +123,42 @@ public class NotificationsController implements Initializable{
     public void handleMinimizeWindow(ActionEvent e){
         Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
         stage.setIconified(true);
+    }
+    
+    public void deleteElement(){
+        if(notificationsVBox instanceof VBox){
+            for(Node hbox : ((VBox)notificationsVBox).getChildren()){
+                if(hbox instanceof HBox){
+                    for(Node cbutton : ((HBox)hbox).getChildren()){
+                        if(cbutton instanceof CButton){
+                            if(((CButton) cbutton).getIdElement() == currentRequest){
+                                notificationsVBox.getChildren().remove(hbox);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @FXML
+    public void handleAdd(ActionEvent e){
+        aceptarBtn.setVisible(false);
+        rechazarBtn.setVisible(false);
+        aceptarBtn.setDisable(true);
+        rechazarBtn.setDisable(true);
+        deleteElement();
+    }
+    
+    @FXML
+    public void handleNoAdd(ActionEvent e){
+        aceptarBtn.setVisible(false);
+        rechazarBtn.setVisible(false);
+        aceptarBtn.setDisable(true);
+        rechazarBtn.setDisable(true);
+        currentRequest = -1;
+        
     }
     
 
@@ -114,6 +180,8 @@ public class NotificationsController implements Initializable{
             io.printStackTrace();
         }
     }
+    
+    
     
     @FXML
     public void signOut(ActionEvent e){

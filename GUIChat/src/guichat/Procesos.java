@@ -23,7 +23,6 @@ import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
@@ -181,7 +180,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
-                Interfaz.createFriend(friends, mensajes,true, true,  usuario.getUsername(), usuario.getId());
+                Interfaz.createFriend(friends, mensajes,false, false,  usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -238,7 +237,7 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
-                Interfaz.createFriend(friends, mensajes, true, true, usuario.getUsername(), usuario.getId());
+                Interfaz.createFriend(friends, mensajes, true, false, usuario.getUsername(), usuario.getId());
             }
             
         } catch (IOException ex) {
@@ -320,9 +319,9 @@ public class Procesos {
             List<Amigo> amigos = json.fromJson(JsonList, type);
             for(Amigo amigo : amigos){
                 if(amigo.getAmigo1() != -1){
-                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo1(), amigo.getAmigo1());
+                    Interfaz.createFriend(friends, mensajes, false, true, amigo.getApodo1(), amigo.getAmigo1());
                 }else if(amigo.getAmigo2() != -1){
-                    Interfaz.createFriend(friends, mensajes, true, true, amigo.getApodo2(), amigo.getAmigo2());
+                    Interfaz.createFriend(friends, mensajes, false, true, amigo.getApodo2(), amigo.getAmigo2());
                 }
             }
             

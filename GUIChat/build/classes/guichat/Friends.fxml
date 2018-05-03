@@ -5,14 +5,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.NotificationsController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.FriendsController">
    <children>
       <AnchorPane layoutX="250.0" layoutY="64.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0">
          <children>
@@ -33,7 +33,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutY="64.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn">
+                  <Button layoutY="64.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -47,6 +47,10 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <styleClass>
+                        <String fx:value="sidebar-btn" />
+                        <String fx:value="sidebar-active" />
+                     </styleClass>
                   </Button>
                   <Button layoutX="-14.0" layoutY="136.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
                      <font>
@@ -78,7 +82,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="notificationBtn" layoutY="192.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="192.0">
+                  <Button layoutY="192.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="192.0">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -92,57 +96,57 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
-                     <styleClass>
-                        <String fx:value="sidebar-btn" />
-                        <String fx:value="sidebar-active" />
-                     </styleClass>
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="64.0" prefHeight="200.0" prefWidth="300.0" styleClass="group" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane layoutX="64.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <AnchorPane prefHeight="44.0" prefWidth="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label layoutX="88.0" layoutY="6.0" prefHeight="32.0" prefWidth="151.0" text="Notificaciones" textAlignment="CENTER" textFill="#f2f7f7">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane layoutY="46.0" prefHeight="522.0" prefWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="46.0">
-                     <children>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="522.0" prefWidth="300.0">
-                           <styleClass>
-                              <String fx:value="green-scroll" />
-                              <String fx:value="bg-blue" />
-                           </styleClass>
-                           <content>
-                              <VBox fx:id="notificationsVBox" prefHeight="453.0" prefWidth="298.0" styleClass="chat" />
-                           </content>
-                        </ScrollPane>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="364.0" prefHeight="200.0" prefWidth="200.0" style="-fx-padding: 0 0 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <AnchorPane prefHeight="112.0" prefWidth="200.0" style="-fx-background-color: #F2F7F7;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                     <children>
-                        <TextField fx:id="txtCurrentNotification" disable="true" layoutX="21.0" layoutY="24.0" prefHeight="64.0" prefWidth="591.0" styleClass="textField" />
-                     </children></AnchorPane>
-                  <Button fx:id="aceptarBtn" disable="true" layoutX="119.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleAdd" prefHeight="64.0" prefWidth="167.0" styleClass="btn-green" text="ACEPTAR" visible="false">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="rechazarBtn" disable="true" layoutX="370.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleNoAdd" prefHeight="64.0" prefWidth="167.0" styleClass="btn-gray" text="RECHAZAR" visible="false">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
-               </children>
-            </AnchorPane>
+                  <SplitPane dividerPositions="0.29797979797979796" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="112.0">
+                    <items>
+                      <AnchorPane maxWidth="468.0" minHeight="0.0" minWidth="468.0" prefHeight="160.0" prefWidth="468.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="170.0" layoutY="56.0" prefHeight="64.0" text="Agregar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="36.0" />
+                                 </font>
+                              </Label>
+                              <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutY="64.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                                 <content>
+                                    <VBox fx:id="addFriendsVBox" prefHeight="200.0" prefWidth="100.0" />
+                                 </content>
+                                 <styleClass>
+                                    <String fx:value="blue-scroll" />
+                                    <String fx:value="bg-gray" />
+                                 </styleClass>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane maxWidth="468.0" minHeight="0.0" minWidth="468.0" prefHeight="160.0" prefWidth="468.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="64.0" text="Eliminar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="36.0" />
+                                 </font>
+                              </Label>
+                              <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                                 <content>
+                                    <VBox fx:id="deleteFriendsVBox" prefHeight="200.0" prefWidth="100.0" />
+                                 </content>
+                                 <styleClass>
+                                    <String fx:value="blue-scroll" />
+                                    <String fx:value="bg-gray" />
+                                 </styleClass>
+                              </ScrollPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+            <Label alignment="CENTER" layoutX="180.0" layoutY="66.0" prefHeight="112.0" text="Amigos" textFill="#54d38a" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Century Gothic Bold" size="36.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="headerBar" layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
