@@ -547,9 +547,7 @@ public class Procesos {
     }
     
     private static boolean GuardarMensajePersonal (Mensaje mensaje) {
-        Gson gson = new Gson();
-            
-        //Id_Conversante es el ID de la otra persona con la que se mensaje
+        Gson gson = new Gson(); 
         
         ArchivosController mensajesPersonalesFile = new ArchivosController (
             System.getProperty("user.dir") + "\\mensajesPersonales.json"
@@ -629,4 +627,17 @@ public class Procesos {
         }
         return false;//Error por que no hay numero mensajes adecuado
     }    
+    
+    private static boolean GuardarMensajeGrupo (MensajeGrupo smsGrupo) {        
+        
+        ArchivosController mensajesPersonalesFile = new ArchivosController (
+            System.getProperty("user.dir") + "\\smsGrupos.json"
+        );
+        
+        //Agregar el menasje al flie de grupos
+        
+        //Para leer verificar cual de cuál grupo es del que se quiere obtener 
+        //los mensajes.
+        
+    }
 }
