@@ -29,7 +29,7 @@ public class GUIChat extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("Friends.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
 
         scene = new Scene(root);
 

@@ -40,7 +40,7 @@
                         <String fx:value="sidebar-active" />
                      </styleClass>
                   </Button>
-                  <Button layoutY="64.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn">
+                  <Button fx:id="friendsBtn" layoutY="64.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#goToFriends" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>

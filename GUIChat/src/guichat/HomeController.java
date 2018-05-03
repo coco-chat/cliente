@@ -32,7 +32,7 @@ import javafx.stage.Stage;
 public class HomeController implements Initializable {
 
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn, notificationBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn, notificationBtn, friendsBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private TextField txtCurrentContact;
@@ -208,6 +208,19 @@ public class HomeController implements Initializable {
      * Métodos FXML
      * =========================================================================
      */
+    
+    @FXML
+    public void goToFriends(ActionEvent e){
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Friends.fxml"));
+            Stage stage = (Stage) friendsBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
     
     @FXML
     public void editContact(ActionEvent e){
