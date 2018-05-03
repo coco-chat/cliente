@@ -37,10 +37,10 @@ import javafx.stage.Stage;
 public class NotificationsController implements Initializable{
     @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, aceptarBtn, rechazarBtn;
     @FXML private VBox notificationsVBox;
-<<<<<<< HEAD
-    @FXML private Label txtCurrentNotification;
-=======
->>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
+//<<<<<<< HEAD
+    @FXML private TextField txtCurrentNotification;
+//=======
+//>>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
     private String username;
     private String[] users = {
         "Arturo Carrillo te quiere agregar como amigo",
@@ -89,15 +89,14 @@ public class NotificationsController implements Initializable{
                     username = notification.getNameElement();
                     aceptarBtn.setVisible(true);
                     rechazarBtn.setVisible(true);
-<<<<<<< HEAD
+//<<<<<<< HEAD
                     aceptarBtn.setDisable(false);
                     rechazarBtn.setDisable(false);
                     
                     }
-=======
+//=======
                 }
->>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
-            }
+//>>>>>>> aef4ee97a32a3cc580912f831b8246abb9425711
         });
         Label con = new Label();
         con.getStyleClass().add("circle");
@@ -145,12 +144,21 @@ public class NotificationsController implements Initializable{
     
     @FXML
     public void handleAdd(ActionEvent e){
+        aceptarBtn.setVisible(false);
+        rechazarBtn.setVisible(false);
+        aceptarBtn.setDisable(true);
+        rechazarBtn.setDisable(true);
         deleteElement();
     }
     
     @FXML
     public void handleNoAdd(ActionEvent e){
+        aceptarBtn.setVisible(false);
+        rechazarBtn.setVisible(false);
+        aceptarBtn.setDisable(true);
+        rechazarBtn.setDisable(true);
         currentRequest = -1;
+        
     }
     
 
