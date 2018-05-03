@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 public class NotificationsController implements Initializable{
     @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, aceptarBtn, rechazarBtn;
     @FXML private VBox notificationsVBox;
-    @FXML private TextField txtCurrentNotification;
+    @FXML private Label txtCurrentNotification;
     private String username;
     private String[] users = {
         "Arturo Carrillo te quiere agregar como amigo",
@@ -83,10 +83,11 @@ public class NotificationsController implements Initializable{
                     System.out.println("Id del usuario: " + notification.getIdElement());
                     txtCurrentNotification.setText(notification.getNameElement());
                     username = notification.getNameElement();
-                    aceptarBtn.setDisable(false);
-                    rechazarBtn.setDisable(false);
                     aceptarBtn.setVisible(true);
                     rechazarBtn.setVisible(true);
+                    aceptarBtn.setDisable(false);
+                    rechazarBtn.setDisable(false);
+                    
                     }
             }
         });
