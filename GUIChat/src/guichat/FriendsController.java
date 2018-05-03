@@ -5,6 +5,7 @@
  */
 package guichat;
 
+import guichat.Components.CCheckBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -25,7 +27,33 @@ public class FriendsController implements Initializable {
 
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, messagesBtn;
+    @FXML private VBox addFriendsVBox, deleteFriendsVBox;
     
+    private String[] users = {
+        "Arturo Carrillo",
+        "Kevin Alan",
+        "Vanya Martínez",
+        "Jimena Zaragoza",
+        "Juan Antonio",
+        "Emiliano Moreno",
+        "Eduardo Fuentes"
+    };
+    
+    
+    public void insertContent(){
+        int count = 1;
+        Boolean flag = true;
+        for(String user : users) {
+            createRequest(true, user, count);
+            if(flag) flag = false;
+            else flag = true;
+            count++;
+        }
+    }
+    
+    public void createRequest(Boolean status, String name, int id){
+        
+    }
     
     /**
      * Método para poder cerrar la pestaña
@@ -81,6 +109,7 @@ public class FriendsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        insertContent();
     }    
     
 }
