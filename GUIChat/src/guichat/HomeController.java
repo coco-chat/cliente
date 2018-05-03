@@ -155,7 +155,7 @@ public class HomeController implements Initializable {
             con.getStyleClass().add("online");
         }else{
             con.getStyleClass().add("offline");
-        }
+        }con.getStyleClass().add("circle");
         container.getChildren().add(user);
         container.getChildren().add(con);
         if(friend){
