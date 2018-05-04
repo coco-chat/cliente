@@ -21,6 +21,7 @@ import guichat.Modelos.Integrante;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
+import guichat.Modelos.PetAmigo;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -178,6 +179,63 @@ public class Procesos {
             List<Usuario> amigos = json.fromJson(JsonList, type);
             for(Usuario usuario : amigos){
                 Interfaz.createFriend(false, false, usuario.getUsername(), usuario.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void MostrarListaAgregar(){
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_USUARIOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Usuario>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Usuario> amigos = json.fromJson(JsonList, type);
+            for(Usuario usuario : amigos){
+                Interfaz.createRequest(true, usuario.getUsername(), usuario.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void MostrarListaEliminar(){
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Amigo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Amigo> amigos = json.fromJson(JsonList, type);
+            for(Amigo amigo : amigos){
+                System.out.println(amigo);
+                if(amigo.getAmigo1() != -1){
+                    Interfaz.createRequest(false, amigo.getApodo1(), amigo.getId());
+                }else{
+                    Interfaz.createRequest(false, amigo.getApodo2(), amigo.getId());
+                }
             }
             
         } catch (IOException ex) {
@@ -498,18 +556,16 @@ public class Procesos {
         GuardarMensajeGrupo(mensaje_grupo);
     }
     
-    public static void EnviarPeticionAmigo ()
-    {
+    public static void PeticionAgregarAmigo (int id) {
         DataOutputStream EnviarCadena = null;
-        Usuario amigoSolicitado = new Usuario();
-        amigoSolicitado.setId(1);
+        Usuario invitacion = new Usuario();
+        invitacion.setId(id);
         System.out.println("Enviando peticion Amigo");
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
             peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NAMIGO);
-            peticionAmigo.setContenido(amigoSolicitado);
-            
+            peticionAmigo.setContenido(invitacion);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
@@ -520,17 +576,17 @@ public class Procesos {
         } 
     }
     
-     public static void PeticionEliminarAmigo ()
+    public static void PeticionEliminarAmigo (int id)
     {
         DataOutputStream EnviarCadena = null;
-        Usuario bannedFriend = new Usuario();
-        bannedFriend.setId(1);
+        Amigo invitacion = new Amigo();
+        invitacion.setAmigo1(id);
         System.out.println("Enviando peticion Amigo");
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
             peticionAmigo.setTipo(Comunicacion.MTypes.RQ_DAMIGO);
-            peticionAmigo.setContenido(bannedFriend);
+            peticionAmigo.setContenido(invitacion);
             
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));

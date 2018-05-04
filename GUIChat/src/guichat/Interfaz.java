@@ -26,6 +26,8 @@ public class Interfaz {
     public static VBox friends;
     public static VBox groups;
     public static VBox lista;
+    public static VBox agregar;
+    public static VBox eliminar;
     public static Button editar;
     public static TextField current;
     public static int idElement;
@@ -35,6 +37,43 @@ public class Interfaz {
     
     public Interfaz(){
         
+    }
+    
+    public static void createRequest(Boolean status, String name, int id){
+        HBox container = new HBox();
+        container.getStyleClass().add("friend-container");
+        CButton request = new CButton();
+        request.setIdElement(id);
+        Label user = new Label();
+        user.setText(name);
+        user.getStyleClass().add("name");
+        if(status){
+            request.getStyleClass().add("btn-green");
+            request.setText("Agregar");
+        }else{
+            request.getStyleClass().add("btn-gray");
+            request.setText("Eliminar");
+        }
+        request.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                if(e.getSource() == request){
+                    System.out.println("Id del Element: " + request.getIdElement());
+                   if(status){
+                       Procesos.PeticionAgregarAmigo(request.getIdElement());
+                   }else{
+                       Procesos.PeticionEliminarAmigo(request.getIdElement());
+                   }
+                }
+            }
+        });
+        container.getChildren().add(user);
+        container.getChildren().add(request);
+        if(status){
+            agregar.getChildren().add(container);
+        }else{
+            eliminar.getChildren().add(container);
+        }
     }
     
     /**

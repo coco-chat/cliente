@@ -43,48 +43,7 @@ public class FriendsController implements Initializable {
     };
     
     
-    public void insertContent(){
-        int count = 1;
-        Boolean flag = true;
-        for(String user : users) {
-            createRequest(flag, user, count);
-            if(flag) flag = false;
-            else flag = true;
-            count++;
-        }
-    }
     
-    public void createRequest(Boolean status, String name, int id){
-        HBox container = new HBox();
-        container.getStyleClass().add("friend-container");
-        CButton request = new CButton();
-        request.setIdElement(id);
-        Label user = new Label();
-        user.setText(name);
-        user.getStyleClass().add("name");
-        if(status){
-            request.getStyleClass().add("btn-green");
-            request.setText("Agregar");
-        }else{
-            request.getStyleClass().add("btn-gray");
-            request.setText("Eliminar");
-        }
-        request.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent e){
-                if(e.getSource() == request){
-                    System.out.println("Id del Element: " + request.getIdElement());
-                }
-            }
-        });
-        container.getChildren().add(user);
-        container.getChildren().add(request);
-        if(status){
-            addFriendsVBox.getChildren().add(container);
-        }else{
-            deleteFriendsVBox.getChildren().add(container);
-        }
-    }
     
     /**
      * Método para poder cerrar la pestaña
@@ -140,7 +99,10 @@ public class FriendsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        insertContent();
+        Interfaz.agregar = addFriendsVBox;
+        Interfaz.eliminar = deleteFriendsVBox;
+        Procesos.MostrarListaAgregar();
+        Procesos.MostrarListaEliminar();
     }    
     
 }
