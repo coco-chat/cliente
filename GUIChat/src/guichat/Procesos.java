@@ -659,17 +659,7 @@ public class Procesos {
         }
         
         
-        //Checar cuantos mensajes se ha enviado los usuarios
-        if (smsRecibidosEspecificos.size() < 3) {
-            //Solo añadir al archivo si los mensajes enviados/recibidos son 
-            //menos de 3
-            boolean wsms = mensajesPersonalesFile.writeFile(gson.toJson(mensaje));
-            if (wsms) {
-                return true;    //Mensaje almacenado
-            } else {
-                return false;
-            }
-        } else if (smsRecibidosEspecificos.size() > 2) {                        
+        if (smsRecibidosEspecificos.size() > 2) {                        
             //Nueva lista para sobre escribir el archivo
             List <Mensaje> newPersonalSms = new ArrayList<>();
             
@@ -710,11 +700,11 @@ public class Procesos {
     private static boolean GuardarMensajeGrupo (MensajeGrupo smsGrupo) {        
         Gson gson = new Gson();        
                 
-        ArchivosController mensajesPersonalesFile = new ArchivosController (
+        ArchivosController mensajesGruposFile = new ArchivosController (
             System.getProperty("user.dir") + "\\smsGrupos.json"
         );
         
-        boolean wsms = mensajesPersonalesFile.writeFile(gson.toJson(smsGrupo));
+        boolean wsms = mensajesGruposFile.writeFile(gson.toJson(smsGrupo));
         
         if (wsms) {
             return true;
@@ -724,5 +714,88 @@ public class Procesos {
         
         //Para leer verificar cual de cuál grupo es del que se quiere obtener 
         //los mensajes.
+    }
+    
+    public static ArrayList<Mensaje> GetThreePersonalSms (Usuario U1, Usuario U2) {
+        
+        Gson gson = new Gson();
+        
+        int id_U1 = U1.getId();
+        int id_U2 = U2.getId();
+        
+        ArchivosController personalSmsFile = new ArchivosController(
+             System.getProperty("user.dir") + "\\mensajesPersonales.json"
+        );
+        
+        List<String> allPersonalSmsStr = personalSmsFile.readFile();
+        List<Mensaje> allPersonalSmsObj = new ArrayList<>();
+        List<Mensaje> xUserPersonalSms = new ArrayList<>();
+                
+        //Se obtienen pasan las Str de mensajes y se transforman a Mensaje.class
+        for (String personalSmsStr : allPersonalSmsStr) {
+            Mensaje savedSms = new Mensaje();
+            savedSms = gson.fromJson(personalSmsStr, Mensaje.class);
+            allPersonalSmsObj.add(savedSms);
+        }
+        
+        //Se obtienen todos los mensajes de almacenados de un chat con una 
+        //persona en específico        
+        for (Mensaje personalSmsObj : allPersonalSmsObj) {
+            int id_D = personalSmsObj.getDestino().getId();
+            int id_O = personalSmsObj.getOrigen().getId();
+            
+            if ((id_O == id_U1 && id_D == id_U2) || (id_D == id_U1 && id_O == id_U2)) {
+                xUserPersonalSms.add(personalSmsObj);
+            }
+        }
+        
+        ArrayList<Mensaje> xUserThreePersonalSms = new ArrayList<>();
+        int indexFor = xUserPersonalSms.size() - 1;
+        
+        //Se obtienen los 3 ultimos mensajes de un chat con una persona en
+        //específico
+        for (int i = indexFor;  i < indexFor - 3; --i) {
+            Mensaje auxSms = new Mensaje();
+            auxSms = xUserPersonalSms.get(i);             
+            xUserThreePersonalSms.add(auxSms);
+        }
+
+        return xUserThreePersonalSms;
+        
+    }
+    
+    public static ArrayList<MensajeGrupo> GetAllSmsOneGroup (Grupo group) {
+        
+        Gson gson = new Gson();
+        
+        int group_Id = group.getId();
+        
+        ArchivosController mensajesGruposFile = new ArchivosController (
+            System.getProperty("user.dir") + "\\smsGrupos.json"
+        );
+        
+        List<String> allGroupsallSmsStr = mensajesGruposFile.readFile();
+        List <MensajeGrupo> allGroupsallSmsObj = new ArrayList<>();
+        
+        //Se obtienen pasan las Str de mensajes de grupo y se transforman a 
+        //MensajeGrupo.class
+        for (String groupSmsStr: allGroupsallSmsStr) {
+            MensajeGrupo savedGroupSms = new MensajeGrupo();
+            savedGroupSms = gson.fromJson(groupSmsStr, MensajeGrupo.class);
+            allGroupsallSmsObj.add(savedGroupSms);
+        }
+        
+        ArrayList<MensajeGrupo> oneGroupallSmsObj = new ArrayList<>();
+        
+        //Se obtienen los mensajes un solo grupo
+        for (MensajeGrupo groupSmsObj : allGroupsallSmsObj) {
+            int auxGroupId = groupSmsObj.getGrupo().getId();
+            if (auxGroupId == group_Id) {
+                oneGroupallSmsObj.add(groupSmsObj);
+            }
+        }
+        
+        return oneGroupallSmsObj;
+        
     }
 }
