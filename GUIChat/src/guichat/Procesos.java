@@ -108,7 +108,7 @@ public class Procesos {
         
         try {
             System.out.println("Entre");
-            Procesos.CrearSocket("192.168.84.15", 4567);
+            Procesos.CrearSocket(servidor, 4567);
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
             usuario.setUsername(nick);
             usuario.setPassword(contraseña);
@@ -368,8 +368,10 @@ public class Procesos {
             Type type = new TypeToken<List<Grupo>>() {}.getType();
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Grupo> grupos = json.fromJson(JsonList, type);
-            for(Grupo grupo : grupos)
+            for(Grupo grupo : grupos){
+                System.out.println(grupo.getNombre());
                 Interfaz.createGroup(grupo.getNombre(), grupo.getId());
+            }
             
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
@@ -631,14 +633,14 @@ public class Procesos {
     
     public static void PeticionAceptarGrupo (int id) {
         DataOutputStream EnviarCadena = null;
-        Usuario aceptar = new Usuario();
-        aceptar.setId(id);
-        System.out.println("Enviando peticion Amigo");
+        Grupo grupo = new Grupo();
+        grupo.setId(id);
+        System.out.println("Enviando peticion Grupo");
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AAMIGO);
-            peticionAmigo.setContenido(aceptar);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AGRUPO);
+            peticionAmigo.setContenido(grupo);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());

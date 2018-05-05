@@ -59,7 +59,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <PasswordField fx:id="txtnewPassword" layoutX="80.0" layoutY="222.0" prefHeight="32.0" prefWidth="280.0" promptText="Crea una contraseña">
+                  <PasswordField fx:id="txtnewPassword" layoutX="80.0" layoutY="176.0" prefHeight="32.0" prefWidth="280.0" promptText="Crea una contraseña">
                      <font>
                         <Font name="Century Gothic" size="12.0" />
                      </font></PasswordField>
@@ -71,12 +71,15 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Label layoutX="80.0" layoutY="224.0" text="Servidor">
+                  <Label layoutX="80.0" layoutY="214.0" text="Servidor:">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Century Gothic Bold" size="13.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtServer" layoutX="80.0" layoutY="254.0" prefHeight="32.0" prefWidth="280.0" promptText="Escribe el nombre del servidor" />
+                  <TextField fx:id="txtServer" layoutX="80.0" layoutY="237.0" prefHeight="32.0" prefWidth="280.0" promptText="Escribe el nombre del servidor">
+                     <font>
+                        <Font name="Century Gothic" size="12.0" />
+                     </font></TextField>
                </children>
                <opaqueInsets>
                   <Insets />

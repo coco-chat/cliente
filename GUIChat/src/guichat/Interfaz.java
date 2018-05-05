@@ -51,7 +51,7 @@ public class Interfaz {
         user.setText(name);
         user.getStyleClass().add("name");
         request.getStyleClass().add("btn-green");
-        request.setText("Agregar");
+        request.setText("Aceptar");
         request.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
@@ -220,24 +220,25 @@ public class Interfaz {
     public static void createGroup(String name, int id){
         HBox container = new HBox();
         container.getStyleClass().add("contact");
-        CButton user = new CButton(name);
-        user.setIdElement(id);
-        user.setNameElement(name);
-        user.getStyleClass().add("btn-group");
-        user.setOnAction(new EventHandler<ActionEvent>(){
+        CButton group = new CButton(name);
+        group.setIdElement(id);
+        group.setNameElement(name);
+        group.getStyleClass().add("btn-group");
+        group.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
-                if(event.getSource() == user){
+                if(event.getSource() == group){
                     mensajes.getChildren().clear();
-                    System.out.println("Id del Usuario: " + user.getIdElement());
-                    idElement = user.getIdElement();
-                    current.setText(user.getNameElement());
-                    nombre = user.getNameElement();
+                    System.out.println("Id del Grupo: " + group.getIdElement());
+                    idElement = group.getIdElement();
+                    current.setText(group.getNameElement());
+                    nombre = group.getNameElement();
                     type = 2;
                     editar.setDisable(false);
                 }
             }
         });
+        container.getChildren().add(group);
         groups.getChildren().add(container);
     }
     

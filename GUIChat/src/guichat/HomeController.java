@@ -232,7 +232,7 @@ public class HomeController implements Initializable, Runnable {
         Interfaz.current = txtCurrentContact;
         Interfaz.editar = editBtn;
         Thread hilo = new Thread(this);
-        //hilo.start();
+        hilo.start();
         Procesos.MostrarAmigos();
         Procesos.MostrarAmigosDesconectados();
         Procesos.MostrarUsuariosConectados();

@@ -35,8 +35,8 @@ public class RegisterController implements Initializable {
     @FXML
     public void handleRegister(ActionEvent e){
         
-        if(!txtNewuser.getText().isEmpty() && !txtnewPassword.getText().isEmpty()){
-            double res = Procesos.Register(txtNewuser.getText(), txtnewPassword.getText(), "192.168.60.5");
+        if(!txtNewuser.getText().isEmpty() && !txtnewPassword.getText().isEmpty() && !txtServer.getText().isEmpty()){
+            double res = Procesos.Register(txtNewuser.getText(), txtnewPassword.getText(), txtServer.getText());
             System.out.println(res);
             if(res == 220.0){
                 try {
