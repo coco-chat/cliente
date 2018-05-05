@@ -557,11 +557,44 @@ public class Procesos {
     }
     
     public static void PeticionAceptarAmigo (int id) {
-        
+        DataOutputStream EnviarCadena = null;
+        Usuario aceptar = new Usuario();
+        aceptar.setId(id);
+        System.out.println("Aceptar petición Amigo");
+        System.out.println("Amigo: " + id);
+        try {
+
+            Comunicacion peticionAmigo = new Comunicacion();
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AAMIGO);
+            peticionAmigo.setContenido(aceptar);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(peticionAmigo));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
     
     public static void PeticionAceptarGrupo (int id) {
-        
+        DataOutputStream EnviarCadena = null;
+        Usuario aceptar = new Usuario();
+        aceptar.setId(id);
+        System.out.println("Enviando peticion Amigo");
+        try {
+
+            Comunicacion peticionAmigo = new Comunicacion();
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AAMIGO);
+            peticionAmigo.setContenido(aceptar);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(peticionAmigo));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }
     
     public static void PeticionAgregarAmigo (int id) {
@@ -572,7 +605,7 @@ public class Procesos {
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NAMIGO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AAMIGO);
             peticionAmigo.setContenido(invitacion);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
