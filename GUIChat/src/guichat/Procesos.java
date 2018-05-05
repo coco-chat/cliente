@@ -556,6 +556,14 @@ public class Procesos {
         GuardarMensajeGrupo(mensaje_grupo);
     }
     
+    public static void PeticionAceptarAmigo (int id) {
+        
+    }
+    
+    public static void PeticionAceptarGrupo (int id) {
+        
+    }
+    
     public static void PeticionAgregarAmigo (int id) {
         DataOutputStream EnviarCadena = null;
         Usuario invitacion = new Usuario();

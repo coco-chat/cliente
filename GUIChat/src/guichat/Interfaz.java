@@ -29,6 +29,8 @@ public class Interfaz {
     public static VBox lista;
     public static VBox agregar;
     public static VBox eliminar;
+    public static VBox aceptarAmigos;
+    public static VBox aceptarGrupos;
     public static Button editar;
     public static TextField current;
     public static int idElement;
@@ -38,6 +40,40 @@ public class Interfaz {
     
     public Interfaz(){
         
+    }
+    
+    public static void createNotification(Boolean status, String name, int id){
+        HBox container = new HBox();
+        container.getStyleClass().add("friend-container");
+        CButton request = new CButton();
+        request.setIdElement(id);
+        Label user = new Label();
+        user.setText(name);
+        user.getStyleClass().add("name");
+        request.getStyleClass().add("btn-green");
+        request.setText("Agregar");
+        request.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                if(e.getSource() == request){
+                    System.out.println("Id del Element: " + request.getIdElement());
+                   if(status){
+                       Procesos.PeticionAceptarAmigo(request.getIdElement());
+                       deleteRequest(aceptarAmigos, request.getIdElement());
+                   }else{
+                       Procesos.PeticionAceptarGrupo(request.getIdElement());
+                       deleteRequest(aceptarGrupos, request.getIdElement());
+                   }
+                }
+            }
+        });
+        container.getChildren().add(user);
+        container.getChildren().add(request);
+        if(status){
+            aceptarAmigos.getChildren().add(container);
+        }else{
+            aceptarGrupos.getChildren().add(container);
+        }
     }
     
     public static void createRequest(Boolean status, String name, int id){
