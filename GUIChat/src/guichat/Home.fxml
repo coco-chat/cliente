@@ -183,9 +183,9 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" layoutX="-30.0" layoutY="-18.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane prefHeight="64.0" prefWidth="401.0">
+                              <AnchorPane prefHeight="64.0" prefWidth="521.0">
                                  <children>
-                                    <TextField fx:id="txtCurrentContact" disable="true" layoutX="14.0" layoutY="19.0" styleClass="textField" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="150.0">
+                                    <TextField fx:id="txtCurrentContact" disable="true" layoutX="-98.0" layoutY="19.0" prefHeight="29.0" prefWidth="349.0" styleClass="textField" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="100.0">
                                        <font>
                                           <Font name="Century Gothic" size="13.0" />
                                        </font>
@@ -200,18 +200,9 @@
                                     <String fx:value="btn-green" />
                                     <String fx:value="square" />
                                  </styleClass>
-                              </Button>
-                              <Button fx:id="deleteBtn" disable="true" maxHeight="32.0" maxWidth="100.0" minHeight="32.0" minWidth="100.0" mnemonicParsing="false" onAction="#deleteContact" prefHeight="32.0" prefWidth="100.0" text="Eliminar" textFill="WHITE">
                                  <HBox.margin>
-                                    <Insets right="5.0" />
+                                    <Insets right="10.0" />
                                  </HBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                                 <styleClass>
-                                    <String fx:value="btn-blue" />
-                                    <String fx:value="square" />
-                                 </styleClass>
                               </Button>
                            </children>
                         </HBox>

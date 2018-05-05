@@ -9,6 +9,7 @@ import guichat.Components.CButton;
 import guichat.Components.CCheckBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -61,8 +62,10 @@ public class Interfaz {
                     System.out.println("Id del Element: " + request.getIdElement());
                    if(status){
                        Procesos.PeticionAgregarAmigo(request.getIdElement());
+                       deleteRequest(agregar, request.getIdElement());
                    }else{
                        Procesos.PeticionEliminarAmigo(request.getIdElement());
+                       deleteRequest(eliminar, request.getIdElement());
                    }
                 }
             }
@@ -73,6 +76,23 @@ public class Interfaz {
             agregar.getChildren().add(container);
         }else{
             eliminar.getChildren().add(container);
+        }
+    }
+    
+    public static void deleteRequest(VBox container, int id){
+        if(container instanceof VBox){
+            for(Node hbox : ((VBox)container).getChildren()){
+                if(hbox instanceof HBox){
+                    for(Node cbutton : ((HBox)hbox).getChildren()){
+                        if(cbutton instanceof CButton){
+                            if(((CButton) cbutton).getIdElement() == id){
+                                container.getChildren().remove(hbox);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -162,25 +182,27 @@ public class Interfaz {
      * @param id int Identificador en la base de datos del grupo
      */
     public static void createGroup(String name, int id){
-        CButton group = new CButton(name);
-        group.setIdElement(id);
-        group.setNameElement(name);
-        group.getStyleClass().add("chat-btn");
-        group.setOnAction(new EventHandler<ActionEvent>(){
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
+        CButton user = new CButton(name);
+        user.setIdElement(id);
+        user.setNameElement(name);
+        user.getStyleClass().add("btn-group");
+        user.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event) {
-                if(event.getSource() == group){
+                if(event.getSource() == user){
                     mensajes.getChildren().clear();
-                    System.out.println("Id del grupo: " + group.getIdElement());
-                    idElement = group.getIdElement();
-                    current.setText(group.getNameElement());
-                    nombre = group.getNameElement();
+                    System.out.println("Id del Usuario: " + user.getIdElement());
+                    idElement = user.getIdElement();
+                    current.setText(user.getNameElement());
+                    nombre = user.getNameElement();
                     type = 2;
                     editar.setDisable(false);
                 }
             }
         });
-        groups.getChildren().add(group);
+        groups.getChildren().add(container);
     }
     
     public static void createUser(String name, int id){

@@ -36,11 +36,10 @@ public class GroupsController implements Initializable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn;
     @FXML private Button minimizeWindowBtn;
-    @FXML private Button createGroupBtn, outBtn, messagesBtn;
+    @FXML private Button createGroupBtn, outBtn, messagesBtn, friendsBtn, notificationBtn;
     @FXML private TextField txtGroup;
     @FXML private TextField txtOwner;
     @FXML private VBox usersVBox;
-    @FXML private AnchorPane headerBar;
     
     // Variables locales
     private String username;
@@ -84,6 +83,31 @@ public class GroupsController implements Initializable {
         }catch (IOException io){
             io.printStackTrace();
         }
+    }
+    
+    @FXML
+    public void goToFriends(ActionEvent e){
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Friends.fxml"));
+            Stage stage = (Stage) friendsBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void goToNotifications(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
+            Stage stage = (Stage) notificationBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+        
     }
     
     /**

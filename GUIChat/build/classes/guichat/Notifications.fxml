@@ -33,7 +33,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutY="64.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn">
+                  <Button fx:id="friendsBtn" layoutY="64.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#goToFriends" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -48,7 +48,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="-14.0" layoutY="136.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
+                  <Button fx:id="groupBtn" layoutX="-14.0" layoutY="136.0" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#goToCreateGroup" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
                      <font>
                         <Font name="Century Gothic Bold" size="13.0" />
                      </font>
@@ -101,16 +101,16 @@
             </AnchorPane>
             <AnchorPane layoutX="64.0" prefHeight="200.0" prefWidth="300.0" styleClass="group" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <AnchorPane prefHeight="44.0" prefWidth="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="112.0" prefWidth="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label layoutX="88.0" layoutY="6.0" prefHeight="32.0" prefWidth="151.0" text="Notificaciones" textAlignment="CENTER" textFill="#f2f7f7">
+                        <Label alignment="CENTER" layoutX="88.0" layoutY="6.0" prefHeight="32.0" prefWidth="151.0" text="Notificaciones" textAlignment="CENTER" textFill="#f2f7f7" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <font>
-                              <Font size="19.0" />
+                              <Font name="Century Gothic Bold" size="36.0" />
                            </font>
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutY="46.0" prefHeight="522.0" prefWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="46.0">
+                  <AnchorPane layoutY="46.0" prefHeight="522.0" prefWidth="306.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-6.0" AnchorPane.topAnchor="112.0">
                      <children>
                         <ScrollPane hbarPolicy="NEVER" prefHeight="522.0" prefWidth="300.0">
                            <styleClass>

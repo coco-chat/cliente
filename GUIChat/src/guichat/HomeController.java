@@ -39,7 +39,7 @@ import javafx.scene.layout.StackPane;
 public class HomeController implements Initializable, Runnable {
     String ip;
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, deleteBtn, editBtn, notificationBtn, friendsBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, editBtn, notificationBtn, friendsBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private TextField txtCurrentContact;
@@ -78,121 +78,13 @@ public class HomeController implements Initializable, Runnable {
         }
         int contador = 0;
         for(String user : users){
-            createFriend(flag, flag, user, contador);
+            Interfaz.createFriend(flag, flag, user, contador);
             if(flag) flag = false;
             else flag = true;
             contador++;
         }
     }
 
-    /**
-     * Método para crear el boton del grupo
-     * @param name String Nombre del grupo
-     * @param id int Identificador en la base de datos del grupo
-     */
-    public void createGroup(String name, int id){
-        CButton group = new CButton(name);
-        group.setIdElement(id);
-        group.setNameElement(name);
-        group.getStyleClass().add("chat-btn");
-        group.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event) {
-                if(event.getSource() == group){
-                    messagesVBox.getChildren().clear();
-                    System.out.println("Id del Grupo: " + group.getIdElement());
-                    txtCurrentContact.setText(group.getNameElement());
-                    contact = group.getNameElement();
-                    type = true;
-                    typeEdit = true;
-                    editBtn.setDisable(false);
-                    deleteBtn.setDisable(false);
-                }
-            }
-        });
-        groupsVBox.getChildren().add(group);
-    }
-    
-    /**
-     * Método para crear el boton del amigo
-     * @param state Boolean Determina si el usuario esta activo o no
-     * true => online
-     * false => offline
-     * @param friend Boolean Determina si un usuario es amigo o no
-     * true => Amigo
-     * false => No es amigo
-     * @param name String Nombre o apodo del amigo
-     * @param id int Identificador en la base de datos del amigo
-     */
-    public void createFriend(Boolean state, Boolean friend, String name, int id){      
-        HBox container = new HBox();
-        container.getStyleClass().add("contact");
-        CButton user = new CButton(name);
-        user.setIdElement(id);
-        user.setNameElement(name);
-        user.getStyleClass().add("btn");
-        user.setOnAction(new EventHandler<ActionEvent>(){
-            @Override
-            public void handle(ActionEvent event) {
-                if(event.getSource() == user){
-                    messagesVBox.getChildren().clear();
-                    System.out.println("Id del Usuario: " + user.getIdElement());
-                    txtCurrentContact.setText(user.getNameElement());
-                    contact = user.getNameElement();
-                    type = false;
-                    typeEdit = false;
-                    editBtn.setDisable(false);
-                    deleteBtn.setDisable(false);
-                }
-            }
-        });
-        Label con = new Label();
-        con.getStyleClass().add("circle");
-        if(state){
-            con.getStyleClass().add("online");
-        }else{
-            con.getStyleClass().add("offline");
-        }con.getStyleClass().add("circle");
-        container.getChildren().add(user);
-        container.getChildren().add(con);
-        if(friend){
-            Label f = new Label();
-            f.getStyleClass().add("icon");
-            container.getChildren().add(f);
-        }
-        friendsVBox.getChildren().add(container);
-    }
-    
-    /**
-     * Editar información de contacto
-     * @param e 
-     */
-    public void createBubble(Boolean position, Boolean type, String message, String user){
-        StackPane main = new StackPane();
-        main.getStyleClass().add("bubble-container");
-        VBox div = new VBox();
-        if(position){
-            main.getStyleClass().add("left");
-            div.getStyleClass().add("align-left");
-        }else{
-            main.getStyleClass().add("right");
-            div.getStyleClass().add("align-right");
-        }
-        Label content = new Label();
-        content.setText(message);
-        content.getStyleClass().add("bubble");
-        div.getChildren().add(content);
-        if(type){
-            main.getStyleClass().add("group-message");
-            Label by = new Label();
-            by.setText(user);
-            by.getStyleClass().add("by");
-            div.getChildren().add(by);
-        }
-        main.getChildren().add(div);
-        messagesVBox.getChildren().add(main);
-    }
-    
     /**
      * =========================================================================
      * Métodos FXML
@@ -233,11 +125,6 @@ public class HomeController implements Initializable, Runnable {
             txtCurrentContact.setDisable(true);
             flagEdit = false;
         }
-    }
-    
-    @FXML
-    public void deleteContact(ActionEvent e){
-        System.out.println("Falta implementar funcionalidad del botón de eliminar");
     }
     
     /**

@@ -35,7 +35,7 @@ import javafx.stage.Stage;
  * @author start
  */
 public class NotificationsController implements Initializable{
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, aceptarBtn, rechazarBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, aceptarBtn, rechazarBtn, groupBtn, friendsBtn;
     @FXML private VBox notificationsVBox;
 //<<<<<<< HEAD
     @FXML private TextField txtCurrentNotification;
@@ -181,7 +181,31 @@ public class NotificationsController implements Initializable{
         }
     }
     
+    @FXML
+    public void goToCreateGroup(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
+            Stage stage = (Stage) groupBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+            GroupsController group = loader.getController();
+            group.setUsername(this.username);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
     
+    @FXML
+    public void goToFriends(ActionEvent e){
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Friends.fxml"));
+            Stage stage = (Stage) friendsBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
     
     @FXML
     public void signOut(ActionEvent e){

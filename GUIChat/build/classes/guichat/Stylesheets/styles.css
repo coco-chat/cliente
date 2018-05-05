@@ -326,6 +326,23 @@ and open the template in the editor.
     -fx-padding: 0 0 0 10;
 }
 
+.contact .btn-group {
+    -fx-alignment: CENTER_LEFT;
+    -fx-background-color: #363E47;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-faint-focus-color: transparent;
+    -fx-font-family: "Lao UI";
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #F2F7F7;
+    -fx-min-width: 292;
+    -fx-border-radius: 0 0 0 0; 
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #363E47;
+}
+
 .contact .btn {
     -fx-alignment: CENTER_LEFT;
     -fx-background-color: #363E47;

@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 public class FriendsController implements Initializable {
 
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, messagesBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, messagesBtn, groupBtn, notificationBtn;
     @FXML private VBox addFriendsVBox, deleteFriendsVBox;
     
     private String[] users = {
@@ -65,6 +65,31 @@ public class FriendsController implements Initializable {
         }catch (IOException io){
             io.printStackTrace();
         }
+    }
+    
+    @FXML
+    public void goToCreateGroup(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
+            Stage stage = (Stage) groupBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void goToNotifications(ActionEvent e){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
+            Stage stage = (Stage) notificationBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+        
     }
     
     /**
