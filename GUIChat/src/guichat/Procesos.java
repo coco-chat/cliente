@@ -22,6 +22,7 @@ import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
 import guichat.Modelos.PetAmigo;
+import guichat.Modelos.PetGrupo;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -230,7 +231,6 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Amigo> amigos = json.fromJson(JsonList, type);
             for(Amigo amigo : amigos){
-                System.out.println(amigo);
                 if(amigo.getAmigo1() != -1){
                     Interfaz.createRequest(false, amigo.getApodo1(), amigo.getId());
                 }else{
@@ -272,7 +272,59 @@ public class Procesos {
         }
        return 0;
     }
+    
+    public static void MostrarNotificacionesGrupos () {
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_PETGRUPOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Grupo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Grupo> grupos = json.fromJson(JsonList, type);
+            for(Grupo grupo : grupos){
+                Interfaz.createNotification(false, grupo.getNombre() + " quiere que seas un integrante del grupo!", grupo.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
         
+    public static void MostrarNotificacionesUsuarios () {
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_PETAMIGOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Usuario>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Usuario> usuarios = json.fromJson(JsonList, type);
+            for(Usuario usuario : usuarios){
+                Interfaz.createNotification(true, usuario.getUsername() + " quiere ser tu amigo!", usuario.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     public static void MostrarUsuariosConectados(){
         DataOutputStream peticion = null;
         try {
@@ -601,11 +653,10 @@ public class Procesos {
         DataOutputStream EnviarCadena = null;
         Usuario invitacion = new Usuario();
         invitacion.setId(id);
-        System.out.println("Enviando peticion Amigo");
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AAMIGO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NAMIGO);
             peticionAmigo.setContenido(invitacion);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
@@ -639,6 +690,20 @@ public class Procesos {
         } 
     }
     
+    public static void CerrarSesion () {
+        DataOutputStream EnviarCadena = null;
+        try {
+
+            Comunicacion cerrar = new Comunicacion();
+            cerrar.setTipo(Comunicacion.MTypes.RQ_LOGOUT);
+            
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(cerrar));
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
         if(mensaje.getOrigen().getId() == Interfaz.idElement && Interfaz.type == 1){

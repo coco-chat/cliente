@@ -130,6 +130,8 @@ public class NotificationsController implements Initializable{
         // TODO
         Interfaz.aceptarAmigos = friendsNotificationsVBox;
         Interfaz.aceptarGrupos = groupsNotificationsVBox;
+        Procesos.MostrarNotificacionesUsuarios();
+        Procesos.MostrarNotificacionesGrupos();
     }
     
 }

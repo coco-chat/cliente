@@ -6,7 +6,6 @@
 package guichat;
 
 import com.google.gson.Gson;
-import guichat.Components.CButton;
 import guichat.Modelos.Comunicacion;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -14,7 +13,6 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -22,14 +20,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 
 /**
  * FXML Controller class
@@ -50,6 +45,7 @@ public class HomeController implements Initializable, Runnable {
     private Boolean flagEdit = false;
     private Boolean typeEdit = true;
     private String contact;
+    private volatile Boolean flagThread = true;
     private String[] users = {
         "Arturo Carrillo",
         "Kevin Alan",
@@ -94,6 +90,7 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void goToFriends(ActionEvent e){
          try {
+            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Friends.fxml"));
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -133,6 +130,7 @@ public class HomeController implements Initializable, Runnable {
      */
     @FXML
     public void handleCloseWindow(ActionEvent e){
+        stopThread();
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
     }
@@ -168,6 +166,8 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void signOut(ActionEvent e){
         try {
+            Procesos.CerrarSesion();
+            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -177,19 +177,18 @@ public class HomeController implements Initializable, Runnable {
         }
     }
     
-    /**
+    /**s
      * Método pare redirigir a la pestaña de Creación de Grupos
      * @param e 
      */
     @FXML
     public void goToCreateGroup(ActionEvent e){
         try {
+            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
             Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
-            GroupsController group = loader.getController();
-            group.setUsername(this.username);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -198,12 +197,11 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void goToNotifications(ActionEvent e){
         try {
+            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
             Stage stage = (Stage) notificationBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
-            NotificationsController notifications = loader.getController();
-            notifications.setUsername(this.username);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -234,7 +232,7 @@ public class HomeController implements Initializable, Runnable {
         Interfaz.current = txtCurrentContact;
         Interfaz.editar = editBtn;
         Thread hilo = new Thread(this);
-        hilo.start();
+        //hilo.start();
         Procesos.MostrarAmigos();
         Procesos.MostrarAmigosDesconectados();
         Procesos.MostrarUsuariosConectados();
@@ -252,7 +250,7 @@ public class HomeController implements Initializable, Runnable {
         System.out.println("Corriendo");
         try {
             ServerSocket response = new ServerSocket(7654);
-            while(true) {
+            while(this.flagThread) {
                 System.out.println("Entre al while");
                 Gson json = new Gson();
                 Socket peticion = response.accept();
@@ -265,5 +263,10 @@ public class HomeController implements Initializable, Runnable {
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void stopThread() {
+        System.out.println("Entre para detener la ");
+        this.flagThread = false;
     }
 }
