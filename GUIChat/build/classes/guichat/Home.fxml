@@ -170,7 +170,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                  <ScrollPane hbarPolicy="NEVER" hvalue="1.0" layoutX="25.0" layoutY="6.0" prefHeight="200.0" prefWidth="200.0" vvalue="1.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                  <ScrollPane fx:id="scrollMain" hbarPolicy="NEVER" hvalue="1.0" layoutX="25.0" layoutY="6.0" prefHeight="200.0" prefWidth="200.0" vvalue="1.0" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
                      <content>
                         <VBox fx:id="messagesVBox" styleClass="message-container" />
                      </content>

@@ -25,6 +25,13 @@ import javafx.stage.Stage;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 /**
  * FXML Controller class
@@ -38,6 +45,7 @@ public class HomeController implements Initializable, Runnable {
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private TextField txtCurrentContact;
+    @FXML private ScrollPane scrollMain;
     
     // Variables de control internas
     private Boolean type = false;
@@ -45,6 +53,7 @@ public class HomeController implements Initializable, Runnable {
     private Boolean flagEdit = false;
     private Boolean typeEdit = true;
     private String contact;
+    private ServerSocket response;
     private volatile Boolean flagThread = true;
     private String[] users = {
         "Arturo Carrillo",
@@ -158,6 +167,29 @@ public class HomeController implements Initializable, Runnable {
         System.out.println(this.ip);
     }
     
+    public void enter(){
+        txtMessage.setOnKeyPressed(new EventHandler<KeyEvent>(){
+            @Override
+            public void handle(KeyEvent keyEvent){
+                if(keyEvent.getCode() == KeyCode.ENTER){
+                    keyEvent.consume();
+                    if(!txtMessage.getText().isEmpty()){send();};
+                }
+            }
+        });
+        messagesVBox.heightProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                scrollMain.setVvalue( 1.0d );
+            }
+        });
+    }
+    
+    public void send(){
+        Interfaz.createBubble(Boolean.FALSE, type, txtMessage.getText(), null);
+        Procesos.EnviarMensajes(txtMessage.getText(), Interfaz.idElement);
+        txtMessage.setText("");
+    }
     
     /**
      * Método para cerrar sesión del Usuario
@@ -210,12 +242,7 @@ public class HomeController implements Initializable, Runnable {
     
     @FXML
     public void sendMessage(ActionEvent e){
-        Interfaz.createBubble(Boolean.FALSE, type, txtMessage.getText(), "werofuentes");
-        Procesos.EnviarMensajes(txtMessage.getText(), Interfaz.idElement);
-        
-        System.out.println(Interfaz.idElement);
-        System.out.println(Interfaz.type);
-        txtMessage.setText("");
+        send();
     }
     
     /**
@@ -226,6 +253,7 @@ public class HomeController implements Initializable, Runnable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        enter();
         Interfaz.mensajes = messagesVBox;
         Interfaz.friends = friendsVBox;
         Interfaz.groups = groupsVBox;
@@ -249,7 +277,7 @@ public class HomeController implements Initializable, Runnable {
     public void run(){
         System.out.println("Corriendo");
         try {
-            ServerSocket response = new ServerSocket(7654);
+            response = new ServerSocket(7654);
             while(this.flagThread) {
                 System.out.println("Entre al while");
                 Gson json = new Gson();
@@ -260,13 +288,19 @@ public class HomeController implements Initializable, Runnable {
                 Procesos.mensajeria(modelo);
                 peticion.close();
             }
+            System.out.println("Sali");
         } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Hilo Terminado");
         }
     }
     
     public void stopThread() {
         System.out.println("Entre para detener la ");
         this.flagThread = false;
+        try {
+            response.close();
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

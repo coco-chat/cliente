@@ -708,11 +708,9 @@ public class Procesos {
     }
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
-        if(mensaje.getOrigen().getId() == Interfaz.idElement && Interfaz.type == 1){
-            Platform.runLater(
-                () -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
-            );
-        }
+        Platform.runLater(
+            () -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
+        );
     }
     
     private static boolean GuardarMensajePersonal (Mensaje mensaje) {
