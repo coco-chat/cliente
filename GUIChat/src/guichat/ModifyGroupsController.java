@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -25,6 +26,7 @@ public class ModifyGroupsController implements Initializable {
 
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, notificationBtn, friendsBtn, messagesBtn;
+    @FXML private VBox groupsVBox;
     
     @FXML
     public void goToMessages(ActionEvent e){

@@ -7,6 +7,7 @@ package guichat;
 
 import guichat.Components.CButton;
 import guichat.Components.CCheckBox;
+import guichat.Modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -186,6 +187,9 @@ public class Interfaz {
                     System.out.println("Id del Usuario: " + user.getIdElement());
                     idElement = user.getIdElement();
                     current.setText(user.getNameElement());
+                    Usuario usuario = new Usuario();
+                    usuario.setId(idElement);
+                    Procesos.showLastMessages(usuario);
                     nombre = user.getNameElement();
                     type = 1;
                     editar.setDisable(false);

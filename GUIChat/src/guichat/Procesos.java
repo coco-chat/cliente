@@ -724,9 +724,22 @@ public class Procesos {
         return status;
     }
     
-    private static List<Mensaje> getLastMessages(Usuario usuario){
+    public static void showLastMessages (Usuario usuario) {
+        List<Mensaje> mensajes = getLastMessages(usuario);
+        for(Mensaje mensaje : mensajes) {
+            if(mensaje.getOrigen() == null){
+                Platform.runLater(() -> Interfaz.createBubble(Boolean.FALSE, Boolean.FALSE, mensaje.getContenido(), null));
+            }else{
+                Platform.runLater(() -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null));
+            }
+        }
+    }
+     
+    public static List<Mensaje> getLastMessages(Usuario usuario){
         Gson gson = new Gson();
-        ArchivosController archivosController = new ArchivosController();
+        ArchivosController archivosController = new ArchivosController(
+                System.getProperty("user.dir") + "\\mensajesPersonales.json"
+        );
         List<String> mensajesJson = archivosController.readFile();
         List<Mensaje> mensajes = new ArrayList<>();
         List<Mensaje> result = new ArrayList<>();
@@ -748,10 +761,12 @@ public class Procesos {
             }
         }
         
-        int size = mensajes.size()-1;
-        for (int i = size; i >= size-3; i--) {
-            result.add(mensajes.get(i));
-        }
+        int size = mensajes.size();
+        if(size>3){
+            for (int i = size - 1; i >= size-3; i--) {
+                result.add(mensajes.get(i));
+            }
+        }else result = mensajes;
         return result;
     }
     
