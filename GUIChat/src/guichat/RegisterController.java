@@ -44,8 +44,6 @@ public class RegisterController implements Initializable {
                     Stage stage = (Stage) signinBtn.getScene().getWindow();
                     Scene scene = new Scene(loader.load());
                     stage.setScene(scene);
-                    HomeController home = loader.getController();
-                    home.setUsername(txtNewuser.getText());
                 }catch (IOException io){
                     io.printStackTrace();
                 }

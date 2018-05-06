@@ -25,7 +25,6 @@ import javafx.stage.Stage;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -39,9 +38,9 @@ import javafx.scene.input.KeyEvent;
  * @author Wero
  */
 public class HomeController implements Initializable, Runnable {
-    String ip;
+    
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, editBtn, notificationBtn, friendsBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, editBtn, notificationBtn, friendsBtn, modifyBtn;
     @FXML private TextArea txtMessage;
     @FXML private VBox messagesVBox, groupsVBox, friendsVBox;
     @FXML private TextField txtCurrentContact;
@@ -67,31 +66,6 @@ public class HomeController implements Initializable, Runnable {
     
     /**
      * =========================================================================
-     * Métodos Locales
-     * =========================================================================
-     */
-    
-    /**
-     * Método para hacer pruebas en la pantalla
-     */
-    public void insertContent(){
-        Boolean flag = false;
-        for(String user : users){
-            Interfaz.createBubble(flag, type, user, null);
-            if(flag) flag = false;
-            else flag = true;
-        }
-        int contador = 0;
-        for(String user : users){
-            Interfaz.createFriend(flag, flag, user, contador);
-            if(flag) flag = false;
-            else flag = true;
-            contador++;
-        }
-    }
-
-    /**
-     * =========================================================================
      * Métodos FXML
      * =========================================================================
      */
@@ -102,6 +76,19 @@ public class HomeController implements Initializable, Runnable {
             stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Friends.fxml"));
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void goToModifyGroup(ActionEvent e){
+         try {
+            stopThread();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyGroups.fxml"));
+            Stage stage = (Stage) modifyBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
         }catch (IOException io){
@@ -152,19 +139,6 @@ public class HomeController implements Initializable, Runnable {
     public void handleMinimizeWindow(ActionEvent e){
         Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
         stage.setIconified(true);
-    }
-    
-    /**
-     * Método para pasar el nombre de usuario de una vista a otra
-     * @param username String Nombre de Usuario
-     */
-    public void setUsername(String username){
-        this.username = username;
-        System.out.println(this.username);
-    }
-    public void setip(String ip){
-        this.ip = ip;
-        System.out.println(this.ip);
     }
     
     public void enter(){
@@ -242,7 +216,7 @@ public class HomeController implements Initializable, Runnable {
     
     @FXML
     public void sendMessage(ActionEvent e){
-        send();
+        if(!txtMessage.getText().isEmpty()){send();};
     }
     
     /**

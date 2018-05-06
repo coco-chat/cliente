@@ -91,9 +91,6 @@ public class LoginController implements Initializable {
                     Stage stage = (Stage) loginBtn.getScene().getWindow();
                     Scene scene = new Scene(loader.load());
                     stage.setScene(scene);
-                    HomeController casita = loader.getController();
-                    casita.setip(txtServer.getText());
-                    casita.setUsername(txtUsername.getText());
                 }catch (IOException io){
                     io.printStackTrace();
                 }

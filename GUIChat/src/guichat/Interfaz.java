@@ -31,16 +31,13 @@ public class Interfaz {
     public static VBox eliminar;
     public static VBox aceptarAmigos;
     public static VBox aceptarGrupos;
+    public static VBox modificarGrupos;
     public static Button editar;
     public static TextField current;
     public static int idElement;
     public static int type;
     public static String nombre;
     public static int amistad;
-    
-    public Interfaz(){
-        
-    }
     
     public static void createNotification(Boolean status, String name, int id){
         HBox container = new HBox();
@@ -240,6 +237,31 @@ public class Interfaz {
         });
         container.getChildren().add(group);
         groups.getChildren().add(container);
+    }
+    
+    public static void createGroupModify(String name, int id){
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
+        CButton group = new CButton(name);
+        group.setIdElement(id);
+        group.setNameElement(name);
+        group.getStyleClass().add("btn-group");
+        group.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == group){
+                    mensajes.getChildren().clear();
+                    System.out.println("Id del Grupo: " + group.getIdElement());
+                    idElement = group.getIdElement();
+                    current.setText(group.getNameElement());
+                    nombre = group.getNameElement();
+                    type = 2;
+                    editar.setDisable(false);
+                }
+            }
+        });
+        container.getChildren().add(group);
+        modificarGrupos.getChildren().add(container);
     }
     
     public static void createUser(String name, int id){
