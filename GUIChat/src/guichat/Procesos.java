@@ -790,53 +790,6 @@ public class Procesos {
         //los mensajes.
     }
     
-    public static ArrayList<Mensaje> GetThreePersonalSms (Usuario U1, Usuario U2) {
-        
-        Gson gson = new Gson();
-        
-        int id_U1 = U1.getId();
-        int id_U2 = U2.getId();
-        
-        ArchivosController personalSmsFile = new ArchivosController(
-             System.getProperty("user.dir") + "\\mensajesPersonales.json"
-        );
-        
-        List<String> allPersonalSmsStr = personalSmsFile.readFile();
-        List<Mensaje> allPersonalSmsObj = new ArrayList<>();
-        List<Mensaje> xUserPersonalSms = new ArrayList<>();
-                
-        //Se obtienen pasan las Str de mensajes y se transforman a Mensaje.class
-        for (String personalSmsStr : allPersonalSmsStr) {
-            Mensaje savedSms = new Mensaje();
-            savedSms = gson.fromJson(personalSmsStr, Mensaje.class);
-            allPersonalSmsObj.add(savedSms);
-        }
-        
-        //Se obtienen todos los mensajes de almacenados de un chat con una 
-        //persona en específico        
-        for (Mensaje personalSmsObj : allPersonalSmsObj) {
-            int id_D = personalSmsObj.getDestino().getId();
-            int id_O = personalSmsObj.getOrigen().getId();
-            
-            if ((id_O == id_U1 && id_D == id_U2) || (id_D == id_U1 && id_O == id_U2)) {
-                xUserPersonalSms.add(personalSmsObj);
-            }
-        }
-        
-        ArrayList<Mensaje> xUserThreePersonalSms = new ArrayList<>();
-        int indexFor = xUserPersonalSms.size() - 1;
-        
-        //Se obtienen los 3 ultimos mensajes de un chat con una persona en
-        //específico
-        for (int i = indexFor;  i < indexFor - 3; --i) {
-            Mensaje auxSms = new Mensaje();
-            auxSms = xUserPersonalSms.get(i);             
-            xUserThreePersonalSms.add(auxSms);
-        }
-
-        return xUserThreePersonalSms;
-        
-    }
     
     public static ArrayList<MensajeGrupo> GetAllSmsOneGroup (Grupo group) {
         

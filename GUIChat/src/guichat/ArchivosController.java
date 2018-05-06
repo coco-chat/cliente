@@ -41,6 +41,7 @@ public class ArchivosController {
     public boolean writeFile(String cad) {
         synchronized(archivo) {
             try {
+                if(!archivo.isFile())archivo.createNewFile();
                 FileWriter FWriter = new FileWriter(archivo,true);
                 BufferedWriter writer = new BufferedWriter(FWriter);
                 writer.append(cad+"\n");
@@ -54,9 +55,10 @@ public class ArchivosController {
     
     public ArrayList<String> readFile() {
         synchronized(archivo) {
-                String auxiliar;
-                ArrayList<String> lista = new ArrayList<>();
-                try {
+            String auxiliar;
+            ArrayList<String> lista = new ArrayList<>();
+            try {
+                if(archivo.isFile()){
                     FileReader FReader = new FileReader(archivo);
                     BufferedReader reader = new BufferedReader(FReader);
                     auxiliar = reader.readLine();
@@ -65,10 +67,11 @@ public class ArchivosController {
                         auxiliar=reader.readLine();
                     }
                     reader.close();
-                    return lista;
-                } catch(IOException ex) {
-                    return null;
-                }
+                }else archivo.createNewFile();
+                return lista;
+            } catch(IOException ex) {
+                return null;
+            }           
         }
     }
     
