@@ -35,7 +35,7 @@ import javafx.stage.Stage;
  * @author start
  */
 public class NotificationsController implements Initializable{
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, groupBtn, friendsBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, groupBtn, friendsBtn, modifyBtn;
     @FXML private VBox friendsNotificationsVBox, groupsNotificationsVBox;
     private String username;
     private String[] users = {
@@ -60,7 +60,17 @@ public class NotificationsController implements Initializable{
         stage.close();
     }
     
-    
+    @FXML
+    public void goToModifyGroup(ActionEvent e){
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyGroups.fxml"));
+            Stage stage = (Stage) modifyBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+    }
     
     @FXML
     public void handleMinimizeWindow(ActionEvent e){

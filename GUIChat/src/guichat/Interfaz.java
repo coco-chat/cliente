@@ -119,7 +119,8 @@ public class Interfaz {
                 if(e.getSource() == request){
                     System.out.println("Id del Element: " + request.getIdElement());
                     Procesos.EliminarIntegrante(request.getIdElement(), idGroup);
-                    deleteRequest(posiblesIntegrantes, request.getIdElement());
+                    deleteRequest(integrantes, request.getIdElement());
+                    createUsers(request.getNameElement(), request.getIdElement());
                 }
             }
         });
@@ -145,7 +146,6 @@ public class Interfaz {
                     System.out.println("Id del Element: " + request.getIdElement());
                     Procesos.AgregarUsuarioGrupo(idGroup, request.getIdElement());
                     deleteRequest(posiblesIntegrantes, request.getIdElement());
-                    createUsers(request.getNameElement(), request.getIdElement());
                 }
             }
         });

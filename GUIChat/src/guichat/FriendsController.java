@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class FriendsController implements Initializable {
 
     // Controles implementados en Interfaz
-    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, messagesBtn, groupBtn, notificationBtn;
+    @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, messagesBtn, groupBtn, notificationBtn, modifyBtn;
     @FXML private VBox addFriendsVBox, deleteFriendsVBox;
     
     private String[] users = {
@@ -49,6 +49,18 @@ public class FriendsController implements Initializable {
     public void handleCloseWindow(ActionEvent e){
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
+    }
+    
+    @FXML
+    public void goToModifyGroup(ActionEvent e){
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyGroups.fxml"));
+            Stage stage = (Stage) modifyBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
     }
     
     @FXML

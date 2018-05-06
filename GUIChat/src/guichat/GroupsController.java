@@ -36,7 +36,7 @@ public class GroupsController implements Initializable {
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn;
     @FXML private Button minimizeWindowBtn;
-    @FXML private Button createGroupBtn, outBtn, messagesBtn, friendsBtn, notificationBtn;
+    @FXML private Button createGroupBtn, outBtn, messagesBtn, friendsBtn, notificationBtn, modifyBtn;
     @FXML private TextField txtGroup;
     @FXML private TextField txtOwner;
     @FXML private VBox usersVBox;
@@ -71,6 +71,18 @@ public class GroupsController implements Initializable {
         this.username = username;
         System.out.println(this.username);
         txtOwner.setText(this.username);
+    }
+    
+    @FXML
+    public void goToModifyGroup(ActionEvent e){
+         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyGroups.fxml"));
+            Stage stage = (Stage) modifyBtn.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setScene(scene);
+        }catch (IOException io){
+            io.printStackTrace();
+        }
     }
     
     @FXML

@@ -97,6 +97,21 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Button fx:id="modifyBtn" maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" onAction="#goToModifyGroup" prefHeight="64.0" prefWidth="64.0" styleClass="sidebar-btn" AnchorPane.topAnchor="256.0">
+                     <font>
+                        <Font name="Century Gothic Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Assets/mgroups.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="64.0" prefHeight="200.0" prefWidth="300.0" styleClass="group" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0">
