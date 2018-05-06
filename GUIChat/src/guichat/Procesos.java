@@ -469,7 +469,6 @@ public class Procesos {
         
         DataOutputStream EnviarCadena = null;
         Usuario origen = new Usuario();
-        origen.setId(1);
         System.out.println("Enviando mensaje");
         try {
 
@@ -601,8 +600,9 @@ public class Procesos {
     }
     public static void MensajeRecibido(Mensaje mensaje)
     {
-        GuardarMensajePersonal(mensaje);
         MostrarMensajeAmigo(mensaje);
+        mensaje.setOrigen(new Usuario());
+        GuardarMensajePersonal(mensaje);
     }
     
     public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
@@ -727,7 +727,7 @@ public class Procesos {
     public static void showLastMessages (Usuario usuario) {
         List<Mensaje> mensajes = getLastMessages(usuario);
         for(Mensaje mensaje : mensajes) {
-            if(mensaje.getOrigen() == null){
+            if(mensaje.getOrigen().getId()==-1){
                 Platform.runLater(() -> Interfaz.createBubble(Boolean.FALSE, Boolean.FALSE, mensaje.getContenido(), null));
             }else{
                 Platform.runLater(() -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null));
@@ -741,21 +741,22 @@ public class Procesos {
                 System.getProperty("user.dir") + "\\mensajesPersonales.json"
         );
         List<String> mensajesJson = archivosController.readFile();
+        List<Mensaje> mensajesUsr = new ArrayList<>();
         List<Mensaje> mensajes = new ArrayList<>();
         List<Mensaje> result = new ArrayList<>();
         Mensaje mensajeAux;
         
         for(String cadena:mensajesJson){
             mensajeAux = gson.fromJson(cadena, Mensaje.class);
-            mensajes.add(mensajeAux);
+            mensajesUsr.add(mensajeAux);
         }
         
-        for(Mensaje mensaje:mensajes){
-            if(mensaje.getDestino()==usuario){
+        for(Mensaje mensaje:mensajesUsr){
+            if(mensaje.getDestino().getId()==usuario.getId()){
                 mensaje.setOrigen(new Usuario());
                 mensajes.add(mensaje);
             }
-            if(mensaje.getOrigen()==usuario){
+            if(mensaje.getOrigen().getId()==usuario.getId()){
                 mensaje.setDestino(new Usuario());
                 mensajes.add(mensaje);
             }

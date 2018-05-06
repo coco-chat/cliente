@@ -1,7 +1,5 @@
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":2,"username":" ","password":" "},"contenido":"Hola Bebe"}
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":4,"username":" ","password":" "},"contenido":"hola"}
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":4,"username":" ","password":" "},"contenido":"hola"}
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":2,"username":" ","password":" "},"contenido":"hola"}
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":2,"username":" ","password":" "},"contenido":"hola"}
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":3,"username":" ","password":" "},"contenido":"hola"}
-{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":3,"username":" ","password":" "},"contenido":"hola"}
+{"origen":{"id":-1,"username":" ","password":" "},"destino":{"id":3,"username":" ","password":" "},"contenido":"hola pancho"}
+{"origen":{"id":-1,"username":" ","password":" "},"destino":{"id":1,"username":" ","password":" "},"contenido":"hola wero"}
+{"origen":{"id":1,"username":" ","password":" "},"destino":{"id":-1,"username":" ","password":" "},"contenido":"hola kevin"}
+{"origen":{"id":-1,"username":" ","password":" "},"destino":{"id":3,"username":" ","password":" "},"contenido":"pancho tu mama es hombre"}
+{"origen":{"id":-1,"username":" ","password":" "},"destino":{"id":1,"username":" ","password":" "},"contenido":"el pito corto te dicen"}
