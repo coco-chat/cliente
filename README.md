@@ -4,20 +4,20 @@
 
 - [x] Login
 - [x] Registro
-- [ ] Mostrar mensajes por amigo
+- [x] Mostrar mensajes por amigo
 - [ ] Mostrar mensajes de un grupo
-- [ ] Crear grupo y agregar amigos
-- [ ] Agregar miembros a grupo (después de crearlo)
+- [x] Crear grupo y agregar amigos
+- [x] Agregar miembros a grupo (después de crearlo)
 - [x] Enviar petición de amistad a amigo
-- [ ] Aceptar peticiones de amigos
-- [ ] Aceptar peticiones de grupos
+- [x] Aceptar peticiones de amigos
+- [x] Aceptar peticiones de grupos
 - [x] Enviar mensaje a amigo
 - [ ] Enviar mensaje a grupo
 - [x] Modificar apodo de amigo
 - [ ] Modificar nombre a grupo
 - [x] Eliminar amigo
-- [ ] Eliminar miembro de un grupo
-- [ ] Eliminar grupo
+- [x] Eliminar miembro de un grupo
+- [x] Eliminar grupo
 - [x] Desplegar lista de desconectados
 - [x] Desplegar lista de conectados
 - [x] Desplegar lista de amigos
