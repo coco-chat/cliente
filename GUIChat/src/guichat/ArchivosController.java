@@ -5,12 +5,18 @@
  */
 package guichat;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,32 +29,22 @@ import java.util.logging.Logger;
  */
 public class ArchivosController {
     private File archivo;
-    private DataOutputStream writer;
-    private DataInputStream reader;
     
     public ArchivosController () {
         this.archivo = null;
-        this.writer = null;
-        this.reader = null;
     }
     
     public ArchivosController(String path) {
         archivo = new File(path);
-        try {
-            // Defino esto explicitamente porque de otra manera no se crea el archivo
-            FileOutputStream x = new FileOutputStream(archivo, true);
-            FileInputStream y = new FileInputStream(archivo);
-            writer = new DataOutputStream(x);
-            reader = new DataInputStream(y);
-        } catch(Exception ex) {
-            Logger.getLogger(ArchivosController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public boolean writeFile(String cad) {
-        synchronized(writer) {
+        synchronized(archivo) {
             try {
-                writer.writeUTF(cad);
+                FileWriter FWriter = new FileWriter(archivo,true);
+                BufferedWriter writer = new BufferedWriter(FWriter);
+                writer.append(cad+"\n");
+                writer.close();
                 return true;
             } catch(IOException ex) {
                 return false;
@@ -57,41 +53,39 @@ public class ArchivosController {
     }
     
     public ArrayList<String> readFile() {
-        synchronized(reader) {
-            ArrayList<String> lista = new ArrayList<>();
-            try {
-                while(reader.available() > 0) {
-                    lista.add(reader.readUTF());
+        synchronized(archivo) {
+                String auxiliar;
+                ArrayList<String> lista = new ArrayList<>();
+                try {
+                    FileReader FReader = new FileReader(archivo);
+                    BufferedReader reader = new BufferedReader(FReader);
+                    auxiliar = reader.readLine();
+                    while(auxiliar!=null) {
+                        lista.add(auxiliar);
+                        auxiliar=reader.readLine();
+                    }
+                    reader.close();
+                    return lista;
+                } catch(IOException ex) {
+                    return null;
                 }
-                return lista;
-            } catch(IOException ex) {
-                return null;
-            }
         }
     }
     
     public boolean overwriteFile(List<String> data) {
-        synchronized(writer) {
+        synchronized(archivo) {
             try {
-                writer = new DataOutputStream(new FileOutputStream(archivo));
+                FileWriter FWriter = new FileWriter(archivo);
+                BufferedWriter writer = new BufferedWriter(FWriter);
                 for(String cad : data) {
-                    writer.writeUTF(cad);
+                    cad+="\n";
+                    writer.write(cad);
                 }
-                writer = new DataOutputStream(new FileOutputStream(archivo, true));
+                writer.close();
                 return true;
             } catch(Exception ex) {
                 return false;
             }
-        }
-    }
-    
-    public boolean close() {
-        try {
-            writer.close();
-            reader.close();
-            return true;
-        } catch(IOException ex) {
-            return false;
         }
     }
 }

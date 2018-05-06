@@ -3,9 +3,12 @@
 <?import java.lang.String?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1000.0" stylesheets="@Stylesheets/styles.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guichat.ModifyGroupsController">
@@ -110,7 +113,23 @@
                   </Button>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="64.0" maxWidth="300.0" minWidth="236.0" prefHeight="200.0" prefWidth="300.0" styleClass="info" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0" />
+            <AnchorPane layoutX="64.0" maxWidth="300.0" minWidth="236.0" prefHeight="200.0" prefWidth="300.0" styleClass="info" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="64.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="112.0">
+                     <styleClass>
+                        <String fx:value="blue-scroll" />
+                        <String fx:value="bg-blue" />
+                     </styleClass>
+                     <content>
+                        <VBox fx:id="groupsVBox" prefHeight="200.0" prefWidth="100.0" />
+                     </content>
+                  </ScrollPane>
+                  <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="112.0" text="Modificar Grupo" textFill="#f2f7f7" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Century Gothic Bold" size="36.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="headerBar" layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
