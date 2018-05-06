@@ -658,16 +658,15 @@ public class Procesos {
     public static void EliminarIntegrante(int IdMiembro, int IdGrupo)
     {
         DataOutputStream EnviarCadena = null;
-        Usuario origen = new Usuario();
-        origen.setId(1);
+        Integrante EliminarIntegrante= new Integrante();
         System.out.println("Eliminando");
         try {
             Comunicacion modeloOutput = new Comunicacion();
-            System.out.println(IdMiembro);
-            Integrante EliminarIntegrante= new Integrante();
-            EliminarIntegrante.setId(IdMiembro);
+            
+            EliminarIntegrante.setUsuario(IdMiembro);
             EliminarIntegrante.setGrupo(IdGrupo);
             modeloOutput.setTipo(Comunicacion.MTypes.RQ_DMIEMBRO);
+            modeloOutput.setContenido(EliminarIntegrante);;
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
