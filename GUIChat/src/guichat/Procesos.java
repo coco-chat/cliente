@@ -17,18 +17,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import guichat.Modelos.Comunicacion;
 import guichat.Modelos.Grupo;
+import guichat.Modelos.InfoGrupo;
 import guichat.Modelos.Integrante;
 import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
-import guichat.Modelos.PetAmigo;
 import guichat.Modelos.PetGrupo;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 /**
  *
  * @author usuario
@@ -159,6 +157,87 @@ public class Procesos {
             return 0;
         }
        return 0;
+    }
+    
+    public static void MostrarGruposA () {
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_GRUPOS);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<Grupo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<Grupo> grupos = json.fromJson(JsonList, type);
+            for(Grupo grupo : grupos){
+                Interfaz.createGroups(grupo.getNombre(), grupo.getId());
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public static void AgregarUsuarioGrupo (int gr, int id) {
+        DataOutputStream EnviarCadena = null;
+        PetGrupo grupo = new PetGrupo();
+        grupo.setGrupo(gr);
+        grupo.setUsuario(id);
+        try {
+
+            Comunicacion peticionAmigo = new Comunicacion();
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NMIEMBRO);
+            peticionAmigo.setContenido(grupo);
+            EnviarCadena = new DataOutputStream(soquet.getOutputStream());
+            EnviarCadena.writeUTF(json.toJson(peticionAmigo));
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            RecibirConfirmacion.readUTF();
+            
+        } catch (IOException ex) { 
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+    }
+    
+    public static void MostrarInfoGrupo (int id) {
+        DataOutputStream peticion = null;
+        Grupo grupo = new Grupo();
+        grupo.setId(id);
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setContenido(grupo);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQ_INFOGRUPO);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            
+            String JsonList = json.toJson(modeloInput.getContenido());
+            InfoGrupo info = json.fromJson(JsonList, InfoGrupo.class);
+            List<Usuario> miembros = info.getMiembros();
+            for(Usuario miembro : miembros) {
+                Interfaz.createIntegrant(miembro.getUsername(), miembro.getId());
+            }
+            List<Usuario> nomiembros = info.getNoMiembros();
+            for(Usuario nomiembro : nomiembros) {
+                Interfaz.createUsers(nomiembro.getUsername(), nomiembro.getId());
+            }
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static void MostrarUsuariosDesconectados(){
@@ -369,7 +448,6 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Grupo> grupos = json.fromJson(JsonList, type);
             for(Grupo grupo : grupos){
-                System.out.println(grupo.getNombre());
                 Interfaz.createGroup(grupo.getNombre(), grupo.getId());
             }
             

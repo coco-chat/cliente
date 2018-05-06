@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -130,6 +131,55 @@
                      </font>
                   </Label>
                </children></AnchorPane>
+            <AnchorPane layoutX="364.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="364.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label fx:id="txtNameGroup" alignment="CENTER" layoutX="27.0" layoutY="6.0" prefHeight="112.0" textFill="#54d38a" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <font>
+                        <Font name="Century Gothic Bold" size="36.0" />
+                     </font>
+                  </Label>
+                  <SplitPane dividerPositions="0.29797979797979796" layoutY="112.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="112.0">
+                    <items>
+                      <AnchorPane maxWidth="314.0" minHeight="0.0" minWidth="314.0" prefHeight="160.0" prefWidth="314.0">
+                           <children>
+                              <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                                 <content>
+                                    <VBox fx:id="intVBox" prefHeight="200.0" prefWidth="100.0" />
+                                 </content>
+                                 <styleClass>
+                                    <String fx:value="blue-scroll" />
+                                    <String fx:value="bg-gray" />
+                                 </styleClass>
+                              </ScrollPane>
+                              <Label alignment="CENTER" prefHeight="64.0" text="Integrantes" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane maxWidth="314.0" minHeight="0.0" minWidth="314.0" prefHeight="160.0" prefWidth="314.0">
+                           <children>
+                              <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+                                 <content>
+                                    <VBox fx:id="usersVBox" prefHeight="200.0" prefWidth="100.0" />
+                                 </content>
+                                 <styleClass>
+                                    <String fx:value="blue-scroll" />
+                                    <String fx:value="bg-gray" />
+                                 </styleClass>
+                              </ScrollPane>
+                              <Label alignment="CENTER" prefHeight="64.0" text="Usuarios" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="headerBar" layoutX="10.0" layoutY="10.0" prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #303841;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

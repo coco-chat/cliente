@@ -33,10 +33,15 @@ public class Interfaz {
     public static VBox aceptarAmigos;
     public static VBox aceptarGrupos;
     public static VBox modificarGrupos;
+    public static VBox integrantes;
+    public static VBox grupos;
+    public static VBox posiblesIntegrantes;
+    public static Label nombreGrupo;
     public static Button editar;
     public static TextField current;
     public static int idElement;
     public static int type;
+    public static int idGroup;
     public static String nombre;
     public static int amistad;
     
@@ -72,6 +77,81 @@ public class Interfaz {
         }else{
             aceptarGrupos.getChildren().add(container);
         }
+    }
+    
+    public static void createGroups(String name, int id) {
+        HBox container = new HBox();
+        container.getStyleClass().add("contact");
+        CButton group = new CButton(name);
+        group.setIdElement(id);
+        group.setNameElement(name);
+        group.getStyleClass().add("btn-group");
+        group.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event) {
+                if(event.getSource() == group){
+                    idGroup = group.getIdElement();
+                    integrantes.getChildren().clear();
+                    posiblesIntegrantes.getChildren().clear();
+                    nombreGrupo.setText(group.getNameElement());
+                    Procesos.MostrarInfoGrupo(group.getIdElement());
+                    System.out.println("Id del Grupo: " + group.getIdElement());
+                }
+            }
+        });
+        container.getChildren().add(group);
+        grupos.getChildren().add(container);
+    }
+    
+    public static void createIntegrant(String name, int id) {
+        HBox container = new HBox();
+        container.getStyleClass().add("friend-container-short");
+        CButton request = new CButton();
+        request.setIdElement(id);
+        Label user = new Label();
+        user.setText(name);
+        user.getStyleClass().add("name");
+        request.getStyleClass().add("btn-gray");
+        request.setText("Eliminar");
+        request.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                if(e.getSource() == request){
+                    System.out.println("Id del Element: " + request.getIdElement());
+                    Procesos.EliminarIntegrante(request.getIdElement(), idGroup);
+                    deleteRequest(posiblesIntegrantes, request.getIdElement());
+                }
+            }
+        });
+        container.getChildren().add(user);
+        container.getChildren().add(request);
+        integrantes.getChildren().add(container);
+    }
+    
+    public static void createUsers(String name, int id) {
+        HBox container = new HBox();
+        container.getStyleClass().add("friend-container-short");
+        CButton request = new CButton();
+        request.setIdElement(id);
+        Label user = new Label();
+        user.setText(name);
+        user.getStyleClass().add("name");
+        request.getStyleClass().add("btn-green");
+        request.setText("Agregar");
+        request.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                if(e.getSource() == request){
+                    System.out.println("Id del Element: " + request.getIdElement());
+                    Procesos.AgregarUsuarioGrupo(idGroup, request.getIdElement());
+                    deleteRequest(posiblesIntegrantes, request.getIdElement());
+                    createUsers(request.getNameElement(), request.getIdElement());
+                }
+            }
+        });
+        container.getChildren().add(user);
+        container.getChildren().add(request);
+        posiblesIntegrantes.getChildren().add(container);
     }
     
     public static void createRequest(Boolean status, String name, int id){

@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
@@ -26,7 +27,8 @@ public class ModifyGroupsController implements Initializable {
 
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, notificationBtn, friendsBtn, messagesBtn;
-    @FXML private VBox groupsVBox;
+    @FXML private VBox groupsVBox, intVBox, usersVBox;
+    @FXML private Label txtNameGroup;
     
     @FXML
     public void goToMessages(ActionEvent e){
@@ -115,6 +117,11 @@ public class ModifyGroupsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        Interfaz.nombreGrupo = txtNameGroup;
+        Interfaz.grupos = groupsVBox;
+        Interfaz.integrantes = intVBox;
+        Interfaz.posiblesIntegrantes = usersVBox;
+        Procesos.MostrarGruposA();
     }    
     
 }

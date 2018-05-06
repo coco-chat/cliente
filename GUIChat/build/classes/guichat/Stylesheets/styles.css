@@ -404,6 +404,49 @@ and open the template in the editor.
     -fx-alignment: CENTER_LEFT; 
 }
 
+.friend-container-short {
+    -fx-pref-height: 48;
+    -fx-pref-width: 300; 
+    -fx-max-width: 300; 
+    -fx-min-width: 300;
+    -fx-alignment: CENTER_LEFT; 
+}
+
+.friend-container-short .name {
+    -fx-pref-height: 64;
+    -fx-pref-width: 220; 
+    -fx-max-width: 220; 
+    -fx-min-width: 220;
+    -fx-padding: 0 10 0 20;
+    -fx-font-family: "Lao UI";
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #363E47;
+}
+
+.friend-container-short .btn-green {
+    -fx-pref-height: 24;
+    -fx-pref-width: 64; 
+    -fx-max-width: 64; 
+    -fx-min-width: 64;
+    -fx-text-fill: #F2F7F7;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.friend-container-short .btn-gray {
+    -fx-pref-height: 24;
+    -fx-pref-width: 64; 
+    -fx-max-width: 64; 
+    -fx-min-width: 64;
+    -fx-text-fill: #F2F7F7;
+    -fx-font-size: 12px;
+    -fx-background-color: #303841;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
 .friend-container .name {
     -fx-pref-height: 64;
     -fx-pref-width: 360; 
