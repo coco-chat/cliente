@@ -109,6 +109,7 @@ public class Interfaz {
         container.getStyleClass().add("friend-container-short");
         CButton request = new CButton();
         request.setIdElement(id);
+        request.setNameElement(name);
         Label user = new Label();
         user.setText(name);
         user.getStyleClass().add("name");
@@ -135,6 +136,7 @@ public class Interfaz {
         container.getStyleClass().add("friend-container-short");
         CButton request = new CButton();
         request.setIdElement(id);
+        request.setNameElement(name);
         Label user = new Label();
         user.setText(name);
         user.getStyleClass().add("name");
