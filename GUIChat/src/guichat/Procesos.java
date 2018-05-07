@@ -79,7 +79,7 @@ public class Procesos {
             DataOutputStream dataOutput=new DataOutputStream(Procesos.soquet.getOutputStream());
             user.setUsername(usuario);
             user.setPassword(contraseña);
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_LOGIN);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQCUENTA_LOGIN);
             modeloOutput.setContenido(user);
             dataOutput.writeUTF(json.toJson(modeloOutput));
             DataInputStream dataInput= new DataInputStream(Procesos.soquet.getInputStream());
@@ -110,7 +110,7 @@ public class Procesos {
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
             usuario.setUsername(nick);
             usuario.setPassword(contraseña);
-            modeloPeticion.setTipo(Comunicacion.MTypes.RQ_REG);
+            modeloPeticion.setTipo(Comunicacion.MTypes.RQCUENTA_REG);
             modeloPeticion.setContenido(usuario);
             peticion.writeUTF(json.toJson(modeloPeticion));
             
@@ -138,7 +138,7 @@ public class Procesos {
             System.out.println("Entre");
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
            
-            modeloPeticion.setTipo(Comunicacion.MTypes.RQ_CGRUPO);
+            modeloPeticion.setTipo(Comunicacion.MTypes.RQGRUPOS_CREATE);
             modeloPeticion.setContenido(grupo);
             peticion.writeUTF(json.toJson(modeloPeticion));
             
@@ -165,7 +165,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_GRUPOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQGRUPOS_GETALL);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -193,7 +193,7 @@ public class Procesos {
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NMIEMBRO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQGRUPOS_INVITE);
             peticionAmigo.setContenido(grupo);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
@@ -214,7 +214,7 @@ public class Procesos {
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
             modeloOutput.setContenido(grupo);
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_INFOGRUPO);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQGRUPOS_GETINFO);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -246,7 +246,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_DESCONECTADOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQUSUARIOS_DESCONECTADOS);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -272,7 +272,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_USUARIOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQAMIGOS_GETUSUARIOS);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -298,7 +298,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQAMIGOS_GETALL);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -329,7 +329,7 @@ public class Procesos {
         
         try {
             DataOutputStream peticion = new DataOutputStream(Procesos.soquet.getOutputStream());
-            modeloPeticion.setTipo(Comunicacion.MTypes.RQ_APODO);
+            modeloPeticion.setTipo(Comunicacion.MTypes.RQAMIGOS_UPDATE);
             amigo.setApodo1(apodo);
             amigo.setAmigo1(id);
             modeloPeticion.setContenido(amigo);
@@ -358,7 +358,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_PETGRUPOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQGRUPOS_GETPET);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -384,7 +384,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_PETAMIGOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQAMIGOS_GETPET);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -410,7 +410,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_CONECTADOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQUSUARIOS_CONECTADOS);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -436,7 +436,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_GRUPOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQGRUPOS_GETALL);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -462,7 +462,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOSCON);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQAMIGOS_CONECTADOS);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -492,7 +492,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_AMIGOSDES);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQAMIGOS_DESCONECTADOS);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -522,7 +522,7 @@ public class Procesos {
 
             Comunicacion modeloOutput = new Comunicacion();
             Comunicacion modeloInput = new Comunicacion();
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_LUSUARIOS);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQUSUARIOS_GETALL);
             peticion = new DataOutputStream(soquet.getOutputStream());
             String data = json.toJson(modeloOutput);
             peticion.writeUTF(data);
@@ -558,7 +558,7 @@ public class Procesos {
             mensaje_enviar.setDestino(usuario_destino);
             mensaje_enviar.setOrigen(origen);
             mensaje_enviar.setContenido(txtMessage);
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQMENSAJES_SENDPERSONAL);
             modeloOutput.setContenido(mensaje_enviar);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
@@ -619,7 +619,7 @@ public class Procesos {
             MensajeGrupo mensaje_enviar= new MensajeGrupo();
             mensaje_enviar.getGrupo().setId(IdGrupo);
             mensaje_enviar.setContenido(txtMessage);
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_MENSAJE_GRUPO);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQMENSAJES_SENDGRUPO);
             modeloOutput.setContenido(mensaje_enviar);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
@@ -645,7 +645,7 @@ public class Procesos {
             Grupo CambiarGrupo= new Grupo();
             CambiarGrupo.setId(IdGrupo);
             CambiarGrupo.setNombre(txtNombre);
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_CGRUPO);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQGRUPOS_CREATE);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
@@ -665,7 +665,7 @@ public class Procesos {
             
             EliminarIntegrante.setUsuario(IdMiembro);
             EliminarIntegrante.setGrupo(IdGrupo);
-            modeloOutput.setTipo(Comunicacion.MTypes.RQ_DMIEMBRO);
+            modeloOutput.setTipo(Comunicacion.MTypes.RQGRUPOS_DELETE);
             modeloOutput.setContenido(EliminarIntegrante);;
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
@@ -696,7 +696,7 @@ public class Procesos {
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AAMIGO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQAMIGOS_ADD);
             peticionAmigo.setContenido(aceptar);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
@@ -716,7 +716,7 @@ public class Procesos {
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_AGRUPO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQGRUPOS_ADD);
             peticionAmigo.setContenido(grupo);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
@@ -735,7 +735,7 @@ public class Procesos {
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_NAMIGO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQAMIGOS_INVITE);
             peticionAmigo.setContenido(invitacion);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
             EnviarCadena.writeUTF(json.toJson(peticionAmigo));
@@ -756,7 +756,7 @@ public class Procesos {
         try {
 
             Comunicacion peticionAmigo = new Comunicacion();
-            peticionAmigo.setTipo(Comunicacion.MTypes.RQ_DAMIGO);
+            peticionAmigo.setTipo(Comunicacion.MTypes.RQAMIGOS_DELETE);
             peticionAmigo.setContenido(invitacion);
             
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
