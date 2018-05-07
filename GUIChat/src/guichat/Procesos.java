@@ -7,6 +7,7 @@ package guichat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import guichat.ArchivosController;
 import guichat.Modelos.Amigo;
 import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
@@ -23,10 +24,17 @@ import guichat.Modelos.Mensaje;
 import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
 import guichat.Modelos.PetGrupo;
+import guichat.Process.Interfaz;
+import guichat.Process.RQAmigos;
+import guichat.Process.RQCuenta;
+import guichat.Process.RQGrupos;
+import guichat.Process.RQMensajes;
+import guichat.Process.RQUsuarios;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
+import guichat.Process.*;
 /**
  *
  * @author usuario
@@ -39,10 +47,7 @@ public class Procesos {
    
    public static Gson json = new Gson();
    
-   public Procesos()
-   {
-       
-   }
+   public Procesos() { }
    
     public static String getIp() {
         return ip;

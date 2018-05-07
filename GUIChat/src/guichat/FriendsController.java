@@ -5,6 +5,7 @@
  */
 package guichat;
 
+import guichat.Process.Interfaz;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -117,6 +118,7 @@ public class FriendsController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
+            Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());

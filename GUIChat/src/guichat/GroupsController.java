@@ -5,10 +5,10 @@
  */
 package guichat;
 
+import guichat.Process.Interfaz;
 import guichat.Components.CCheckBox;
 import guichat.Modelos.NuevoGrupo;
 import guichat.Modelos.PetGrupo;
-import guichat.Modelos.Usuario;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -149,6 +148,7 @@ public class GroupsController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
+            Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());

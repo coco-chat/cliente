@@ -5,28 +5,16 @@
  */
 package guichat;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
-import guichat.Components.CButton;
+import guichat.Process.Interfaz;
 import java.io.IOException;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
-import static javafx.scene.input.KeyCode.T;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -124,6 +112,7 @@ public class NotificationsController implements Initializable{
     @FXML
     public void signOut(ActionEvent e){
         try {
+            Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());

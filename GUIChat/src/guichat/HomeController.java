@@ -5,6 +5,7 @@
  */
 package guichat;
 
+import guichat.Process.Interfaz;
 import com.google.gson.Gson;
 import guichat.Modelos.Comunicacion;
 import java.io.DataInputStream;
