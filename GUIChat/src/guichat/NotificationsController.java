@@ -90,8 +90,6 @@ public class NotificationsController implements Initializable{
             Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
-            GroupsController group = loader.getController();
-            group.setUsername(this.username);
         }catch (IOException io){
             io.printStackTrace();
         }

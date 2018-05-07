@@ -266,6 +266,8 @@ public class Interfaz {
             @Override
             public void handle(ActionEvent event) {
                 if(event.getSource() == user){
+                    editar.setDisable(true);
+                    editar.setText("Editar");
                     mensajes.getChildren().clear();
                     System.out.println("Id del Usuario: " + user.getIdElement());
                     idElement = user.getIdElement();
@@ -275,7 +277,7 @@ public class Interfaz {
                     Procesos.showLastMessages(usuario);
                     nombre = user.getNameElement();
                     type = 1;
-                    editar.setDisable(false);
+                    if(friend){editar.setDisable(false);}
                 }
             }
         });

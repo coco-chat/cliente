@@ -148,7 +148,11 @@ public class HomeController implements Initializable, Runnable {
             public void handle(KeyEvent keyEvent){
                 if(keyEvent.getCode() == KeyCode.ENTER){
                     keyEvent.consume();
-                    if(!txtMessage.getText().isEmpty()){send();};
+                    if(Interfaz.type == 1){
+                        if(!txtMessage.getText().isEmpty()){sendToFriend();};
+                    }else if(Interfaz.type == 2){
+                        if(!txtMessage.getText().isEmpty()){sendToGroup();};
+                    }
                 }
             }
         });
@@ -160,9 +164,15 @@ public class HomeController implements Initializable, Runnable {
         });
     }
     
-    public void send(){
+    public void sendToFriend(){
         Interfaz.createBubble(Boolean.FALSE, type, txtMessage.getText(), null);
         Procesos.EnviarMensajes(txtMessage.getText(), Interfaz.idElement);
+        txtMessage.setText("");
+    }
+    
+    public void sendToGroup() {
+        Interfaz.createBubble(Boolean.FALSE, type, txtMessage.getText(), null);
+        Procesos.EnviarMensajeGrupo(txtMessage.getText(), Interfaz.idElement);
         txtMessage.setText("");
     }
     
@@ -217,7 +227,11 @@ public class HomeController implements Initializable, Runnable {
     
     @FXML
     public void sendMessage(ActionEvent e){
-        if(!txtMessage.getText().isEmpty()){send();};
+        if(Interfaz.type == 1){
+            if(!txtMessage.getText().isEmpty()){sendToFriend();};
+        }else if(Interfaz.type == 2){
+            if(!txtMessage.getText().isEmpty()){sendToGroup();};
+        }
     }
     
     /**

@@ -62,16 +62,6 @@ public class GroupsController implements Initializable {
         stage.close();
     }
     
-    /**
-     * Método para pasar el nombre de usuario de una vista a otra
-     * @param username String Nombre de Usuario
-     */
-    public void setUsername(String username){
-        this.username = username;
-        System.out.println(this.username);
-        txtOwner.setText(this.username);
-    }
-    
     @FXML
     public void goToModifyGroup(ActionEvent e){
          try {
@@ -137,8 +127,7 @@ public class GroupsController implements Initializable {
      */
     @FXML
     public void createGroup(ActionEvent e){        
-            getUsers();
-            
+        getUsers();        
     }
     
     /**

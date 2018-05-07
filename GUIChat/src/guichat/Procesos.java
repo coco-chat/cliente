@@ -7,7 +7,6 @@ package guichat;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import guichat.ArchivosController;
 import guichat.Modelos.Amigo;
 import guichat.Modelos.Usuario;
 import java.io.DataInputStream;
@@ -25,16 +24,10 @@ import guichat.Modelos.MensajeGrupo;
 import guichat.Modelos.NuevoGrupo;
 import guichat.Modelos.PetGrupo;
 import guichat.Process.Interfaz;
-import guichat.Process.RQAmigos;
-import guichat.Process.RQCuenta;
-import guichat.Process.RQGrupos;
-import guichat.Process.RQMensajes;
-import guichat.Process.RQUsuarios;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
-import guichat.Process.*;
 /**
  *
  * @author usuario
@@ -68,19 +61,18 @@ public class Procesos {
    public static void CrearSocket(String ip, int puerto)
    {     
        try {
-           soquet= new Socket(ip,puerto);
+           soquet = new Socket(ip,puerto);
        } catch (IOException ex) {
            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
        }
    }
    
    public static double Login(String usuario, String contraseña, String servidor){
-        String ip= servidor;
         Usuario user = new Usuario();
         Comunicacion modeloInput = new Comunicacion();
         Comunicacion modeloOutput = new Comunicacion();
         try {
-            Procesos.CrearSocket(ip, 4567);
+            Procesos.CrearSocket(servidor, 4567);
             DataOutputStream dataOutput=new DataOutputStream(Procesos.soquet.getOutputStream());
             user.setUsername(usuario);
             user.setPassword(contraseña);
@@ -678,7 +670,7 @@ public class Procesos {
             RecibirConfirmacion.readUTF();
         } catch (IOException ex) {
             Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }   
     }
     public static void MensajeRecibido(Mensaje mensaje)
     {
@@ -689,6 +681,9 @@ public class Procesos {
     
     public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
     {
+        Platform.runLater(() -> {
+            Interfaz.createBubble(Boolean.TRUE, Boolean.TRUE, mensaje_grupo.getContenido(), mensaje_grupo.getUsuario().getUsername());
+        });
         GuardarMensajeGrupo(mensaje_grupo);
     }
     
