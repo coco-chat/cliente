@@ -64,6 +64,7 @@ public class Procesos {
            soquet = new Socket(ip,puerto);
        } catch (IOException ex) {
            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+           System.out.println("Problemas al crear el socket");
        }
    }
    
@@ -174,7 +175,9 @@ public class Procesos {
             String JsonList = json.toJson(modeloInput.getContenido());
             List<Grupo> grupos = json.fromJson(JsonList, type);
             for(Grupo grupo : grupos){
-                Interfaz.createGroups(grupo.getNombre(), grupo.getId());
+                if(grupo.getAdmin() == -1){
+                    Interfaz.createGroups(grupo.getNombre(), grupo.getId());
+                }
             }
             
         } catch (IOException ex) {

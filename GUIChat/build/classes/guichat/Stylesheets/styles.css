@@ -449,9 +449,9 @@ and open the template in the editor.
 
 .friend-container .name {
     -fx-pref-height: 64;
-    -fx-pref-width: 280; 
-    -fx-max-width: 280; 
-    -fx-min-width: 280;
+    -fx-pref-width: 310; 
+    -fx-max-width: 310; 
+    -fx-min-width: 310;
     -fx-padding: 0 10 0 20;
     -fx-font-family: "Lao UI";
     -fx-font-size: 12px;

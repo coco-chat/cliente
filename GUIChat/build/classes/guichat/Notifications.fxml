@@ -9,7 +9,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -128,16 +127,7 @@
                               </Label>
                               <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutY="64.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
                                  <content>
-                                    <VBox fx:id="friendsNotificationsVBox" prefHeight="200.0" prefWidth="100.0">
-                                       <children>
-                                          <HBox prefHeight="100.0" prefWidth="200.0" styleClass="friend-container">
-                                             <children>
-                                                <Label styleClass="name" text="Label" />
-                                                <Button mnemonicParsing="false" styleClass="btn-green" text="Aceptar" />
-                                                <Button mnemonicParsing="false" styleClass="btn-gray" text="Rechazar" />
-                                             </children>
-                                          </HBox>
-                                       </children></VBox>
+                                    <VBox fx:id="friendsNotificationsVBox" prefHeight="200.0" prefWidth="100.0" />
                                  </content>
                                  <styleClass>
                                     <String fx:value="blue-scroll" />
