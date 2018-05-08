@@ -449,9 +449,9 @@ and open the template in the editor.
 
 .friend-container .name {
     -fx-pref-height: 64;
-    -fx-pref-width: 360; 
-    -fx-max-width: 360; 
-    -fx-min-width: 360;
+    -fx-pref-width: 280; 
+    -fx-max-width: 280; 
+    -fx-min-width: 280;
     -fx-padding: 0 10 0 20;
     -fx-font-family: "Lao UI";
     -fx-font-size: 12px;
@@ -471,13 +471,16 @@ and open the template in the editor.
 }
 
 .friend-container .btn-gray {
-    -fx-pref-height: 24;
-    -fx-pref-width: 64; 
-    -fx-max-width: 64; 
-    -fx-min-width: 64;
+    -fx-pref-height: 35;
+    -fx-pref-width: 74; 
+    -fx-max-width: 74; 
+    -fx-min-width: 74;
     -fx-text-fill: #F2F7F7;
     -fx-font-size: 12px;
     -fx-background-color: #303841;
     -fx-font-weight: bold;
     -fx-cursor: hand;
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
 }

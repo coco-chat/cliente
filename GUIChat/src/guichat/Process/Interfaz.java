@@ -11,7 +11,6 @@ import guichat.Components.CCheckBox;
 import guichat.Modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -50,30 +49,50 @@ public class Interfaz {
     public static void createNotification(Boolean status, String name, int id){
         HBox container = new HBox();
         container.getStyleClass().add("friend-container");
-        CButton request = new CButton();
-        request.setIdElement(id);
-        Label user = new Label();
-        user.setText(name);
-        user.getStyleClass().add("name");
-        request.getStyleClass().add("btn-green");
-        request.setText("Aceptar");
-        request.setOnAction(new EventHandler<ActionEvent>(){
+        CButton accept = new CButton();
+        accept.setIdElement(id);
+        accept.getStyleClass().add("btn-green");
+        accept.setText("Aceptar");
+        accept.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent e){
-                if(e.getSource() == request){
-                    System.out.println("Id del Element: " + request.getIdElement());
+                if(e.getSource() == accept){
+                    System.out.println("Id del Element: " + accept.getIdElement());
                    if(status){
-                       Procesos.PeticionAceptarAmigo(request.getIdElement());
-                       deleteRequest(aceptarAmigos, request.getIdElement());
+                       Procesos.PeticionAceptarAmigo(accept.getIdElement());
+                       deleteRequest(aceptarAmigos, accept.getIdElement());
                    }else{
-                       Procesos.PeticionAceptarGrupo(request.getIdElement());
-                       deleteRequest(aceptarGrupos, request.getIdElement());
+                       Procesos.PeticionAceptarGrupo(accept.getIdElement());
+                       deleteRequest(aceptarGrupos, accept.getIdElement());
                    }
                 }
             }
         });
+        CButton deny = new CButton();
+        deny.setIdElement(id);
+        deny.getStyleClass().add("btn-gray");
+        deny.setText("Rechazar");
+        deny.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){
+                if(e.getSource() == deny){
+                    System.out.println("Id del Element: " + accept.getIdElement());
+                   if(status){
+                       Procesos.PeticionRechazarAmigo(deny.getIdElement());
+                       deleteRequest(aceptarAmigos, deny.getIdElement());
+                   }else{
+                       Procesos.PeticionRechazarGrupo(deny.getIdElement());
+                       deleteRequest(aceptarGrupos, deny.getIdElement());
+                   }
+                }
+            }
+        });
+        Label user = new Label();
+        user.setText(name);
+        user.getStyleClass().add("name");
         container.getChildren().add(user);
-        container.getChildren().add(request);
+        container.getChildren().add(accept);
+        container.getChildren().add(deny);
         if(status){
             aceptarAmigos.getChildren().add(container);
         }else{

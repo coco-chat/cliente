@@ -44,7 +44,6 @@ public class Hilo extends Thread {
             }
             System.out.println("Finalizado.");
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
             System.out.println("Hilo Terminado.");
         }
     }
@@ -55,7 +54,7 @@ public class Hilo extends Thread {
         try {
             response.close();
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Hilo terminado por stopThread");
         }
     }
     
