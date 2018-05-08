@@ -28,6 +28,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 /**
  *
  * @author usuario
@@ -62,9 +64,8 @@ public class Procesos {
    {     
        try {
            soquet = new Socket(ip,puerto);
-       } catch (IOException ex) {
-           Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
-           System.out.println("Problemas al crear el socket");
+       } catch (Exception ex) {
+           showGlobalMessage("Por favor verifica que la dirección del Servidor sea correcta.", "Coco Chat", "Problema con conexión");
        }
    }
    
@@ -88,8 +89,9 @@ public class Procesos {
                     return (double)modeloInput.getContenido();
                 }
             }
-        } catch (IOException I) {
+        } catch (Exception I) {
             I.getMessage();
+            System.out.println("Problema con la red");
             return 0;
         }
        return 0;
@@ -872,7 +874,41 @@ public class Procesos {
         }
     }
     
-    private static void MostrarMensajeAmigo(Mensaje mensaje) {
+    public static void ConseguirMensajeGrupo() {
+        DataOutputStream peticion = null;
+        try {
+
+            Comunicacion modeloOutput = new Comunicacion();
+            Comunicacion modeloInput = new Comunicacion();
+            modeloOutput.setTipo(Comunicacion.MTypes.RQMENSAJES_GETGRUPO);
+            peticion = new DataOutputStream(soquet.getOutputStream());
+            String data = json.toJson(modeloOutput);
+            peticion.writeUTF(data);
+
+            DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
+            data = RecibirConfirmacion.readUTF();
+            modeloInput = json.fromJson(data, Comunicacion.class);
+            Type type = new TypeToken<List<MensajeGrupo>>() {}.getType();
+            String JsonList = json.toJson(modeloInput.getContenido());
+            List<MensajeGrupo> mensajes = json.fromJson(JsonList, type);
+            for(MensajeGrupo mensaje : mensajes){
+                boolean a = GuardarMensajeGrupo(mensaje);
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Procesos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static void showGlobalMessage(String content, String title, String header) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+    
+    public static void MostrarMensajeAmigo(Mensaje mensaje) {
         if(Interfaz.type == 1){
             if(mensaje.getOrigen().getId() == Interfaz.idElement){
                 Platform.runLater(
@@ -895,6 +931,42 @@ public class Procesos {
         String cadena = gson.toJson(mensaje);
         status = mensajesPersonalesFile.writeFile(cadena);
         return status;
+    }
+     
+    public static List<MensajeGrupo> getLastGroupsMessages (Grupo grupo) {
+        Gson gson = new Gson();
+        
+        ArchivosController fileController = new ArchivosController(
+                System.getProperty("user.dir") + "\\smsGrupos.json"
+        );
+        
+        List<String> smsGroupsOnStr = fileController.readFile();
+        List<MensajeGrupo> smsXGroupOnObj = new ArrayList<>();
+        
+        for (String smsGpoStr : smsGroupsOnStr) {
+            MensajeGrupo newSmsGpo;
+            newSmsGpo = gson.fromJson(smsGpoStr, MensajeGrupo.class);
+            
+            if(newSmsGpo.getGrupo().getId() == grupo.getId()){
+                smsXGroupOnObj.add(newSmsGpo);
+            }
+        }
+        
+        return smsXGroupOnObj;
+        
+    }
+    
+    
+    
+    public static void showLastGroupsMessages(Grupo grupo) {
+        List<MensajeGrupo> mensajes = getLastGroupsMessages(grupo);
+        for( MensajeGrupo mensaje : mensajes ) {
+            if(mensaje.getRemitente().getId() == -1) {
+                Platform.runLater(() -> Interfaz.createBubble(Boolean.FALSE, Boolean.TRUE, mensaje.getMensaje(), mensaje.getRemitente().getUsername()));
+            } else {
+                Platform.runLater(() -> Interfaz.createBubble(Boolean.TRUE, Boolean.TRUE, mensaje.getMensaje(), mensaje.getRemitente().getUsername()));
+            }
+        }
     }
     
     public static void showLastMessages (Usuario usuario) {

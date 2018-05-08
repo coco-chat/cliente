@@ -8,6 +8,7 @@ package guichat.Process;
 import guichat.Procesos;
 import guichat.Components.CButton;
 import guichat.Components.CCheckBox;
+import guichat.Modelos.Grupo;
 import guichat.Modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -373,9 +374,12 @@ public class Interfaz {
                     System.out.println("Id del Grupo: " + group.getIdElement());
                     idElement = group.getIdElement();
                     current.setText(group.getNameElement());
+                    Grupo grupo = new Grupo();
+                    grupo.setId(group.getIdElement());
+                    Procesos.showLastGroupsMessages(grupo);
                     nombre = group.getNameElement();
                     type = 2;
-                    editar.setDisable(false);
+                    editar.setDisable(true);
                 }
             }
         });

@@ -241,5 +241,6 @@ public class HomeController implements Initializable {
         Procesos.MostrarUsuariosConectados();
         Procesos.MostrarUsuariosDesconectados();
         Procesos.MostrarGrupos();
+        Procesos.ConseguirMensajeGrupo();
     }
 }

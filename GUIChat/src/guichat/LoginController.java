@@ -99,7 +99,7 @@ public class LoginController implements Initializable {
                     hilo.start();
                     home.setHilo(hilo);
                 }catch (IOException io){
-                    io.printStackTrace();
+                    
                 }
             } else {
                 count++;
@@ -116,7 +116,7 @@ public class LoginController implements Initializable {
                             hilo.start();
                             home.setHilo(hilo);
                         } catch( IOException io) {
-                            io.printStackTrace();
+                            
                         }
                     }
                 }
