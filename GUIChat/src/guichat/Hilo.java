@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class Hilo extends Thread {
     
-    private Boolean flagThread = true;
+    private volatile Boolean flagThread = true;
     private ServerSocket response;
     
     public Hilo() {
@@ -31,7 +31,7 @@ public class Hilo extends Thread {
     public void run(){
         System.out.println("Corriendo");
         try {
-            response = new ServerSocket(7654);
+            response = new ServerSocket(7654);  
             while(this.flagThread) {
                 System.out.println("Entre al while");
                 Gson json = new Gson();

@@ -37,6 +37,9 @@ public class LoginController implements Initializable {
     @FXML private Button closeWindowBtn, minimizeWindowBtn, registerBtn, loginBtn;
     @FXML private TextField txtUsername, txtPassword, txtServer;
     
+    private int count;
+    
+    
     /**
      * Constructor de LoginController
      * 
@@ -91,8 +94,31 @@ public class LoginController implements Initializable {
                     Stage stage = (Stage) loginBtn.getScene().getWindow();
                     Scene scene = new Scene(loader.load());
                     stage.setScene(scene);
+                    HomeController home = loader.getController();
+                    Hilo hilo = new Hilo();
+                    hilo.start();
+                    home.setHilo(hilo);
                 }catch (IOException io){
                     io.printStackTrace();
+                }
+            } else {
+                count++;
+                if(count >= 3) {
+                    if(Procesos.Register(txtUsername.getText(), txtPassword.getText(), txtServer.getText()) == 220.0) {
+                        System.out.println("Usuarios Registrado debido a 3 fallos de intento de Login");
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("Home.fxml"));
+                            Stage stage = (Stage) loginBtn.getScene().getWindow();
+                            Scene scene = new Scene(loader.load());
+                            stage.setScene(scene);
+                            HomeController home = loader.getController();
+                            Hilo hilo = new Hilo();
+                            hilo.start();
+                            home.setHilo(hilo);
+                        } catch( IOException io) {
+                            io.printStackTrace();
+                        }
+                    }
                 }
             }
         }
@@ -110,6 +136,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        this.count = 0;
         
     } 
     

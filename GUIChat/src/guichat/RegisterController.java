@@ -44,6 +44,10 @@ public class RegisterController implements Initializable {
                     Stage stage = (Stage) signinBtn.getScene().getWindow();
                     Scene scene = new Scene(loader.load());
                     stage.setScene(scene);
+                    HomeController home = loader.getController();
+                    Hilo hilo = new Hilo();
+                    hilo.start();
+                    home.setHilo(hilo);
                 }catch (IOException io){
                     io.printStackTrace();
                 }

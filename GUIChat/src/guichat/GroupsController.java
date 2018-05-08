@@ -42,15 +42,11 @@ public class GroupsController implements Initializable {
     
     // Variables locales
     private String username;
-    private String[] users = {
-        "Arturo Carrillo",
-        "Kevin Alan",
-        "Vanya Martínez",
-        "Jimena Zaragoza",
-        "Juan Antonio",
-        "Emiliano Moreno",
-        "Eduardo Fuentes"
-    };
+    private Hilo hilo;
+        
+    public void setHilo(Hilo hilo) {
+        this.hilo = hilo;
+    }
     
     /**
      * Método para poder cerrar la pestaña
@@ -58,6 +54,7 @@ public class GroupsController implements Initializable {
      */
     @FXML
     public void handleCloseWindow(ActionEvent e){
+        this.hilo.stopThread();
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
     }
@@ -69,6 +66,8 @@ public class GroupsController implements Initializable {
             Stage stage = (Stage) modifyBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            ModifyGroupsController modify = loader.getController();
+            modify.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -81,6 +80,8 @@ public class GroupsController implements Initializable {
             Stage stage = (Stage) messagesBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            HomeController home = loader.getController();
+            home.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -93,6 +94,8 @@ public class GroupsController implements Initializable {
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            FriendsController friends = loader.getController();
+            friends.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -105,6 +108,8 @@ public class GroupsController implements Initializable {
             Stage stage = (Stage) notificationBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            NotificationsController notifications = loader.getController();
+            notifications.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -137,6 +142,7 @@ public class GroupsController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
+            this.hilo.stopThread();
             Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
@@ -179,16 +185,6 @@ public class GroupsController implements Initializable {
             }
         }else{
             System.out.println("No tienes usuarios seleccionados.");
-        }
-    }
-    
-    /**
-     * Método para insertar contenido de pruebas
-     */
-    public void insertContent(){
-        int count = 1;
-        for(String user : users) {
-            Interfaz.createUser(user, count);
         }
     }
     

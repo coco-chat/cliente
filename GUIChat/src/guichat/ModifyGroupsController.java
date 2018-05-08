@@ -31,6 +31,13 @@ public class ModifyGroupsController implements Initializable {
     @FXML private VBox groupsVBox, intVBox, usersVBox;
     @FXML private Label txtNameGroup;
     
+    // Variables Globales
+    private Hilo hilo;
+        
+    public void setHilo(Hilo hilo) {
+        this.hilo = hilo;
+    }
+    
     @FXML
     public void goToMessages(ActionEvent e){
         try {
@@ -38,6 +45,8 @@ public class ModifyGroupsController implements Initializable {
             Stage stage = (Stage) messagesBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            HomeController home = loader.getController();
+            home.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -50,6 +59,8 @@ public class ModifyGroupsController implements Initializable {
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            FriendsController friends = loader.getController();
+            friends.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -58,6 +69,7 @@ public class ModifyGroupsController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
+            this.hilo.stopThread();
             Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
@@ -75,6 +87,8 @@ public class ModifyGroupsController implements Initializable {
             Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            GroupsController groups = loader.getController();
+            groups.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -87,6 +101,8 @@ public class ModifyGroupsController implements Initializable {
             Stage stage = (Stage) notificationBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            NotificationsController notifications = loader.getController();
+            notifications.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -99,6 +115,7 @@ public class ModifyGroupsController implements Initializable {
      */
     @FXML
     public void handleCloseWindow(ActionEvent e){
+        this.hilo.stopThread();
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
     }

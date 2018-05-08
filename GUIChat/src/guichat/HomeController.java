@@ -49,21 +49,12 @@ public class HomeController implements Initializable {
     
     // Variables de control internas
     private Boolean type = false;
-    private String username;
     private Boolean flagEdit = false;
-    private Boolean typeEdit = true;
-    private String contact;
-    private ServerSocket response;
-    private volatile Boolean flagThread = true;
-    private String[] users = {
-        "Arturo Carrillo",
-        "Kevin Alan",
-        "Vanya Martínez",
-        "Jimena Zaragoza",
-        "Juan Antonio",
-        "Emiliano Moreno",
-        "Eduardo Fuentes"
-    };
+    private Hilo hilo;
+        
+    public void setHilo(Hilo hilo) {
+        this.hilo = hilo;
+    }
     
     /**
      * =========================================================================
@@ -78,6 +69,8 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            FriendsController friends = loader.getController();
+            friends.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -90,6 +83,8 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) modifyBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            ModifyGroupsController modify = loader.getController();
+            modify.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -125,6 +120,7 @@ public class HomeController implements Initializable {
      */
     @FXML
     public void handleCloseWindow(ActionEvent e){
+        this.hilo.stopThread();
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
     }
@@ -180,6 +176,7 @@ public class HomeController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
+            this.hilo.stopThread();
             Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
@@ -201,6 +198,8 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            GroupsController groups = loader.getController();
+            groups.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -213,6 +212,8 @@ public class HomeController implements Initializable {
             Stage stage = (Stage) notificationBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            NotificationsController notifications = loader.getController();
+            notifications.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }

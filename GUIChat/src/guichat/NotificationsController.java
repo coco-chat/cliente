@@ -26,16 +26,11 @@ public class NotificationsController implements Initializable{
     @FXML private Button closeWindowBtn, minimizeWindowBtn, messagesBtn, outBtn, groupBtn, friendsBtn, modifyBtn;
     @FXML private VBox friendsNotificationsVBox, groupsNotificationsVBox;
     private String username;
-    private String[] users = {
-        "Arturo Carrillo te quiere agregar como amigo",
-        "Kevin Alan te envío solicitud para el grupo Basura",
-        "Vanya Martínez te quiere agregar como amigo",
-        "Jimena Zaragoza",
-        "Juan Antonio",
-        "Emiliano Moreno",
-        "Eduardo Fuentes"
-    };
-    private int currentRequest;
+    private Hilo hilo;
+        
+    public void setHilo(Hilo hilo) {
+        this.hilo = hilo;
+    }
 
     public NotificationsController() {
         
@@ -44,6 +39,7 @@ public class NotificationsController implements Initializable{
     
     @FXML
     public void handleCloseWindow(ActionEvent e){
+        this.hilo.stopThread();
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
     }
@@ -55,6 +51,8 @@ public class NotificationsController implements Initializable{
             Stage stage = (Stage) modifyBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            ModifyGroupsController modify = loader.getController();
+            modify.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -65,11 +63,6 @@ public class NotificationsController implements Initializable{
         Stage stage = (Stage) minimizeWindowBtn.getScene().getWindow();
         stage.setIconified(true);
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-        System.out.println(this.username);
-    }
     
     @FXML
     public void goToMessages(ActionEvent e){
@@ -78,6 +71,8 @@ public class NotificationsController implements Initializable{
             Stage stage = (Stage) messagesBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            HomeController home = loader.getController();
+            home.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -90,6 +85,8 @@ public class NotificationsController implements Initializable{
             Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            GroupsController groups = loader.getController();
+            groups.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -102,6 +99,8 @@ public class NotificationsController implements Initializable{
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            FriendsController friends = loader.getController();
+            friends.setHilo(this.hilo);
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -110,6 +109,7 @@ public class NotificationsController implements Initializable{
     @FXML
     public void signOut(ActionEvent e){
         try {
+            this.hilo.stopThread();
             Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
