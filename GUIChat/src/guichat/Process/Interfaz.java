@@ -11,6 +11,7 @@ import guichat.Components.CCheckBox;
 import guichat.Modelos.Usuario;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -77,6 +78,41 @@ public class Interfaz {
             aceptarAmigos.getChildren().add(container);
         }else{
             aceptarGrupos.getChildren().add(container);
+        }
+    }
+    
+    /**
+     * Modelo para actualizar el estado de Conexión de un usuario
+     * @param status Boolean Determinar si el usuario se conecto o desconecto
+     * true => Conectado
+     * false => Desconectado
+     * @param id int Numero identificador del usuario
+     */
+    public static void updateStatus(Boolean status, int id) {
+        if(friends instanceof VBox){
+            for(Node hbox : ((VBox)friends).getChildren()){
+                if(hbox instanceof HBox){
+                    for(Node cbutton : ((HBox)hbox).getChildren()){
+                        if(cbutton instanceof CButton){
+                            if(((CButton) cbutton).getIdElement() == id){
+                                for(Node label : ((HBox)hbox).getChildren()) {
+                                    if(label instanceof Label) {
+                                        if(label.getStyleClass().contains("circle")) {
+                                            if(status) {
+                                                label.getStyleClass().remove("offline");
+                                                label.getStyleClass().add("online");
+                                            } else {
+                                                label.getStyleClass().add("offline");
+                                                label.getStyleClass().remove("online");
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     

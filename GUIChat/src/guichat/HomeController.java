@@ -6,11 +6,7 @@
 package guichat;
 
 import guichat.Process.Interfaz;
-import com.google.gson.Gson;
-import guichat.Modelos.Comunicacion;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,9 +19,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.net.ServerSocket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -176,12 +169,12 @@ public class HomeController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
-            this.hilo.stopThread();
             Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            this.hilo.stopThread();
         }catch (IOException io){
             io.printStackTrace();
         }
@@ -247,11 +240,6 @@ public class HomeController implements Initializable {
         Procesos.MostrarAmigosDesconectados();
         Procesos.MostrarUsuariosConectados();
         Procesos.MostrarUsuariosDesconectados();
-        //if(Procesos.ActualizarApodoAmigo("Pancho") == 243.0){
-        //    System.out.println("El cambio se llevo a cabo correctamente");
-        //}else{
-        //    System.out.println("Hubo problemas con la actualización");
-        //}
         Procesos.MostrarGrupos();
     }
 }

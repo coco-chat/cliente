@@ -572,16 +572,19 @@ public class Procesos {
     
     public static void RecibirPeticiones()
     {
-        Gson jayson= new Gson();
+        
+        Gson json= new Gson();
         Comunicacion modelo = new Comunicacion();
+        
         try {
             DataInputStream dataInput= new DataInputStream(soquet.getInputStream());
-            modelo= jayson.fromJson(dataInput.readUTF(), Comunicacion.class);
+            modelo = json.fromJson(dataInput.readUTF(), Comunicacion.class);
             mensajeria(modelo);
         } catch (IOException e) {
             e.getMessage();
-}
+        }
     }
+    
     public static void mensajeria(Comunicacion modelo)
     {
         
@@ -601,7 +604,43 @@ public class Procesos {
                 case SEND_DESCONECTADOS:
                     
                     break;
+                case SENDUSUARIO_CONECTADO:
+                    ActualizarUsuarioConectado(json.fromJson(data, Usuario.class));
+                    break;
+                case SENDUSUARIO_DESCONECTADO:
+                    ActualizarUsuarioDesconectado(json.fromJson(data, Usuario.class));
+                    break;
+                case SENDAMIGO_CONECTADO:
+                    ActualizarAmigoConectado(json.fromJson(data, Usuario.class));
+                    break;
+                case SENDAMIGO_DESCONECTADO:
+                    ActualizarAmigoDesconectado(json.fromJson(data, Usuario.class));
+                    break;
             }
+    }
+    
+    public static void ActualizarAmigoConectado(Usuario usuario) {
+        Platform.runLater(() -> {
+            Interfaz.updateStatus(true, usuario.getId());
+        });
+    }
+    
+    public static void ActualizarAmigoDesconectado(Usuario usuario) {
+        Platform.runLater(() -> {
+            Interfaz.updateStatus(false, usuario.getId());
+        });
+    }
+    
+    public static void ActualizarUsuarioConectado(Usuario usuario) {
+         Platform.runLater(() -> {
+            Interfaz.updateStatus(true, usuario.getId());
+        });
+    }
+    
+    public static void ActualizarUsuarioDesconectado(Usuario usuario) {
+        Platform.runLater(() -> {
+            Interfaz.updateStatus(false, usuario.getId());
+        });
     }
     
     public static void EnviarMensajeGrupo(String txtMessage, int IdGrupo)

@@ -123,12 +123,12 @@ public class FriendsController implements Initializable {
     @FXML
     public void signOut(ActionEvent e){
         try {
-            this.hilo.stopThread();
             Procesos.CerrarSesion();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
             stage.setScene(scene);
+            this.hilo.stopThread();
         }catch (IOException io){
             io.printStackTrace();
         }
