@@ -6,6 +6,8 @@
 package guichat.Modelos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,14 +15,9 @@ import java.io.Serializable;
  */
 public class MensajeGrupo implements Serializable{
     private Grupo grupo;
-    private Usuario usuario;
-    private String contenido;
-    
-    public MensajeGrupo() {
-        this.grupo = new Grupo();
-        this.usuario = new Usuario();
-        this.contenido = " ";
-    }
+    private Usuario remitente;
+    private String mensaje;
+    private List<Usuario> integrantes;
 
     public Grupo getGrupo() {
         return grupo;
@@ -29,20 +26,36 @@ public class MensajeGrupo implements Serializable{
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
-
-    public Usuario getUsuario() {
-        return usuario;
+    
+    public Usuario getRemitente() {
+        return remitente;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setRemitente(Usuario remitente) {
+        this.remitente = remitente;
     }
 
-    public String getContenido() {
-        return contenido;
+    public String getMensaje() {
+        return mensaje;
     }
 
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }   
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public List<Usuario> getIntegrantes() {
+        return integrantes;
+    }
+
+    public void setIntegrantes(List<Usuario> integrantes) {
+        this.integrantes = integrantes;
+    }
+    
+    public MensajeGrupo() {
+        this.grupo = new Grupo();
+        this.remitente = new Usuario();
+        this.mensaje = " ";
+        this.integrantes = new ArrayList<>();
+    }
+ 
 }

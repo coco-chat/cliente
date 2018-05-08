@@ -38,7 +38,7 @@ import javafx.scene.input.KeyEvent;
  *
  * @author Wero
  */
-public class HomeController implements Initializable, Runnable {
+public class HomeController implements Initializable {
     
     // Controles implementados en Interfaz
     @FXML private Button closeWindowBtn, minimizeWindowBtn, outBtn, groupBtn, editBtn, notificationBtn, friendsBtn, modifyBtn;
@@ -74,7 +74,6 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void goToFriends(ActionEvent e){
          try {
-            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Friends.fxml"));
             Stage stage = (Stage) friendsBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -86,8 +85,7 @@ public class HomeController implements Initializable, Runnable {
     
     @FXML
     public void goToModifyGroup(ActionEvent e){
-         try {
-            stopThread();
+         try {            
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifyGroups.fxml"));
             Stage stage = (Stage) modifyBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -127,7 +125,6 @@ public class HomeController implements Initializable, Runnable {
      */
     @FXML
     public void handleCloseWindow(ActionEvent e){
-        stopThread();
         Stage stage = (Stage) closeWindowBtn.getScene().getWindow();
         stage.close();
     }
@@ -184,7 +181,6 @@ public class HomeController implements Initializable, Runnable {
     public void signOut(ActionEvent e){
         try {
             Procesos.CerrarSesion();
-            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
             Stage stage = (Stage) outBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -201,7 +197,6 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void goToCreateGroup(ActionEvent e){
         try {
-            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Groups.fxml"));
             Stage stage = (Stage) groupBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -214,7 +209,6 @@ public class HomeController implements Initializable, Runnable {
     @FXML
     public void goToNotifications(ActionEvent e){
         try {
-            stopThread();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Notifications.fxml"));
             Stage stage = (Stage) notificationBtn.getScene().getWindow();
             Scene scene = new Scene(loader.load());
@@ -248,8 +242,6 @@ public class HomeController implements Initializable, Runnable {
         Interfaz.groups = groupsVBox;
         Interfaz.current = txtCurrentContact;
         Interfaz.editar = editBtn;
-        Thread hilo = new Thread(this);
-        hilo.start();
         Procesos.MostrarAmigos();
         Procesos.MostrarAmigosDesconectados();
         Procesos.MostrarUsuariosConectados();
@@ -260,36 +252,5 @@ public class HomeController implements Initializable, Runnable {
         //    System.out.println("Hubo problemas con la actualización");
         //}
         Procesos.MostrarGrupos();
-    }
-    
-    @Override
-    public void run(){
-        System.out.println("Corriendo");
-        try {
-            response = new ServerSocket(7654);
-            while(this.flagThread) {
-                System.out.println("Entre al while");
-                Gson json = new Gson();
-                Socket peticion = response.accept();
-                DataInputStream datos = new DataInputStream(peticion.getInputStream());
-                String da = datos.readUTF();
-                Comunicacion modelo = json.fromJson(da, Comunicacion.class);
-                Procesos.mensajeria(modelo);
-                peticion.close();
-            }
-            System.out.println("Sali");
-        } catch (IOException ex) {
-            System.out.println("Hilo Terminado");
-        }
-    }
-    
-    public void stopThread() {
-        System.out.println("Entre para detener la ");
-        this.flagThread = false;
-        try {
-            response.close();
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

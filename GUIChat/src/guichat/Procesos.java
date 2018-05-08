@@ -561,7 +561,7 @@ public class Procesos {
             EnviarCadena.writeUTF(json.toJson(modeloOutput));
             DataInputStream RecibirConfirmacion= new DataInputStream(soquet.getInputStream());
             RecibirConfirmacion.readUTF();
-            
+            mensaje_enviar.setOrigen(new Usuario());
             GuardarMensajePersonal(mensaje_enviar);
             
         } catch (IOException ex) {
@@ -592,7 +592,7 @@ public class Procesos {
                 case SEND_MENSAJE:
                     MensajeRecibido(json.fromJson(data, Mensaje.class));
                     break;
-                case SEND_GRUPO:
+                case SEND_MENSAJE_GRUPO:
                     MensajeGrupoRecibido(json.fromJson(data, MensajeGrupo.class));
                     break;
                 case SEND_CONECTADOS:
@@ -607,15 +607,12 @@ public class Procesos {
     public static void EnviarMensajeGrupo(String txtMessage, int IdGrupo)
     {
         DataOutputStream EnviarCadena = null;
-        Usuario origen = new Usuario();
-        origen.setId(1);
-        System.out.println("Enviando mensaje");
         try {
             Comunicacion modeloOutput = new Comunicacion();
             System.out.println(txtMessage);
             MensajeGrupo mensaje_enviar= new MensajeGrupo();
             mensaje_enviar.getGrupo().setId(IdGrupo);
-            mensaje_enviar.setContenido(txtMessage);
+            mensaje_enviar.setMensaje(txtMessage);
             modeloOutput.setTipo(Comunicacion.MTypes.RQMENSAJES_SENDGRUPO);
             modeloOutput.setContenido(mensaje_enviar);
             EnviarCadena = new DataOutputStream(soquet.getOutputStream());
@@ -675,15 +672,23 @@ public class Procesos {
     public static void MensajeRecibido(Mensaje mensaje)
     {
         MostrarMensajeAmigo(mensaje);
-        mensaje.setOrigen(new Usuario());
+        mensaje.setDestino(new Usuario());
         GuardarMensajePersonal(mensaje);
     }
     
     public static void MensajeGrupoRecibido(MensajeGrupo mensaje_grupo)
     {
-        Platform.runLater(() -> {
-            Interfaz.createBubble(Boolean.TRUE, Boolean.TRUE, mensaje_grupo.getContenido(), mensaje_grupo.getUsuario().getUsername());
-        });
+        if(Interfaz.type == 2){
+            if(mensaje_grupo.getGrupo().getId() == Interfaz.idElement){
+                Platform.runLater(() -> {
+                    Interfaz.createBubble(Boolean.TRUE, Boolean.TRUE, mensaje_grupo.getMensaje(), mensaje_grupo.getRemitente().getUsername());
+                });
+            } else {
+                System.out.println("Estas en otro grupo");
+            }
+        } else {
+            System.out.println("Estas platicando con alguien en persona");
+        }
         GuardarMensajeGrupo(mensaje_grupo);
     }
     
@@ -785,9 +790,17 @@ public class Procesos {
     }
     
     private static void MostrarMensajeAmigo(Mensaje mensaje) {
-        Platform.runLater(
-            () -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
-        );
+        if(Interfaz.type == 1){
+            if(mensaje.getOrigen().getId() == Interfaz.idElement){
+                Platform.runLater(
+                    () -> Interfaz.createBubble(Boolean.TRUE, Boolean.FALSE, mensaje.getContenido(), null)
+                );
+            } else {
+                System.out.println("Te llego un mensaje");  
+            }
+        } else {
+            System.out.println("Estas platicando en un grupo");
+        }
     }
     
      private static boolean GuardarMensajePersonal (Mensaje mensaje) {
@@ -841,7 +854,7 @@ public class Procesos {
         
         int size = mensajes.size();
         if(size>3){
-            for (int i = size - 1; i >= size-3; i--) {
+            for (int i = size-4;i<size ; i++) {
                 result.add(mensajes.get(i));
             }
         }else result = mensajes;
